@@ -27,7 +27,7 @@ import org.docksidestage.unit.PlainTestCase;
  * @author Ichy14 (n.ichikawa@bizreach.co.jp)
  */
 public class Step01VariableTest extends PlainTestCase {
-    // `exrends`キーワードを使うによりStep01VariableTestはPlainTestCaseを継承している
+    // `extends`キーワードを使うによりStep01VariableTestはPlainTestCaseを継承している
     // ===================================================================================
     //                                                                      Local Variable
     //                                                                      ==============
@@ -37,9 +37,14 @@ public class Step01VariableTest extends PlainTestCase {
      */
     public void test_variable_basic() { // example, so begin from the next method
         String sea = "mystic";
-        log(sea); // your answer? => mystic
-        // TODO: `log()`メソッドの実装を読解したい
-        // TODO ichikawa [ふぉろー] よーし、1on1で一緒に読みますか(^^ by jflute (2025/07/24)
+        RuntimeException exception = new RuntimeException();
+        log(sea, exception); // your answer? => mystic
+        // done: `log()`メソッドの実装を読解したい
+        // done ichikawa [ふぉろー] よーし、1on1で一緒に読みますか(^^ by jflute (2025/07/24)
+        // #1on1: command+click でコードジャンプ、そのメソッドやクラスのソースコードへ飛ぶ
+        // #1on1: ソースコードリーディングのコツ: 漠然読みで構造をだけ把握して、目的に合うフォーカス読みしていく
+        // ichikawaさんの基礎力が上がったら、またlog()一緒に読んでみましょう。
+        // #1on1: IntelliJでのとぅどぅの探し方、右のLINEとshift+shiftのとぅどぅ
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -53,16 +58,22 @@ public class Step01VariableTest extends PlainTestCase {
         // 正常に？出力されてしまった。
         // intの8がstringにキャストされた？stringで宣言したnullが"null"という文字列として変換されているのはなぜ?
         // `+`演算子を実行するときは左側の型に合わせて演算される＆String型が左右どちらかに来たらString型として処理する、みたいなことになってそう？
-        // TODO: 変数の型を確認する方法は？
-        // TODO ichikawa [ふぉろー] 演算中の型の理解はそれでOKです。Stringが含まれたらそこにどんどん引きずりこまれる感じですね by jflute (2025/07/24)
+        // done: 変数の型を確認する方法は？
+        // done ichikawa [ふぉろー] 演算中の型の理解はそれでOKです。Stringが含まれたらそこにどんどん引きずりこまれる感じですね by jflute (2025/07/24)
         // +演算子の型変換は暗黙で行われるので、IDE上でもあんまり確認する方法がないかもですね。
         // まあ例えばこう書いてみて...
         //  e.g. int a = 1 + "b";
         // → コンパイルエラーのメッセージに「Type mismatch: cannot convert from String to int」とあるので、
         // これで String になっていることを確認する、ってことはできそうです。
+        // #1on1: 自分が思っている以上に、期間が空くと忘れちゃうので、コメント書くときもちょい細かめに
+        // 細切れの仕事ができるようになるためのコツ。javatryでシミュレーション。
 
-        // TODO jflute 1on1にて、null文字列に変換されることに関してフォロー予定 (2025/07/24)
+        // done jflute 1on1にて、null文字列に変換されることに関してフォロー予定 (2025/07/24)
         // (↑これはくぼ用のtodoということでそのまま残しておいてください)
+        // #1on1 例えば、C#だと空文字になります。JavaScriptだとnullとかundefinedとかが文字列になる。
+        // 昔のインターネット画面だと、こんにちは null さんって表示されることもあった。
+        // メールだと最近でも null を見かける。
+        // エラーの優先度のお話、なんでもかんでも細かいところまで落とせば良いというわけでもない。
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -96,10 +107,17 @@ public class Step01VariableTest extends PlainTestCase {
         log(sea); // your answer? => 417
         // BigDecimalはimmutable → seaの値は変わらない。Python書いてたときにもこんなのがあった気がする
         // Javaのsyntax sugarのこともうちょい知りたい
-        // TODO ichikawa [いいね] immutableという概念を理解されているの素晴らしいです by jflute (2025/07/24)
+        // done ichikawa [いいね] immutableという概念を理解されているの素晴らしいです by jflute (2025/07/24)
         // TODO ichikawa [ふぉろー] 1on1のときぜひsyntax sugarの話させてください by jflute (2025/07/24)
+        // #1on1: 変数seaと94BigDecimalインスタンスの関係性:
+        // 変数seaが、94BigDecimalインスタンスの置き場所(アドレス)を持っていて参照している。 
+        // seaインスタンスという言葉: 厳密ではない表現だけど、ただ理解しやすいので、便宜上使うみたいな感じ
+        // #1on1: 調べ方の選択肢:
+        // 1: IntelliJでBigDecimal/add()にカーソルを当ててクラス/メソッドのJavaDocを表示
+        // 2: IntelliJでメソッド補完時はcontrol+JでJavaDocを表示
 
         // TODO jflute 1on1にてimmutable周りとJavaのsyntax sugarの話 (2025/07/24)
+        // TODO jflute 1on1にてソースコードリーディング (2025/07/25)
     }
 
     // ===================================================================================
@@ -249,7 +267,7 @@ public class Step01VariableTest extends PlainTestCase {
      * <pre>
      * _/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
      * your question here (ここにあなたの質問を):
-     * 
+     *
      * _/_/_/_/_/_/_/_/_/_/
      * </pre>
      */
