@@ -108,7 +108,14 @@ public class Step01VariableTest extends PlainTestCase {
         // BigDecimalはimmutable → seaの値は変わらない。Python書いてたときにもこんなのがあった気がする
         // Javaのsyntax sugarのこともうちょい知りたい
         // done ichikawa [いいね] immutableという概念を理解されているの素晴らしいです by jflute (2025/07/24)
-        // TODO ichikawa [ふぉろー] 1on1のときぜひsyntax sugarの話させてください by jflute (2025/07/24)
+        // done ichikawa [ふぉろー] 1on1のときぜひsyntax sugarの話させてください by jflute (2025/07/24)
+        // #1on1: Javaのsyntax sugarのバランスについて。sugarあるけど、他の言語に比べたらない方かも。
+        // sugarなのであれば良いというものではなく、バランスが重要。言語によってsugarの価値観が違う。
+        //for (String stage : stageList) {
+        //    log(stage);
+        //}
+        //stageList.forEach(stage -> log(stage));
+
         // #1on1: 変数seaと94BigDecimalインスタンスの関係性:
         // 変数seaが、94BigDecimalインスタンスの置き場所(アドレス)を持っていて参照している。 
         // seaインスタンスという言葉: 厳密ではない表現だけど、ただ理解しやすいので、便宜上使うみたいな感じ
@@ -116,8 +123,30 @@ public class Step01VariableTest extends PlainTestCase {
         // 1: IntelliJでBigDecimal/add()にカーソルを当ててクラス/メソッドのJavaDocを表示
         // 2: IntelliJでメソッド補完時はcontrol+JでJavaDocを表示
 
-        // TODO jflute 1on1にてimmutable周りとJavaのsyntax sugarの話 (2025/07/24)
-        // TODO jflute 1on1にてソースコードリーディング (2025/07/25)
+        // done jflute 1on1にてimmutable周りとJavaのsyntax sugarの話 (2025/07/24)
+        // done jflute 1on1にてソースコードリーディング (2025/07/25)
+        // #1on1: log()から再びadd()で「漠然読みで構造だけ把握して、当てをつけてフォーカス読み」 (2025/08/06)
+        // #1on1: 何を知りたかったんだっけ？にならないように by ichikawaさん
+        // #1on1: 「My Favorite Book: 仮説思考」に通じるかも!?
+        // https://jflute.hatenadiary.jp/entry/20150111/kasetsu
+
+        // #1on1: immutableのメリット/デメリットは？ (2025/08/06)
+        // 0というインスタンスを突然1に書き換えられたら大変!? (別の性質になる) by ichikawaさん
+        //BigDecimal land開園日 = new BigDecimal(415);
+        //land開園日.add(new BigDecimal(1)); // 仮にmutableなら
+        //log(land開園日); // 416
+        // ↓
+        //BigDecimal land開園日 = new BigDecimal(415);
+        //BigDecimal land開園日の次の日 = land開園日.add(new BigDecimal(1));
+        //log(land開園日); // 415
+        //log(land開園日の次の日); // 416
+        //
+        // o 可読性
+        // o 安全性
+        // o 変わらない方が世話ない (mutableだと人間の管理が追っつかない)
+        //  → 人都合
+        // #1on1 immutableの歴史 (2025/08/06)
+        // TODO jflute 次回1on1で、Javaでなんでぜんぶimmutableにしないの？ (2025/08/06)
     }
 
     // ===================================================================================
