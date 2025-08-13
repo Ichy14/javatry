@@ -183,7 +183,7 @@ public class Step01VariableTest extends PlainTestCase {
         Integer sea = instanceHangar;
         log(sea); // your answer? => nul
         // 基本型のintと違って、Integerはnullが許容されるっぽい？
-        // TODO ichikawa [ふぉろー] yes, そうなります。 by jflute (2025/07/24)
+        // done ichikawa [ふぉろー] yes, そうなります。 by jflute (2025/07/24)
         // intのようなプリミティブ型と、Integerのようなオブジェクト型と二つありまして、
         // プリミティブ型は null という状態 (変数が何も指し示していない) が発生しないようになっています。
         // ゆえに、intの場合はデフォルトで0が暗黙的に入るのですが、Integer/Stringなどのオブジェクト型は、
@@ -236,10 +236,12 @@ public class Step01VariableTest extends PlainTestCase {
     //                                   -------------------
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
     public void test_variable_method_argument_mutable_methodcall() {
-        StringBuilder sea = new StringBuilder("harbor");
+        StringBuilder sea = new StringBuilder("harbor");  // sea = 6 + 16 <-違う
         int land = 415;
         helpMethodArgumentMethodcall(sea, land);
-        log(sea); // your answer? => 
+        log(sea); // your answer? => 416 + 22 => 438
+        // StringBuilder("harbor")が文字数を取ってくるものだと思ってしまったがそうではないらしい
+        // immutableなString型の"harbor"がmutableなものとして扱えている、驚き
     }
 
     private void helpMethodArgumentMethodcall(StringBuilder sea, int land) {
@@ -255,7 +257,7 @@ public class Step01VariableTest extends PlainTestCase {
         StringBuilder sea = new StringBuilder("harbor");
         int land = 415;
         helpMethodArgumentVariable(sea, land);
-        log(sea); // your answer? => 
+        log(sea); // your answer? => "harbor"
     }
 
     private void helpMethodArgumentVariable(StringBuilder sea, int land) {
@@ -283,8 +285,13 @@ public class Step01VariableTest extends PlainTestCase {
      * o すべての変数をlog()でカンマ区切りの文字列で表示
      * </pre>
      */
+    int piari;
+
     public void test_variable_writing() {
         // define variables here
+        String sea = "mystic";
+        Integer land = null;
+        log(sea, land, piari);
     }
 
     // ===================================================================================
@@ -297,10 +304,54 @@ public class Step01VariableTest extends PlainTestCase {
      * _/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
      * your question here (ここにあなたの質問を):
      *
+     * 以下の出力はどうなるか
+     *
      * _/_/_/_/_/_/_/_/_/_/
      * </pre>
      */
+    // もうちょい面白い問題作りたい
+    int num1 = 1;
+
     public void test_variable_yourExercise() {
         // write your code here
+        int num2 = 2;
+        add_num(num2);
+        log(num1, num2); // your answer? =>
+    }
+
+    private void add_num(int num2) {
+        // 変数aとbを足して、num1に加算する
+        num1++;
+        num2++;
+    }
+}
+
+
+// クラス変数の挙動の確認
+class Main {
+    public static void main(String[] args) {
+        Sample sampleA = new Sample();
+        Sample sampleB = new Sample();
+        Sample sampleC = new Sample();
+
+        sampleA.setNum(30);
+        sampleB.setNum(40);
+        sampleC.b = 50; // Sampleクラスのstaticフィールドbに直接アクセス
+        System.out.println(sampleA.getNum());
+        System.out.println(sampleB.getNum());
+        System.out.println(sampleC.b);
+    }
+}
+
+class Sample {
+
+    public static int b;
+
+    public void setNum(int value) {
+        b = value;
+    }
+
+    public int getNum() {
+        return b;
     }
 }
