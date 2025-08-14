@@ -310,6 +310,7 @@ public class Step01VariableTest extends PlainTestCase {
      * </pre>
      */
     // もうちょい面白い問題作りたい
+    // javaだとローカル変数を参照渡しできない
     int num1 = 1;
 
     public void test_variable_yourExercise() {
@@ -320,7 +321,6 @@ public class Step01VariableTest extends PlainTestCase {
     }
 
     private void add_num(int num2) {
-        // 変数aとbを足して、num1に加算する
         num1++;
         num2++;
     }
