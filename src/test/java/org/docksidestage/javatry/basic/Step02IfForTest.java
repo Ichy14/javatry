@@ -156,7 +156,7 @@ public class Step02IfForTest extends PlainTestCase {
             }
         });
         String sea = sb.toString();
-        log(sea); // your answer? => dickside
+        log(sea); // your answer? => dockside
     }
 
     // ===================================================================================
@@ -187,17 +187,35 @@ public class Step02IfForTest extends PlainTestCase {
      */
     public void test_iffor_refactor_foreach_to_forEach() {
         List<String> stageList = prepareStageList();
-        String sea = null;
-        for (String stage : stageList) {
-            if (stage.startsWith("br")) {
-                continue;
+//        String sea = null;
+//        for (String stage : stageList) {
+//            if (stage.startsWith("br")) {
+//                continue;
+//            }
+//            sea = stage;
+//            if (stage.contains("ga")) {
+//                break;
+//            }
+//        }
+
+//        stageList.forEach(stage -> {
+//            sea = stage;
+//            if (stage.contains("ga")) {
+//                break;
+//            }
+//        });
+        // forEach()メソッドはcontinueやbreakは使えない。
+        // breakしたい時は例外を投げるようにする、と調べてわかったが、長くなるし、他の方法があるはず、、、
+        // ローカル変数も使えないらしい。メンバ変数ならいいらしいが、、、
+
+        final String[] sea = {null}; // 参照型にしておく  <- 参照型にしておく、とは、、、？tab補完でやらせたけどコメントの意味がよくわからん
+        stageList.forEach(stage -> {
+            sea[0] = stage;
+            if (stage.startsWith("ga")) {
+                // ここからどうする？
             }
-            sea = stage;
-            if (stage.contains("ga")) {
-                break;
-            }
-        }
-        log(sea); // should be same as before-fix
+        });
+        log(sea[0]); // should be same as before-fix
     }
 
     /**
