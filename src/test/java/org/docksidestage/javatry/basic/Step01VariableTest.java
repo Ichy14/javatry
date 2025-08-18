@@ -146,7 +146,21 @@ public class Step01VariableTest extends PlainTestCase {
         // o 変わらない方が世話ない (mutableだと人間の管理が追っつかない)
         //  → 人都合
         // #1on1 immutableの歴史 (2025/08/06)
-        // TODO jflute 次回1on1で、Javaでなんでぜんぶimmutableにしないの？ (2025/08/06)
+        // done jflute 次回1on1で、Javaでなんでぜんぶimmutableにしないの？ (2025/08/06)
+        // #1on1: ここまでのセオリーとしては、immutableはいいことばっかり。
+        // 現実は、Javaだとけっこう混ざってる。
+        // o Javaができたのは1995年、まだ全然immutable指向な世の中じゃないとき
+        //  i に言語デザインされているので、mutableなクラスや思想もたくさん残ってる
+        //  i それでも、ちょっとずつimmutableなクラスは増えているけど緩やか
+        // o mutableなクラスの方がちゃちゃっと書けることもある
+        //  i immutableにすることで少しプログラミングの手間が掛かることもある
+        // o ↑の原因の一つとして、Javaの文法がimmutable全推しってわけじゃない
+        //  i immutableを実現するのに文法がまだちょっと足りない
+        //  i じゃあJavaはそれをどんどん付け足していくのか？はまだわからない
+        //  i 強力な文法をてんこ盛りにするのが良いのかどうか？(Javaとして)
+        //
+        // ちなみに別の言語だと、immutable全推しの言語もある。e.g. Scala
+        // (全推しではないけど、Javaよりは推してるのが Kotlin)
     }
 
     // ===================================================================================
@@ -164,12 +178,14 @@ public class Step01VariableTest extends PlainTestCase {
         // クラス内で宣言されたフィールドを取得しようとする関数？
         // instanceBroadwayという変数を宣言したものの、初期化していないので、型に合わせて自動的に初期値がセットされる
         // その初期値はString型ならnullになるので、nullが出力されるっぽい
-        // TODO ichikawa [ふぉろー] 初期値に関してはそれで認識大丈夫です by jflute (2025/07/24)
+        // done ichikawa [ふぉろー] 初期値に関してはそれで認識大丈夫です by jflute (2025/07/24)
         // クラス内で宣言されたフィールドは「インスタンス変数」と呼び、特定の一つのインスタンスに紐づく変数となります。
         // そして、このtest_メソッドは文法的にはインスタンスメソッドと呼ばれて、
         // 同じく特定の一つのインスタンスに紐づくメソッドということでインスタンス変数が参照できます。
         // ということで、インスタンスメソッド内からインスタンス変数を直接参照しているということなので、
         // 特に関数を経由して取得しているとかではありません。
+        // #1on1 インスタンスとは？インスタンス変数とは？インスタンスメソッドとは？
+        // 一軒家の設計図から一軒家インスタンスを作ったら話。
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -193,14 +209,14 @@ public class Step01VariableTest extends PlainTestCase {
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
     public void test_variable_instance_variable_via_method() {
         instanceBroadway = "bbb"; // BigBandBeat無くなるの悲しいです
-        // TODO ichikawa [ざつだん] いやほんとその通り。It don't mean a thing がもう聴けない（＞＜ by jflute (2025/07/24)
+        // done ichikawa [ざつだん] いやほんとその通り。It don't mean a thing がもう聴けない（＞＜ by jflute (2025/07/24)
         instanceMagiclamp = "magician";
         helpInstanceVariableViaMethod(instanceMagiclamp);
         String sea = instanceBroadway + "|" + instanceDockside + "|" + instanceHangar + "|" + instanceMagiclamp;
         log(sea); // your answer? => bbb|1|null|magician
         // ミュータブルな変数instanceDockside以外は、helpInstanceVariableViaMethodメソッドを呼び出して代入しても値は変わらないはず?
         // → 違った。なぜ？たぶん何かを勘違いしている。
-        // TODO ichikawa [ふぉろー] インスタンス変数はどのインスタンスメソッドからも参照ができるので... by jflute (2025/07/24)
+        // done ichikawa [ふぉろー] インスタンス変数はどのインスタンスメソッドからも参照ができるので... by jflute (2025/07/24)
         // instanceBroadway = "bigband"; にて値が差し替わります。
         // test_ も help も instanceBroadway は共有している同じ変数なので。
     }
@@ -222,13 +238,18 @@ public class Step01VariableTest extends PlainTestCase {
         String sea = "harbor";
         int land = 415;
         helpMethodArgumentImmutableMethodcall(sea, land);
-        log(sea); // your answer? => 
+        log(sea); // your answer? => harbor (o)
+        // #1on1:
+        // o Stringはimmutable
+        // o String@concat()は、あたらしく連結した文字列を戻す
+        //  i なので、戻して受け取ってtest側のseaを差し替えない限り変わらない
+        // 今となっては、helpメソッドの中を読まなくても結果はわかる。=> 可読性
     }
 
     private void helpMethodArgumentImmutableMethodcall(String sea, int land) {
         ++land;
         String landStr = String.valueOf(land); // is "416"
-        sea.concat(landStr);
+        sea.concat(landStr); // concat(): harbor416
     }
 
     // -----------------------------------------------------
@@ -236,7 +257,7 @@ public class Step01VariableTest extends PlainTestCase {
     //                                   -------------------
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
     public void test_variable_method_argument_mutable_methodcall() {
-        StringBuilder sea = new StringBuilder("harbor");  // sea = 6 + 16 <-違う
+        StringBuilder sea = new StringBuilder("harbor"); // sea = 6 + 16 <-違う
         int land = 415;
         helpMethodArgumentMethodcall(sea, land);
         log(sea); // your answer? => 416 + 22 => 438
@@ -247,6 +268,16 @@ public class Step01VariableTest extends PlainTestCase {
     private void helpMethodArgumentMethodcall(StringBuilder sea, int land) {
         ++land;
         sea.append(land);
+        // #1on1: hashも同じ
+        //StringBuilder appended = sea.append(land);
+        //log(sea.hashCode(), appended.hashCode());
+        // #1on1: thisを戻している理由
+        // sea.append(land).append("oneman"); というふうに書きたいから。
+        // 業務的には戻り値は不要だけど、書き方の工夫の選択肢のために戻してる。
+        // なので、immutableの戻り値と全然質が違う戻り値。
+        //
+        // return thisのときは、(必要なければ)受け取らなくても良い。by いちかわさん
+        // (Javaが、戻り値の受け取りを必須にしてないことで成立)
     }
 
     // -----------------------------------------------------
@@ -258,6 +289,7 @@ public class Step01VariableTest extends PlainTestCase {
         int land = 415;
         helpMethodArgumentVariable(sea, land);
         log(sea); // your answer? => "harbor"
+        // TODO ichikawa [自己理解課題] 1on1での説明をさらに頭の中で整理してみてください by jflute (2025/08/18)
     }
 
     private void helpMethodArgumentVariable(StringBuilder sea, int land) {
@@ -292,6 +324,13 @@ public class Step01VariableTest extends PlainTestCase {
         String sea = "mystic";
         Integer land = null;
         log(sea, land, piari);
+
+        // #1on1: sample変数名
+        // foo, bar, baz, qux, quux, corge...
+        // hoge, fuga, ...
+        //
+        // jflute流:
+        // sea, land, piari, bonvo, dstore, amba, miraco, dohotel
     }
 
     // ===================================================================================
@@ -311,6 +350,7 @@ public class Step01VariableTest extends PlainTestCase {
      */
     // もうちょい面白い問題作りたい
     // javaだとローカル変数を参照渡しできない
+    // done ichikawa [いいね] Goodなエクササイズです by jflute (2025/08/18)
     int num1 = 1;
 
     public void test_variable_yourExercise() {
@@ -326,6 +366,14 @@ public class Step01VariableTest extends PlainTestCase {
     }
 }
 
+// #1on1: 文法用語
+// クラス変数: staticが付いている変数 (特定のインスタンスに紐付かない、共通的)
+// クラスメソッド: staticが付いているメソッド (特定のインスタンスに紐付かない、共通的)
+//  → 実際の現場では、クラス変数というよりは、みんなstatic変数、staticメソッドって呼ぶ
+//
+// インスタンス変数: 特定のインスタンスに属している変数
+// インスタンスメソッド: 特定のインスタンスに属しているメソッド (インスタンス変数が参照できる)
+//  → 単にメソッドって言うと、インスタンスメソッドを指し示すことが多い、という感覚
 
 // クラス変数の挙動の確認
 class Main {
@@ -345,6 +393,8 @@ class Main {
 
 class Sample {
 
+    // #1on1: publicだから直接アクセスができちゃうだけで、privateにすれば直接アクセスはできないようにできる
+    // setterがあるんだったら、変数はprivateにするのがオーソドックスではある。
     public static int b;
 
     public void setNum(int value) {
