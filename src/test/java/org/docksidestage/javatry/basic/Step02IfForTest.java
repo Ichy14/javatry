@@ -185,6 +185,7 @@ public class Step02IfForTest extends PlainTestCase {
      * Change foreach statement to List's forEach() (keep result after fix) <br>
      * (foreach文をforEach()メソッドへの置き換えてみましょう (修正前と修正後で実行結果が同じになるように))
      */
+    String sea = null;
     public void test_iffor_refactor_foreach_to_forEach() {
         List<String> stageList = prepareStageList();
 //        String sea = null;
@@ -197,6 +198,7 @@ public class Step02IfForTest extends PlainTestCase {
 //                break;
 //            }
 //        }
+//        log(sea); // should be same as before-fix
 
 //        stageList.forEach(stage -> {
 //            sea = stage;
@@ -205,17 +207,29 @@ public class Step02IfForTest extends PlainTestCase {
 //            }
 //        });
         // forEach()メソッドはcontinueやbreakは使えない。
-        // breakしたい時は例外を投げるようにする、と調べてわかったが、長くなるし、他の方法があるはず、、、
-        // ローカル変数も使えないらしい。メンバ変数ならいいらしいが、、、
+        // breakしたい時は例外を投げるようにする、と調べてわかったが、長くなるし、他の方法があるはず？
+        // ローカル変数も使えないらしい。インスタンス変数ならいいらしいが、、、
 
-        final String[] sea = {null}; // 参照型にしておく  <- 参照型にしておく、とは、、、？tab補完でやらせたけどコメントの意味がよくわからん
-        stageList.forEach(stage -> {
-            sea[0] = stage;
-            if (stage.startsWith("ga")) {
-                // ここからどうする？
-            }
-        });
-        log(sea[0]); // should be same as before-fix
+//        final String[] sea = {null}; // 参照型にしておく  <- 参照型にしておく、とは、、、？tab補完でやらせたけどコメントの意味がよくわからん
+//        stageList.forEach(stage -> {
+//            sea[0] = stage;
+//            if (stage.startsWith("ga")) {
+//                // ここからどうする？
+//            }
+//        });
+
+        try {
+            stageList.forEach(stage -> {
+                if (stage.startsWith("br")) {
+                    return;
+                }
+                sea = stage;
+                if (stage.contains("ga")) {
+                    throw new RuntimeException();
+                }
+            });
+        } catch (RuntimeException e) {}
+        log(sea);
     }
 
     /**

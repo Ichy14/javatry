@@ -290,6 +290,8 @@ public class Step01VariableTest extends PlainTestCase {
         helpMethodArgumentVariable(sea, land);
         log(sea); // your answer? => "harbor"
         // TODO ichikawa [自己理解課題] 1on1での説明をさらに頭の中で整理してみてください by jflute (2025/08/18)
+        // 変数seaとlandはローカル変数であり、helpMethodArgumentVariableメソッドに渡されているのは値だけ
+        // そのため、テストメソッド内で宣言された変数seaとlandがmutableかどうかなどは気にせず、値は変わらないと言える（わざわざヘルプメソッド内部の実装を確認せずとも、今回の場合は変数seaの値が変わっていないことがわかる）
     }
 
     private void helpMethodArgumentVariable(StringBuilder sea, int land) {
