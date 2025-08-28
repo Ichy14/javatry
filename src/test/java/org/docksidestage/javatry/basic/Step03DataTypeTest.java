@@ -47,6 +47,9 @@ public class Step03DataTypeTest extends PlainTestCase {
 
         piari = piari.plusDays(1);
         land = piari.getYear();
+        // ↑型が違うはずなのに代入できているのはなぜ？ intをIntegerに変換できているのは、そういう設計がされているということ？
+        // しかも、どうやら使われていないらしい（そういう警告が出ている）。どういうこと？
+        // → 下の方でlandに対して代入が行われている＋ここで代入されたlandは使われていないので警告されているということか？IDE賢いなあ。。。
         bonvo = bonvo.plusMonths(1);
         land = bonvo.getMonthValue();
         land--;
@@ -54,7 +57,7 @@ public class Step03DataTypeTest extends PlainTestCase {
             BigDecimal addedDecimal = amba.add(new BigDecimal(land));
             sea = String.valueOf(addedDecimal);
         }
-        log(sea); // your answer? => 
+        log(sea); // your answer? => "18.4" <-当たってた嬉しい
     }
 
     // ===================================================================================
@@ -66,11 +69,11 @@ public class Step03DataTypeTest extends PlainTestCase {
         short land = 32767; // max
         int piari = 1;
         long bonvo = 9223372036854775807L; // max
-        float dstore = 1.1f;
+        float dstore = 1.1f;  // long, float, doubleは末尾にl, fやdをつけるのは可読性のため？
         double amba = 2.3d;
         char miraco = 'a';
-        boolean dohotel = miraco == 'a';
-        if (dohotel && dstore >= piari) {
+        boolean dohotel = miraco == 'a';  // この書き方面白い
+        if (dohotel && dstore >= piari) {  // 型が違っていても数値の大小比較はできるらしい？
             bonvo = sea;
             land = (short) bonvo;
             bonvo = piari;
@@ -82,7 +85,7 @@ public class Step03DataTypeTest extends PlainTestCase {
         if ((int) dstore > piari) {
             sea = 0;
         }
-        log(sea); // your answer? => 
+        log(sea); // your answer? => 2 <-当たってた嬉しい
     }
 
     // ===================================================================================
@@ -92,7 +95,7 @@ public class Step03DataTypeTest extends PlainTestCase {
     public void test_datatype_object() {
         St3ImmutableStage stage = new St3ImmutableStage("hangar");
         String sea = stage.getStageName();
-        log(sea); // your answer? => 
+        log(sea); // your answer? => "hangar"
     }
 
     private static class St3ImmutableStage {
