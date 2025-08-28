@@ -238,12 +238,24 @@ public class Step02IfForTest extends PlainTestCase {
      * <pre>
      * _/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
      * your question here (ここにあなたの質問を):
-     * 
+     *
+     * 変数iの中身は？
+     *
      * _/_/_/_/_/_/_/_/_/_/
      * </pre>
      */
     public void test_iffor_yourExercise() {
         // write your code here
+        List<String> stageList = prepareStageList();
+        List<String> newStageList = new ArrayList<>();
+        for (int i = 0; i < stageList.size(); i++) {
+            String stage = stageList.get(i);
+            newStageList.add(stage);
+            if (stage.length() <= 6) {
+                newStageList.add("capecod");
+                log(i);
+            }
+        }
     }
 
     // ===================================================================================
