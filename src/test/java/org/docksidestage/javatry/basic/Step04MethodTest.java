@@ -35,7 +35,7 @@ public class Step04MethodTest extends PlainTestCase {
      */
     public void test_method_call_basic() {
         String sea = supplySomething();
-        log(sea); // your answer? =>
+        log(sea); // your answer? => "over"
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -43,7 +43,7 @@ public class Step04MethodTest extends PlainTestCase {
         String sea = functionSomething("mystic");
         consumeSomething(supplySomething());
         runnableSomething();
-        log(sea); // your answer? => 
+        log(sea); // your answer? => "mysmys"
     }
 
     private String functionSomething(String name) {
@@ -63,7 +63,7 @@ public class Step04MethodTest extends PlainTestCase {
     }
 
     private void runnableSomething() {
-        String sea = "outofshadow";
+        String sea = "outofshadow";  // このショー知らなかったです、この次のソングオブミラージュは一回だけ見たことがあるような気がします
         log("in runnable: {}", sea);
     }
 
@@ -76,7 +76,9 @@ public class Step04MethodTest extends PlainTestCase {
         if (!land) {
             sea = sea + mutable.getStageName().length();
         }
-        log(sea); // your answer? => 
+        log(sea); // your answer? => 905
+        // mutableとimmutableなオブジェクト（インスタンス）の扱いをまだ正しく理解できていないっぽい（helloMutable()メソッドでセットした値が、メソッド外で実体化したインスタンスの中身になっているのが理解できていない）
+        // ↑それはそれとして、なんで910になった？helloMutable()メソッドで最初の引数seaに900が渡されているからreturnされる値は901のはずでは？
     }
 
     private int helloMutable(int sea, Boolean land, St4MutableStage piari) {
