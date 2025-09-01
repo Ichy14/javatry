@@ -20,6 +20,13 @@ import java.util.List;
 
 import org.docksidestage.unit.PlainTestCase;
 
+// TODO ichikawa [読み物課題] 質問のコツその一: なんでその質問してるのか？も伝えよう by jflute (2025/09/01)
+// https://jflute.hatenadiary.jp/entry/20170611/askingway1
+
+// TODO ichikawa [読み物課題] プログラマーに求められるデザイン脳 by jflute (2025/09/01)
+// https://jflute.hatenadiary.jp/entry/20170623/desigraming
+
+// TODO ichikawa @authorお願いします by jflute (2025/09/01)
 /**
  * The test of if-for. <br>
  * Operate exercise as javadoc. If it's question style, write your answer before test execution. <br>
@@ -99,6 +106,14 @@ public class Step02IfForTest extends PlainTestCase {
         }
         log(sea); // your answer? => 8
         // よく見たら94行目からif elseじゃなくて独立したいif文になってた、ミスった
+        // #1on1: まず漠然読みで構造だけ分解する。
+        // 細かいところ読みながら構造も一緒にってなると、俯瞰がしづらくなるので構造把握ミスが起きやすい。
+        //
+        // その後、ギャンブルポイントを見つけてフォーカス読み。
+        // 漠然読み/フォーカス読みの実践。
+        //
+        // 目的意識を明確に持って読むこと大事 by いちかわさん
+        // でかいコードを読んでるときこそ何知りたいんだっけ？になりがち by いちかわさん
     }
 
     // ===================================================================================
@@ -121,10 +136,19 @@ public class Step02IfForTest extends PlainTestCase {
     public void test_for_foreach_basic() {
         List<String> stageList = prepareStageList();
         String sea = null;
-        for (String stage : stageList) {  // listの全ての要素に対して操作する時はこの書き方ができる。これはsyntax sugar？
+        for (String stage : stageList) { // listの全ての要素に対して操作する時はこの書き方ができる。これはsyntax sugar？
             sea = stage;
         }
         log(sea); // your answer? => magiclamp
+
+        // #1on1: 伝統的ないんとあいのfor文とすっきりした拡張for文の違い
+        // 伝統的ないんとあいのfor文: 1995あたり
+        // すっきりした拡張for文: 2005あたり
+        //
+        // 現場では、すっかり慣れて、拡張for文がメインになってきた。
+        // (int indexって自分で変数宣言しちゃえば、代替もできるし)
+        // こっちばっかりになってきたので、普通のfor文って言った時...拡張for文!?
+        // 拡張for文って言葉、現場の会話であんまり出てこないかも。
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -157,6 +181,14 @@ public class Step02IfForTest extends PlainTestCase {
         });
         String sea = sb.toString();
         log(sea); // your answer? => dockside
+
+        // #1on1: ３つ目のループ
+        // 伝統的ないんとあいのfor文: 1995あたり
+        // すっきりした拡張for文: 2005あたり
+        // forEach()メソッド(文法ではない): 2015あたり
+        //  → ローカル変数書き換えできない、continue/breakできない
+        // なぜ、できないだらけのループが出てきた？理由もなく導入しないでしょうということで。
+        // TODO ichikawa なぜをちょっと考えてみてください by jflute (2025/09/01)
     }
 
     // ===================================================================================
@@ -168,14 +200,16 @@ public class Step02IfForTest extends PlainTestCase {
      */
     public void test_iffor_making() {
         // write if-for here
-        List<String> stageList = prepareStageList();  // Stream APIを使えばこの時点で目的のリストが作れるらしい？
+        List<String> stageList = prepareStageList(); // Stream APIを使えばこの時点で目的のリストが作れるらしい？
         List<String> stageListWithA = new ArrayList<>();
         stageList.forEach(stage -> {
             if (stage.contains("a")) {
                 stageListWithA.add(stage);
             }
         });
-        stageListWithA.forEach(stage -> {log(stage);});
+        stageListWithA.forEach(stage -> {
+            log(stage);
+        });
     }
 
     // ===================================================================================
@@ -186,37 +220,38 @@ public class Step02IfForTest extends PlainTestCase {
      * (foreach文をforEach()メソッドへの置き換えてみましょう (修正前と修正後で実行結果が同じになるように))
      */
     String sea = null;
+
     public void test_iffor_refactor_foreach_to_forEach() {
         List<String> stageList = prepareStageList();
-//        String sea = null;
-//        for (String stage : stageList) {
-//            if (stage.startsWith("br")) {
-//                continue;
-//            }
-//            sea = stage;
-//            if (stage.contains("ga")) {
-//                break;
-//            }
-//        }
-//        log(sea); // should be same as before-fix
+        //        String sea = null;
+        //        for (String stage : stageList) {
+        //            if (stage.startsWith("br")) {
+        //                continue;
+        //            }
+        //            sea = stage;
+        //            if (stage.contains("ga")) {
+        //                break;
+        //            }
+        //        }
+        //        log(sea); // should be same as before-fix
 
-//        stageList.forEach(stage -> {
-//            sea = stage;
-//            if (stage.contains("ga")) {
-//                break;
-//            }
-//        });
+        //        stageList.forEach(stage -> {
+        //            sea = stage;
+        //            if (stage.contains("ga")) {
+        //                break;
+        //            }
+        //        });
         // forEach()メソッドはcontinueやbreakは使えない。
         // breakしたい時は例外を投げるようにする、と調べてわかったが、長くなるし、他の方法があるはず？
         // ローカル変数も使えないらしい。インスタンス変数ならいいらしいが、、、
 
-//        final String[] sea = {null}; // 参照型にしておく  <- 参照型にしておく、とは、、、？tab補完でやらせたけどコメントの意味がよくわからん
-//        stageList.forEach(stage -> {
-//            sea[0] = stage;
-//            if (stage.startsWith("ga")) {
-//                // ここからどうする？
-//            }
-//        });
+        //        final String[] sea = {null}; // 参照型にしておく  <- 参照型にしておく、とは、、、？tab補完でやらせたけどコメントの意味がよくわからん
+        //        stageList.forEach(stage -> {
+        //            sea[0] = stage;
+        //            if (stage.startsWith("ga")) {
+        //                // ここからどうする？
+        //            }
+        //        });
 
         try {
             stageList.forEach(stage -> {
@@ -230,6 +265,23 @@ public class Step02IfForTest extends PlainTestCase {
             });
         } catch (RuntimeException e) {}
         log(sea);
+
+        // #1on1: Lambda式で外側のローカル変数を代入できない理由について。
+        // ローカル変数ってのは、そのメソッドの中だけで生きて使われる想定(コンセプト)のもの。
+        // Lambda式ってのは、メソッドの中で宣言されているけど、(感覚的には)別クラスの別メソッドと言える。
+        // 別メソッド間で互いのローカル変数を書き換えるってのはコンセプトからは外れる。
+        // ということから、Javaはローカル変数は他のメソッドから書き換えられないようにしている。
+        // (Lambda式についてさらに深掘りはstep8にて)
+        //
+        // インスタンス変数は、public/privateの制御が自分でできるので、参照さえできたら書き換えできるコンセプト。
+        // 厳密にはLambda式がインナークラスで外側クラスのインスタンス変数を参照できるから書き換えもできる。
+
+        // #1on1: インスタンス変数技は他のメソッドにも影響を与えるので、ちょっと豪快ではある。
+        // ただ、mutable技もなんだかなー感はあるので、ぶっちゃけどっちもどっちで、パズルとしてどっちでもOK。
+
+        // #1on1:  || sea.contains("ga") のやり方のふぉろー
+        // 確かにクレバーな感じはありますが、パフォーマンスで言うと、無駄ループがあるので...
+        // 例外をthrowするっていうある意味どストレートなやり方の方が良いかも。
     }
 
     /**
@@ -257,6 +309,7 @@ public class Step02IfForTest extends PlainTestCase {
             }
         }
     }
+    // done ichikawa [いいね] ノイズがあって良い問題 by jflute (2025/09/01)
 
     // ===================================================================================
     //                                                                        Small Helper

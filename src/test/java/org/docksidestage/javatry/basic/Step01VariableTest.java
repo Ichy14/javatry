@@ -263,6 +263,9 @@ public class Step01VariableTest extends PlainTestCase {
         log(sea); // your answer? => 416 + 22 => 438
         // StringBuilder("harbor")が文字数を取ってくるものだと思ってしまったがそうではないらしい
         // immutableなString型の"harbor"がmutableなものとして扱えている、驚き
+        // #1on1: 実際の解は → harbor416 となる。
+        // helpの中で共有しているharborインスタンスに対して、append()しているから...
+        // help後のlog(sea);は結果が変化する。
     }
 
     private void helpMethodArgumentMethodcall(StringBuilder sea, int land) {
@@ -289,12 +292,25 @@ public class Step01VariableTest extends PlainTestCase {
         int land = 415;
         helpMethodArgumentVariable(sea, land);
         log(sea); // your answer? => "harbor"
-        // TODO ichikawa [自己理解課題] 1on1での説明をさらに頭の中で整理してみてください by jflute (2025/08/18)
+        // done ichikawa [自己理解課題] 1on1での説明をさらに頭の中で整理してみてください by jflute (2025/08/18)
         // 変数seaとlandはローカル変数であり、helpMethodArgumentVariableメソッドに渡されているのは値だけ
-        // そのため、テストメソッド内で宣言された変数seaとlandがmutableかどうかなどは気にせず、値は変わらないと言える（わざわざヘルプメソッド内部の実装を確認せずとも、今回の場合は変数seaの値が変わっていないことがわかる）
+        // そのため、テストメソッド内で宣言された変数seaとlandがmutableかどうかなどは気にせず、値は変わらないと言える
+        //（わざわざヘルプメソッド内部の実装を確認せずとも、今回の場合は変数seaの値が変わっていないことがわかる）
+        // done ichikawa [ふぉろー] "わざわざヘルプメソッド内部の実装を確認せずとも" は確認の必要はあります by jflute (2025/09/01)
+        // 「変数の代入による変化」に関しては、変数はメソッドごとに独立したものなので、発生しない。
+        // 一方で、「test_のsea」と「helpのsea」は別変数でも、指し示しているのは同じインスタンスです。
+        // (少なくともhelpの中で再代入されるまでは)
+        // 両方とも、test_メソッドの最初の new StringBuilder("harbor") を指し示している。
+        // ということで、共有している "harbor"インスタンス がhelpの中で変えられてないか確認する必要はある。
+
+        // #1on1: outputするからこそフィードバックがもらえる。
+        // 間違ってるかどうか気にせずどんどん書いてくれてOK。書いてくれたので素晴らしい。
     }
 
     private void helpMethodArgumentVariable(StringBuilder sea, int land) {
+        // なので、この行の時点で help の sea は、"harbor"インスタンスを指し示していて共有している。
+        // なのでなので、もしこの時点で、 sea.append("fantasy"); とかやると...
+        // test_のlog(sea);の結果は変化します。
         ++land;
         String seaStr = sea.toString(); // is "harbor"
         sea = new StringBuilder(seaStr).append(land);
