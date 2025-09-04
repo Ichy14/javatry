@@ -22,7 +22,7 @@ import org.docksidestage.unit.PlainTestCase;
  * Operate exercise as javadoc. If it's question style, write your answer before test execution. <br>
  * (javadocの通りにエクササイズを実施。質問形式の場合はテストを実行する前に考えて答えを書いてみましょう)
  * @author jflute
- * @author your_name_here
+ * @author Ichy14 (n.ichikawa@bizreach.co.jp)
  */
 public class Step04MethodTest extends PlainTestCase {
 
@@ -78,7 +78,11 @@ public class Step04MethodTest extends PlainTestCase {
         }
         log(sea); // your answer? => 905
         // mutableとimmutableなオブジェクト（インスタンス）の扱いをまだ正しく理解できていないっぽい（helloMutable()メソッドでセットした値が、メソッド外で実体化したインスタンスの中身になっているのが理解できていない）
-        // ↑それはそれとして、なんで910になった？helloMutable()メソッドで最初の引数seaに900が渡されているからreturnされる値は901のはずでは？
+        // ↑それはそれとして、なんで910になった？helloMutable()メソッドで最初の引数seaに900が渡されているからhelloMutable()メソッドでreturnされる値は901のはずでは？
+        // ↑helloMutable()メソッドでreturnしているけれど受け取ってないな、、、→ seaは変わらず904
+
+        // 変数mutableが持つのは参照先を指す値（ポインタ）である。javaは値渡ししかできないので、helloMutable()メソッドにmutableを渡すとローカル変数piariにmutableのポインタがコピーされる（＝代入される？）
+        // mutableとpiariは同じインスタンスを指している（同じアドレスを持つ）ので、piari.setStageName()でインスタンスに生えているstageNameフィールドのアドレスを変更している
     }
 
     private int helloMutable(int sea, Boolean land, St4MutableStage piari) {

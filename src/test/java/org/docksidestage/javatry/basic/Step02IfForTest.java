@@ -26,13 +26,13 @@ import org.docksidestage.unit.PlainTestCase;
 // TODO ichikawa [読み物課題] プログラマーに求められるデザイン脳 by jflute (2025/09/01)
 // https://jflute.hatenadiary.jp/entry/20170623/desigraming
 
-// TODO ichikawa @authorお願いします by jflute (2025/09/01)
+// done ichikawa @authorお願いします by jflute (2025/09/01)
 /**
  * The test of if-for. <br>
  * Operate exercise as javadoc. If it's question style, write your answer before test execution. <br>
  * (javadocの通りにエクササイズを実施。質問形式の場合はテストを実行する前に考えて答えを書いてみましょう)
  * @author jflute
- * @author your_name_here
+ * @author Ichy14 (n.ichikawa@bizreach.co.jp)
  */
 public class Step02IfForTest extends PlainTestCase {
 
