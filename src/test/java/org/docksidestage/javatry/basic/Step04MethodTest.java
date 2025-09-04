@@ -83,6 +83,7 @@ public class Step04MethodTest extends PlainTestCase {
 
         // 変数mutableが持つのは参照先を指す値（ポインタ）である。javaは値渡ししかできないので、helloMutable()メソッドにmutableを渡すとローカル変数piariにmutableのポインタがコピーされる（＝代入される？）
         // mutableとpiariは同じインスタンスを指している（同じアドレスを持つ）ので、piari.setStageName()でインスタンスに生えているstageNameフィールドのアドレスを変更している
+        // インスタンス自体のアドレスが共有されて、そのインスタンスのフィールドのアドレスが変更されている、というのが理解できていなかったっぽい。
     }
 
     private int helloMutable(int sea, Boolean land, St4MutableStage piari) {
