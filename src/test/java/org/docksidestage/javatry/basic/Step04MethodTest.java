@@ -122,12 +122,14 @@ public class Step04MethodTest extends PlainTestCase {
         }
         ++sea;
         sea = inParkCount;
-        log(sea); // your answer? => 
+        log(sea); // your answer? => 101
+        // `++sea`しているものの、次の行でinParkCountを代入しているから100になる（ぱっと見で100にして+1するんだろうな、と思い込んでしまった。それをするなら順番を逆にする必要がある）
     }
 
     private void offAnnualPassport(boolean hasAnnualPassport) {
         hasAnnualPassport = false;
     }
+    // 【疑問】インスタンス変数hasAnnualPassportを引数に受け取ってそれを使うにはどうする？
 
     private void goToPark() {
         if (hasAnnualPassport) {
@@ -159,12 +161,33 @@ public class Step04MethodTest extends PlainTestCase {
      */
     public void test_method_making() {
         // use after making these methods
-        //String replaced = replaceCwithB(replaceAwithB("ABC"));
-        //String sea = quote(replaced, "'");
-        //if (isAvailableLogging()) {
-        //    showSea(sea);
-        //}
+        String replaced = replaceCwithB(replaceAwithB("ABC"));
+        String sea = quote(replaced, "'");
+        if (isAvailableLogging()) {
+            showSea(sea);
+        }
     }
 
     // write methods here
+    private boolean availableLogging = true;
+
+    private String replaceAwithB(String str) {
+        return str.replace("A", "B");
+    }
+
+    private String replaceCwithB(String str) {
+        return str.replace("C", "B");
+    }
+
+    private String quote(String str, String quotation) {
+        return quotation + str + quotation;
+    }
+
+    private boolean isAvailableLogging() {
+        return availableLogging;
+    }
+
+    private void showSea(String str) {
+        log(str);
+    }
 }
