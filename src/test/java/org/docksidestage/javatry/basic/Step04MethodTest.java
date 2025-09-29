@@ -63,6 +63,7 @@ public class Step04MethodTest extends PlainTestCase {
     }
 
     private void runnableSomething() {
+        // #1on1: いいね！
         String sea = "outofshadow";  // このショー知らなかったです、この次のソングオブミラージュは一回だけ見たことがあるような気がします
         log("in runnable: {}", sea);
     }
@@ -124,12 +125,18 @@ public class Step04MethodTest extends PlainTestCase {
         sea = inParkCount;
         log(sea); // your answer? => 101
         // `++sea`しているものの、次の行でinParkCountを代入しているから100になる（ぱっと見で100にして+1するんだろうな、と思い込んでしまった。それをするなら順番を逆にする必要がある）
+        // #1on1: 自分で学びのリカバリできてるのでOK (2025/09/29)
     }
 
     private void offAnnualPassport(boolean hasAnnualPassport) {
         hasAnnualPassport = false;
     }
     // 【疑問】インスタンス変数hasAnnualPassportを引数に受け取ってそれを使うにはどうする？
+    // #1on1: インスタンス変数そのものを引数にすることはできない。
+    // というか、呼び出し側がインスタンス変数だろうがローカル変数だろうが、変数自体をそのまま渡すことはできない。
+    // あくまで呼び出し側がその変数の値(アドレス/参照)を取り出して、呼び出すメソッドの引数に渡している。
+    // 呼び出された側からすると、渡された値(アドレス/参照)が、元々インスタンス変数だったのかローカル変数だったのかわからない。
+    // 箱そのものを渡すのか？箱の中身を渡すのか？後者になる。
 
     private void goToPark() {
         if (hasAnnualPassport) {
@@ -168,6 +175,8 @@ public class Step04MethodTest extends PlainTestCase {
         }
     }
 
+    // TODO jflute 次回1on1にて補足 (2025/09/29)
+    
     // write methods here
     private boolean availableLogging = true;
 
