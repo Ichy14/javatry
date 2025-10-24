@@ -30,6 +30,7 @@ public class TicketBooth {
     // ===================================================================================
     //                                                                           Attribute
     //                                                                           =========
+    // TODO ichikawa 元の quantity 変数の変数名をどうしたらいいか？を考えてみてください by jflute (2025/10/24)
     private int quantity = MAX_QUANTITY;
     private int quantity_twoDay = MAX_QUANTITY;
     private Integer salesProceeds; // null allowed: until first purchase
@@ -52,6 +53,7 @@ public class TicketBooth {
     // * @throws TicketSoldOutException ブース内のチケットが売り切れだったら
     // * @throws TicketShortMoneyException 買うのに金額が足りなかったら
     // */
+    // TODO ichikawa javadoc, 追加した戻り値に関するコメントを書きましょう (@return) by jflute (2025/10/24)
     /**
      * Buy one-day passport, method for park guest.
      * @param handedMoney The money (amount) handed over from park guest. (NotNull, NotMinus)
@@ -69,6 +71,7 @@ public class TicketBooth {
         countSalesProceeds(ONE_DAY_PRICE);
         // そもそもsalesProceedsの初期値を0にしておけば、nullチェックしなくて良いのでは？
         // ただ、要件的に「まだ売上がない」ことをnullで表現したい気もする
+        // #1on1: 本当その通り。ここは要件は自分で決めてOK。
 
         return new Ticket(ONE_DAY_PRICE);
 
@@ -89,6 +92,8 @@ public class TicketBooth {
 
         return (handedMoney - TWO_DAY_PRICE) > 0 ? (handedMoney - TWO_DAY_PRICE) : null;
     }
+    
+    // TODO ichikawa 再利用、もう少しチャレンジしてみましょう (これ以上は無理かなってところまで) by jflute (2025/10/24)
 
     private void countSalesProceeds(int price) {
         if (salesProceeds != null) { // second or more purchase
@@ -123,6 +128,7 @@ public class TicketBooth {
         return quantity;
     }
 
+    // TODO ichikawa 突然ここだけ一行スタイル by jflute (2025/10/24)
     public int getQuantity_twoDay() {return quantity_twoDay;}
 
     public Integer getSalesProceeds() {

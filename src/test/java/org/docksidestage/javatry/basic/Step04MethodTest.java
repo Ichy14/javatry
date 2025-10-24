@@ -175,7 +175,38 @@ public class Step04MethodTest extends PlainTestCase {
         }
     }
 
-    // TODO jflute 次回1on1にて補足 (2025/09/29)
+    // done jflute 次回1on1にて補足 (2025/09/29)
+   
+    // #1on1: privateメソッドの定義順、呼び出し順序と一致していたわかりやすいGood (2025/10/24)
+    // privateメソッドに切り出すきっかけ大きく二つ:
+    // A. スコープを閉じさせるためにprivateに切り出す
+    //    (変数スコープを短く＆見た目のスッキリさ＆流れを読みやすく)
+    // B. 単純に他のメソッドも使うから (再利用)
+    /*
+        // replaceAwithB()をprivateメソッドやめてフラットに展開したとして...
+        // そして、AwithB内部でseeeという変数がどうしても必要だとして...
+        String seee = "aaaaaa";
+        System.out.println(seee);
+        String firstResult= str.replace("A", "B");
+        // ここから先はseeeは要らない...けど、フラットな変数宣言だと見えちゃう
+        // これをprivateメソッドに切り出すことで、AwithB内部で閉じる変数は外に出さなくて済む
+     */
+    // #1on1: 意図が伝わりやすく＆なんだっけ？ by いちかわさん
+    
+    // #1on1: 何も考えず1番下に追加するパターン多し by jflute
+    // 既存コードのデザインバランスをちゃんと理解して、どこに追加したらいいのか？を考えて欲しい。
+    // でも、既存コードは自分コードじゃないからお邪魔します感が出る人が多い。
+    // でもでも、既存コードは既存コードを最初に書いた人のものじゃない。(所有してない)
+    // 業務のコードだったら、その会社のもの、そのチーム全員に責任があると言っても良い。
+    // なので、手を入れるって話になった時点で、その既存コードの可読性の責任も持つってこと。
+    // 少なくとも、既存コードのデザインバランスに対する責任を持つ。
+    
+    // #1on1: 仮にquote()が再利用メソッドになったら...
+    // jfluteだったら、Small Helperみたいなカテゴリを作って、独立させる。
+    // test_method_making()に依存しないメソッドとして管理するようにする。
+    
+    // #1on1: privateメソッドの内容が、独立性の高い重要度の高いものであれば... (2025/10/24)
+    // クラスに昇格していくこともある。
     
     // write methods here
     private boolean availableLogging = true;
@@ -187,7 +218,7 @@ public class Step04MethodTest extends PlainTestCase {
     private String replaceCwithB(String str) {
         return str.replace("C", "B");
     }
-
+    
     private String quote(String str, String quotation) {
         return quotation + str + quotation;
     }
