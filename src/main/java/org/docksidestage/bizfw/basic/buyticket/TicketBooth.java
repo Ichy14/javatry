@@ -58,7 +58,7 @@ public class TicketBooth {
      * @throws TicketSoldOutException When ticket in booth is sold out.
      * @throws TicketShortMoneyException When the specified money is short for purchase.
      */
-    public void buyOneDayPassport(Integer handedMoney) {
+    public Ticket buyOneDayPassport(Integer handedMoney) {
         if (handedMoney < ONE_DAY_PRICE) {
             throw new TicketShortMoneyException("Short money: " + handedMoney);
         }
@@ -66,13 +66,15 @@ public class TicketBooth {
             throw new TicketSoldOutException("Sold out");
         }
         --quantity;
-        if (salesProceeds != null) { // second or more purchase
-            salesProceeds = salesProceeds + ONE_DAY_PRICE;
-        } else { // first purchase
-            salesProceeds = ONE_DAY_PRICE;
-        }
+        countSalesProceeds(ONE_DAY_PRICE);
         // そもそもsalesProceedsの初期値を0にしておけば、nullチェックしなくて良いのでは？
         // ただ、要件的に「まだ売上がない」ことをnullで表現したい気もする
+
+        return new Ticket(ONE_DAY_PRICE);
+
+        // これらのクラスはメソッドは業務ロジックを実行するユースケースに該当するのか？
+        // そういうことを考え始めると、売り上げ、チケット、金額あたりを値オブジェクトにする、みたいなことも考えてみたい。ここでエンティティにするべきものはあるか？（idで識別するべきものはなさそうに見える）
+        // 「チケット」はあった（それを知る前に↑を考えてた）。doInPark()メソッドで状態を変更しているが、たしかにチケットは値オブジェクトじゃなくてエンティティの方が適切か、、、（idで管理するうんぬんは一旦置いといて、今回の場合チケットは等価性より同一性で同じものかどうか判断されるべきだと思う）
     }
 
     public Integer buyTwoDayPassport(Integer handedMoney) {
@@ -83,13 +85,17 @@ public class TicketBooth {
             throw new TicketSoldOutException("Sold out");
         }
         --quantity_twoDay;
-        if (salesProceeds != null) { // second or more purchase
-            salesProceeds = salesProceeds + TWO_DAY_PRICE;
-        } else { // first purchase
-            salesProceeds = TWO_DAY_PRICE;
-        }
+        countSalesProceeds(TWO_DAY_PRICE);
 
         return (handedMoney - TWO_DAY_PRICE) > 0 ? (handedMoney - TWO_DAY_PRICE) : null;
+    }
+
+    private void countSalesProceeds(int price) {
+        if (salesProceeds != null) { // second or more purchase
+            salesProceeds = salesProceeds + price;
+        } else { // first purchase
+            salesProceeds = price;
+        }
     }
 
     public static class TicketSoldOutException extends RuntimeException {
