@@ -53,11 +53,12 @@ public class TicketBooth {
     // * @throws TicketSoldOutException ブース内のチケットが売り切れだったら
     // * @throws TicketShortMoneyException 買うのに金額が足りなかったら
     // */
-    // TODO ichikawa javadoc, 追加した戻り値に関するコメントを書きましょう (@return) by jflute (2025/10/24)
+    // done ichikawa javadoc, 追加した戻り値に関するコメントを書きましょう (@return) by jflute (2025/10/24)
     /**
      * Buy one-day passport, method for park guest.
      * @param handedMoney The money (amount) handed over from park guest. (NotNull, NotMinus)
      * @throws TicketSoldOutException When ticket in booth is sold out.
+     * @return The ticket object representing the one-day passport.
      * @throws TicketShortMoneyException When the specified money is short for purchase.
      */
     public Ticket buyOneDayPassport(Integer handedMoney) {
@@ -80,7 +81,7 @@ public class TicketBooth {
         // 「チケット」はあった（それを知る前に↑を考えてた）。doInPark()メソッドで状態を変更しているが、たしかにチケットは値オブジェクトじゃなくてエンティティの方が適切か、、、（idで管理するうんぬんは一旦置いといて、今回の場合チケットは等価性より同一性で同じものかどうか判断されるべきだと思う）
     }
 
-    public Integer buyTwoDayPassport(Integer handedMoney) {
+    public TicketBuyResult buyTwoDayPassport(Integer handedMoney) {
         if (handedMoney < TWO_DAY_PRICE) {
             throw new TicketShortMoneyException("Short money: " + handedMoney);
         }
@@ -90,7 +91,7 @@ public class TicketBooth {
         --quantity_twoDay;
         countSalesProceeds(TWO_DAY_PRICE);
 
-        return (handedMoney - TWO_DAY_PRICE) > 0 ? (handedMoney - TWO_DAY_PRICE) : null;
+        return new TicketBuyResult(handedMoney, TWO_DAY_PRICE);
     }
     
     // TODO ichikawa 再利用、もう少しチャレンジしてみましょう (これ以上は無理かなってところまで) by jflute (2025/10/24)
