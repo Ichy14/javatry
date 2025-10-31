@@ -15,6 +15,7 @@
  */
 package org.docksidestage.bizfw.basic.buyticket;
 
+// TODO ichikawa javadoc, author追加お願いします by jflute (2025/10/31)
 /**
  * @author jflute
  */

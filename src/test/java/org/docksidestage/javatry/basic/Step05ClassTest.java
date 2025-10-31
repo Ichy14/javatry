@@ -178,6 +178,7 @@ public class Step05ClassTest extends PlainTestCase {
 
         // 1dayパスを買う時にはチケットが戻ってきて、2dayパスを買う時には購入の結果が返ってくるの違和感ある
     }
+    // TODO jflute 次回1on1ここから (2025/10/31)
 
     /**
      * Now you can use only one in spite of two-day passport, so fix Ticket to be able to handle plural days. <br>

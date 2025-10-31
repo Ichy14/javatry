@@ -23,8 +23,11 @@ public class TicketBuyResult {
     // ===================================================================================
     //                                                                           Attribute
     //                                                                           =========
+    // TODO ichikawa unused警告になっている (Constructorで消費しておしまい) by jflute (2025/10/31)
     private final int handedMoney;
     private final int displayPrice; // written on ticket, park guest can watch this
+    // TODO ichikawa 変数名がTwoDayPassportになっているけど、TwoDay限定？ by jflute (2025/10/31)
+    // IntelliJのrenameを使ってrenameしましょう。
     private Ticket twoDayPassport;
     private int change;
 
@@ -33,8 +36,14 @@ public class TicketBuyResult {
     //                                                                         ===========
     public TicketBuyResult(int handedMoney, int displayPrice) {
         // お釣りをreturnしようとした時にhandedMoneyがdisplayPrice未満になることを防ぐためにここで例外ハンドリングするべきのような気がするが、呼び出しもとのbuyTwoDayPassportでやってるから大丈夫？
+        // #1on1: このResultクラスが、Domain Entity的なニュアンスで概念化されるのか？
+        // それとも、青いトレーのように一時的に受け渡しで使うためだけの入れ物クラスというニュアンスなのか？
+        // DTO？ by いちかわさん
+        // yes, DTOの種類の一つ。DTOに具体的なニュアンス(色)を付けるかどうか？ってところ。
+        // (ちょいDDDとの絡みの話)
         this.displayPrice = displayPrice;
         this.handedMoney = handedMoney;
+        // TODO ichikawa チケットの発行と、お釣りの計算をresultがやるかどうか？ by jflute (2025/10/31)
         this.twoDayPassport = new Ticket(displayPrice);
         this.change = handedMoney - displayPrice;
     }
