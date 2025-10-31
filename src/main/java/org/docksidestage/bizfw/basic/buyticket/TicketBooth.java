@@ -30,9 +30,9 @@ public class TicketBooth {
     // ===================================================================================
     //                                                                           Attribute
     //                                                                           =========
-    // TODO ichikawa 元の quantity 変数の変数名をどうしたらいいか？を考えてみてください by jflute (2025/10/24)
-    private int quantity = MAX_QUANTITY;
-    private int quantity_twoDay = MAX_QUANTITY;
+    // done ichikawa 元の quantity 変数の変数名をどうしたらいいか？を考えてみてください by jflute (2025/10/24)
+    private int oneDayPassQuantity = MAX_QUANTITY;
+    private int twoDayPassQuantity = MAX_QUANTITY;
     private Integer salesProceeds; // null allowed: until first purchase
     // 1-dayパスと2-dayパスの売上を分けるべきか？実際には別れていた方が嬉しそうな気はする
 
@@ -65,10 +65,10 @@ public class TicketBooth {
         if (handedMoney < ONE_DAY_PRICE) {
             throw new TicketShortMoneyException("Short money: " + handedMoney);
         }
-        if (quantity <= 0) {
+        if (oneDayPassQuantity <= 0) {
             throw new TicketSoldOutException("Sold out");
         }
-        --quantity;
+        --oneDayPassQuantity;
         countSalesProceeds(ONE_DAY_PRICE);
         // そもそもsalesProceedsの初期値を0にしておけば、nullチェックしなくて良いのでは？
         // ただ、要件的に「まだ売上がない」ことをnullで表現したい気もする
@@ -85,10 +85,10 @@ public class TicketBooth {
         if (handedMoney < TWO_DAY_PRICE) {
             throw new TicketShortMoneyException("Short money: " + handedMoney);
         }
-        if (quantity_twoDay <= 0) {
+        if (twoDayPassQuantity <= 0) {
             throw new TicketSoldOutException("Sold out");
         }
-        --quantity_twoDay;
+        --twoDayPassQuantity;
         countSalesProceeds(TWO_DAY_PRICE);
 
         return new TicketBuyResult(handedMoney, TWO_DAY_PRICE);
@@ -125,12 +125,12 @@ public class TicketBooth {
     // ===================================================================================
     //                                                                            Accessor
     //                                                                            ========
-    public int getQuantity() {
-        return quantity;
+    public int getOneDayPassQuantity() {
+        return oneDayPassQuantity;
     }
 
     // TODO ichikawa 突然ここだけ一行スタイル by jflute (2025/10/24)
-    public int getQuantity_twoDay() {return quantity_twoDay;}
+    public int getTwoDayPassQuantity() {return twoDayPassQuantity;}
 
     public Integer getSalesProceeds() {
         return salesProceeds;
