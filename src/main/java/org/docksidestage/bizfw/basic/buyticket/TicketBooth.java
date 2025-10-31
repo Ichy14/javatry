@@ -129,8 +129,11 @@ public class TicketBooth {
         return oneDayPassQuantity;
     }
 
-    // TODO ichikawa 突然ここだけ一行スタイル by jflute (2025/10/24)
-    public int getTwoDayPassQuantity() {return twoDayPassQuantity;}
+    // done ichikawa 突然ここだけ一行スタイル by jflute (2025/10/24)
+    // intelliJが勝手に表示を変えてただけでした
+    public int getTwoDayPassQuantity() {
+        return twoDayPassQuantity;
+    }
 
     public Integer getSalesProceeds() {
         return salesProceeds;
