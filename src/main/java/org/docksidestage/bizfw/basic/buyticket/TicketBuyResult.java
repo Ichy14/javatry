@@ -23,13 +23,11 @@ public class TicketBuyResult {
     // ===================================================================================
     //                                                                           Attribute
     //                                                                           =========
-    // TODO ichikawa unused警告になっている (Constructorで消費しておしまい) by jflute (2025/10/31)
-    private final int handedMoney;
-    private final int displayPrice; // written on ticket, park guest can watch this
-    // TODO ichikawa 変数名がTwoDayPassportになっているけど、TwoDay限定？ by jflute (2025/10/31)
+    // done TODO ichikawa unused警告になっている (Constructorで消費しておしまい) by jflute (2025/10/31)
+    // done TODO ichikawa 変数名がTwoDayPassportになっているけど、TwoDay限定？ by jflute (2025/10/31)
     // IntelliJのrenameを使ってrenameしましょう。
-    private Ticket twoDayPassport;
-    private int change;
+    private Ticket ticket;
+    private Change change;
 
     // ===================================================================================
     //                                                                         Constructor
@@ -41,21 +39,19 @@ public class TicketBuyResult {
         // DTO？ by いちかわさん
         // yes, DTOの種類の一つ。DTOに具体的なニュアンス(色)を付けるかどうか？ってところ。
         // (ちょいDDDとの絡みの話)
-        this.displayPrice = displayPrice;
-        this.handedMoney = handedMoney;
-        // TODO ichikawa チケットの発行と、お釣りの計算をresultがやるかどうか？ by jflute (2025/10/31)
-        this.twoDayPassport = new Ticket(displayPrice);
-        this.change = handedMoney - displayPrice;
+        // done TODO ichikawa チケットの発行と、お釣りの計算をresultがやるかどうか？ by jflute (2025/10/31)
+        this.ticket = new Ticket(displayPrice);
+        this.change = new Change(handedMoney, displayPrice);
     }
 
     // ===================================================================================
     //                                                                            Accessor
     //                                                                            ========
     public Ticket getTicket() {
-        return twoDayPassport;
+        return ticket;
     }
 
-    public int getChange() {
+    public Change getChange() {
         return change;
     }
 }

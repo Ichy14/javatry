@@ -32,6 +32,7 @@ public class TicketBooth {
     //                                                                           Attribute
     //                                                                           =========
     // done ichikawa 元の quantity 変数の変数名をどうしたらいいか？を考えてみてください by jflute (2025/10/24)
+    // ここを分けない方が実装が楽、の意味がようやくわかった、、、
     private int oneDayPassQuantity = MAX_QUANTITY;
     private int twoDayPassQuantity = MAX_QUANTITY;
     private Integer salesProceeds; // null allowed: until first purchase
@@ -66,10 +67,7 @@ public class TicketBooth {
         if (handedMoney < ONE_DAY_PRICE) {
             throw new TicketShortMoneyException("Short money: " + handedMoney);
         }
-        if (oneDayPassQuantity <= 0) {
-            throw new TicketSoldOutException("Sold out");
-        }
-        --oneDayPassQuantity;
+        reduceQuantity();
         countSalesProceeds(ONE_DAY_PRICE);
         // そもそもsalesProceedsの初期値を0にしておけば、nullチェックしなくて良いのでは？
         // ただ、要件的に「まだ売上がない」ことをnullで表現したい気もする
@@ -96,6 +94,25 @@ public class TicketBooth {
     }
     
     // TODO ichikawa 再利用、もう少しチャレンジしてみましょう (これ以上は無理かなってところまで) by jflute (2025/10/24)
+
+    private void reduceQuantity() {
+        // これがやりたいわけじゃないんだよなあ、、、
+        if (isOnneDayPass(ONE_DAY_PRICE)) {
+            if (oneDayPassQuantity <= 0) {
+                throw new TicketSoldOutException("Sold out");
+            }
+            --oneDayPassQuantity;
+        } else {
+            if (twoDayPassQuantity <= 0) {
+                throw new TicketSoldOutException("Sold out");
+            }
+            --twoDayPassQuantity;
+        }
+    }
+    private boolean isOnneDayPass(int price) {
+        return price == ONE_DAY_PRICE;
+    }
+    // チケットの種類が増えたときにこの判別方法だと拡張性が低いから別のロジックにしたい気持ち
 
     private void countSalesProceeds(int price) {
         if (salesProceeds != null) { // second or more purchase

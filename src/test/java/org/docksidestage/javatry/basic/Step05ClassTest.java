@@ -128,7 +128,7 @@ public class Step05ClassTest extends PlainTestCase {
         // uncomment after making the method
         TicketBooth booth = new TicketBooth();
         int money = 14000;
-        int change = booth.buyTwoDayPassport(money).getChange();
+        int change = booth.buyTwoDayPassport(money).getChange().getAmount();
         Integer sea = booth.getSalesProceeds() + change;
         log(sea); // should be same as money
 
@@ -173,7 +173,7 @@ public class Step05ClassTest extends PlainTestCase {
         int handedMoney = 20000;
         TicketBuyResult buyResult = booth.buyTwoDayPassport(handedMoney);
         Ticket twoDayPassport = buyResult.getTicket();
-        int change = buyResult.getChange();
+        int change = buyResult.getChange().getAmount();
         log(twoDayPassport.getDisplayPrice() + change); // should be same as money
 
         // 1dayパスを買う時にはチケットが戻ってきて、2dayパスを買う時には購入の結果が返ってくるの違和感ある
