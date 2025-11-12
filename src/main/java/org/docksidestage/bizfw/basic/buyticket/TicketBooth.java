@@ -33,7 +33,8 @@ public class TicketBooth {
     //                                                                           =========
     // done ichikawa 元の quantity 変数の変数名をどうしたらいいか？を考えてみてください by jflute (2025/10/24)
     // ここを分けない方が実装が楽、の意味がようやくわかった、、、
-    private int oneDayPassQuantity = MAX_QUANTITY;
+//    private int oneDayPassQuantity = MAX_QUANTITY;
+    private Quantity oneDayPassQuantity = new Quantity(MAX_QUANTITY);
     private int twoDayPassQuantity = MAX_QUANTITY;
     private Integer salesProceeds; // null allowed: until first purchase
     // 1-dayパスと2-dayパスの売上を分けるべきか？実際には別れていた方が嬉しそうな気はする
@@ -64,10 +65,10 @@ public class TicketBooth {
      * @throws TicketShortMoneyException When the specified money is short for purchase.
      */
     public Ticket buyOneDayPassport(Integer handedMoney) {
-        if (handedMoney < ONE_DAY_PRICE) {
-            throw new TicketShortMoneyException("Short money: " + handedMoney);
-        }
-        reduceQuantity();
+        checkHandedMoneyShortage(handedMoney, ONE_DAY_PRICE);
+
+        oneDayPassQuantity.reduce();
+
         countSalesProceeds(ONE_DAY_PRICE);
         // そもそもsalesProceedsの初期値を0にしておけば、nullチェックしなくて良いのでは？
         // ただ、要件的に「まだ売上がない」ことをnullで表現したい気もする
@@ -81,9 +82,7 @@ public class TicketBooth {
     }
 
     public TicketBuyResult buyTwoDayPassport(Integer handedMoney) {
-        if (handedMoney < TWO_DAY_PRICE) {
-            throw new TicketShortMoneyException("Short money: " + handedMoney);
-        }
+        checkHandedMoneyShortage(handedMoney, TWO_DAY_PRICE);
         if (twoDayPassQuantity <= 0) {
             throw new TicketSoldOutException("Sold out");
         }
@@ -95,23 +94,36 @@ public class TicketBooth {
     
     // TODO ichikawa 再利用、もう少しチャレンジしてみましょう (これ以上は無理かなってところまで) by jflute (2025/10/24)
 
-    private void reduceQuantity() {
-        // これがやりたいわけじゃないんだよなあ、、、
-        if (isOnneDayPass(ONE_DAY_PRICE)) {
-            if (oneDayPassQuantity <= 0) {
-                throw new TicketSoldOutException("Sold out");
-            }
-            --oneDayPassQuantity;
-        } else {
-            if (twoDayPassQuantity <= 0) {
-                throw new TicketSoldOutException("Sold out");
-            }
-            --twoDayPassQuantity;
+    private void checkHandedMoneyShortage(int handedMoney, int price) {
+        if (handedMoney < price) {
+            throw new TicketShortMoneyException("Short money: " + handedMoney);
         }
     }
-    private boolean isOnneDayPass(int price) {
-        return price == ONE_DAY_PRICE;
+
+    private void reduceQuantity(int quantity) {
+        if (quantity <= 0) {
+            throw new TicketSoldOutException("Sold out");
+        }
+        --quantity;
     }
+
+//    private void reduceQuantity() {
+//        // これがやりたいわけじゃないんだよなあ、、、
+//        if (isOnneDayPass(ONE_DAY_PRICE)) {
+//            if (oneDayPassQuantity <= 0) {
+//                throw new TicketSoldOutException("Sold out");
+//            }
+//            --oneDayPassQuantity;
+//        } else {
+//            if (twoDayPassQuantity <= 0) {
+//                throw new TicketSoldOutException("Sold out");
+//            }
+//            --twoDayPassQuantity;
+//        }
+//    }
+//    private boolean isOnneDayPass(int price) {
+//        return price == ONE_DAY_PRICE;
+//    }
     // チケットの種類が増えたときにこの判別方法だと拡張性が低いから別のロジックにしたい気持ち
 
     private void countSalesProceeds(int price) {
@@ -144,7 +156,7 @@ public class TicketBooth {
     //                                                                            Accessor
     //                                                                            ========
     public int getOneDayPassQuantity() {
-        return oneDayPassQuantity;
+        return oneDayPassQuantity.getQuantity();
     }
 
     // done ichikawa 突然ここだけ一行スタイル by jflute (2025/10/24)
