@@ -129,9 +129,14 @@ public class Step05ClassTest extends PlainTestCase {
         // uncomment after making the method
         TicketBooth booth = new TicketBooth();
         int money = 14000;
-        int change = booth.buyTwoDayPassport(money).getChange().getAmount();
+        int change = booth.buyTwoDayPassport(money).getChange().getAmount(); // getChange().getAmount()がちょいキモい気がする
         Integer sea = booth.getSalesProceeds() + change;
         log(sea); // should be same as money
+
+        booth.buyOneDayPassport(money);
+        booth.buyOneDayPassport(money);
+        booth.buyOneDayPassport(money); // こうするとquantityが6になるはず?なのにならない、、、
+
 
         // and show two-day passport quantity here
         log(booth.getTwoDayPassQuantity());

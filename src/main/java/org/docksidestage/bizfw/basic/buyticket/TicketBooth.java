@@ -68,7 +68,8 @@ public class TicketBooth {
         // チケットブースの視点で、チケット購入操作の時何をするか、が表現できると良いんだろうな
         checkHandedMoneyShortage(handedMoney, ONE_DAY_PRICE);
 
-        oneDayPassQuantity.reduce(); // ここだけちょっと毛色が違うの気になる
+//        oneDayPassQuantity.reduce(); // ここだけちょっと毛色が違うの気になる
+        reduceTicketQuantity(oneDayPassQuantity); // バケツリレーしたりインスタンスメソッドを使っていたら、これでうまくいく理由がわからなくなってしまった
 
         countSalesProceeds(ONE_DAY_PRICE);
         // そもそもsalesProceedsの初期値を0にしておけば、nullチェックしなくて良いのでは？
@@ -85,7 +86,8 @@ public class TicketBooth {
     public TicketBuyResult buyTwoDayPassport(Integer handedMoney) {
         checkHandedMoneyShortage(handedMoney, TWO_DAY_PRICE);
 
-        twoDayPassQuantity.reduce(); // ここだけちょっと毛色が違うの気になる
+//        twoDayPassQuantity.reduce(); // ここだけちょっと毛色が違うの気になる
+        reduceTicketQuantity(twoDayPassQuantity); // バケツリレーしたりインスタンスメソッドを使っていたら、これでうまくいく理由がわからなくなってしまった
 
         countSalesProceeds(TWO_DAY_PRICE);
 
@@ -100,6 +102,10 @@ public class TicketBooth {
         if (handedMoney < price) {
             throw new TicketShortMoneyException("Short money: " + handedMoney);
         }
+    }
+
+    private void reduceTicketQuantity(Quantity quantity) {
+        quantity.reduce();
     }
 
     private void countSalesProceeds(int price) {
