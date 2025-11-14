@@ -92,7 +92,7 @@ public class TicketBooth {
         return new TicketBuyResult(handedMoney, TWO_DAY_PRICE);
     }
     
-    // done TODO ichikawa 再利用、もう少しチャレンジしてみましょう (これ以上は無理かなってところまで) by jflute (2025/10/24)
+    // TODO ichikawa 再利用、もう少しチャレンジしてみましょう (これ以上は無理かなってところまで) by jflute (2025/10/24)
     // 「これ以上無理」の基準はなんだろうか？まとめすぎても意味がわからなくなりそう
     // → 業務の一つ一つの操作を単位としてまとめるイメージを持った → どこまで一括りにすべき？というのは考えることになるも？
 
