@@ -35,7 +35,7 @@ public class TicketBooth {
     // ここを分けない方が実装が楽、の意味がようやくわかった、、、
 //    private int oneDayPassQuantity = MAX_QUANTITY;
     private Quantity oneDayPassQuantity = new Quantity(MAX_QUANTITY);
-    private int twoDayPassQuantity = MAX_QUANTITY;
+    private Quantity twoDayPassQuantity = new Quantity(MAX_QUANTITY);
     private Integer salesProceeds; // null allowed: until first purchase
     // 1-dayパスと2-dayパスの売上を分けるべきか？実際には別れていた方が嬉しそうな気はする
 
@@ -65,9 +65,10 @@ public class TicketBooth {
      * @throws TicketShortMoneyException When the specified money is short for purchase.
      */
     public Ticket buyOneDayPassport(Integer handedMoney) {
+        // チケットブースの視点で、チケット購入操作の時何をするか、が表現できると良いんだろうな
         checkHandedMoneyShortage(handedMoney, ONE_DAY_PRICE);
 
-        oneDayPassQuantity.reduce();
+        oneDayPassQuantity.reduce(); // ここだけちょっと毛色が違うの気になる
 
         countSalesProceeds(ONE_DAY_PRICE);
         // そもそもsalesProceedsの初期値を0にしておけば、nullチェックしなくて良いのでは？
@@ -83,48 +84,23 @@ public class TicketBooth {
 
     public TicketBuyResult buyTwoDayPassport(Integer handedMoney) {
         checkHandedMoneyShortage(handedMoney, TWO_DAY_PRICE);
-        if (twoDayPassQuantity <= 0) {
-            throw new TicketSoldOutException("Sold out");
-        }
-        --twoDayPassQuantity;
+
+        twoDayPassQuantity.reduce(); // ここだけちょっと毛色が違うの気になる
+
         countSalesProceeds(TWO_DAY_PRICE);
 
         return new TicketBuyResult(handedMoney, TWO_DAY_PRICE);
     }
     
-    // TODO ichikawa 再利用、もう少しチャレンジしてみましょう (これ以上は無理かなってところまで) by jflute (2025/10/24)
+    // done TODO ichikawa 再利用、もう少しチャレンジしてみましょう (これ以上は無理かなってところまで) by jflute (2025/10/24)
+    // 「これ以上無理」の基準はなんだろうか？まとめすぎても意味がわからなくなりそう
+    // → 業務の一つ一つの操作を単位としてまとめるイメージを持った → どこまで一括りにすべき？というのは考えることになるも？
 
     private void checkHandedMoneyShortage(int handedMoney, int price) {
         if (handedMoney < price) {
             throw new TicketShortMoneyException("Short money: " + handedMoney);
         }
     }
-
-    private void reduceQuantity(int quantity) {
-        if (quantity <= 0) {
-            throw new TicketSoldOutException("Sold out");
-        }
-        --quantity;
-    }
-
-//    private void reduceQuantity() {
-//        // これがやりたいわけじゃないんだよなあ、、、
-//        if (isOnneDayPass(ONE_DAY_PRICE)) {
-//            if (oneDayPassQuantity <= 0) {
-//                throw new TicketSoldOutException("Sold out");
-//            }
-//            --oneDayPassQuantity;
-//        } else {
-//            if (twoDayPassQuantity <= 0) {
-//                throw new TicketSoldOutException("Sold out");
-//            }
-//            --twoDayPassQuantity;
-//        }
-//    }
-//    private boolean isOnneDayPass(int price) {
-//        return price == ONE_DAY_PRICE;
-//    }
-    // チケットの種類が増えたときにこの判別方法だと拡張性が低いから別のロジックにしたい気持ち
 
     private void countSalesProceeds(int price) {
         if (salesProceeds != null) { // second or more purchase
@@ -162,7 +138,7 @@ public class TicketBooth {
     // done ichikawa 突然ここだけ一行スタイル by jflute (2025/10/24)
     // intelliJが勝手に表示を変えてただけでした
     public int getTwoDayPassQuantity() {
-        return twoDayPassQuantity;
+        return twoDayPassQuantity.getQuantity();
     }
 
     public Integer getSalesProceeds() {
