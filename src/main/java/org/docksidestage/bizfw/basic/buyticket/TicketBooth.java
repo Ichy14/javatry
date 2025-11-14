@@ -65,10 +65,14 @@ public class TicketBooth {
      * @throws TicketShortMoneyException When the specified money is short for purchase.
      */
     public Ticket buyOneDayPassport(Integer handedMoney) {
+        // _/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+        // TODO ichikawa checkしてreduceしてcountするって流れを再利用してみましょう by jflute (2025/11/14)
+        // 現状は、個別の処理は再利用されているけど、流れが再利用されていないので、流れの変更で複数箇所修正が必要になる。
+        // _/_/_/_/
         // チケットブースの視点で、チケット購入操作の時何をするか、が表現できると良いんだろうな
         checkHandedMoneyShortage(handedMoney, ONE_DAY_PRICE);
 
-//        oneDayPassQuantity.reduce(); // ここだけちょっと毛色が違うの気になる
+        //oneDayPassQuantity.reduce(); // ここだけちょっと毛色が違うの気になる
         reduceTicketQuantity(oneDayPassQuantity); // バケツリレーしたりインスタンスメソッドを使っていたら、これでうまくいく理由がわからなくなってしまった
 
         countSalesProceeds(ONE_DAY_PRICE);
@@ -94,10 +98,15 @@ public class TicketBooth {
         return new TicketBuyResult(handedMoney, TWO_DAY_PRICE);
     }
     
-    // TODO ichikawa 再利用、もう少しチャレンジしてみましょう (これ以上は無理かなってところまで) by jflute (2025/10/24)
+    // done ichikawa 再利用、もう少しチャレンジしてみましょう (これ以上は無理かなってところまで) by jflute (2025/10/24)
     // 「これ以上無理」の基準はなんだろうか？まとめすぎても意味がわからなくなりそう
     // → 業務の一つ一つの操作を単位としてまとめるイメージを持った → どこまで一括りにすべき？というのは考えることになるも？
 
+    // TODO ichihara checkという言葉、どっちをチェックをするの？どっちで例外が発生するの？ by jflute (2025/11/14)
+    // 正しい方をチェックするのか？間違った方をチェックするのか？どっちにも使える便利でありながら曖昧な言葉なので...
+    // 明確な動詞を使うことが多い。 e.g. assert[正しいこと、期待されること]
+    //  e.g. assertHandedMoneyEnough()
+    // もし、間違ってる方にフォーカスを当てるなら... e.g. throwIfHandedMoneyShortage() とか。
     private void checkHandedMoneyShortage(int handedMoney, int price) {
         if (handedMoney < price) {
             throw new TicketShortMoneyException("Short money: " + handedMoney);

@@ -151,7 +151,8 @@ public class Step05ClassTest extends PlainTestCase {
         booth.buyOneDayPassport(10000);
         log(booth.getOneDayPassQuantity(), booth.getSalesProceeds()); // should be same as before-fix
     }
-
+    
+    // TODO jflute 次回1on1ここから (2025/11/14)
     // ===================================================================================
     //                                                                           Challenge
     //                                                                           =========
