@@ -15,9 +15,42 @@
  */
 package org.docksidestage.bizfw.basic.buyticket;
 
-// TODO done ichikawa javadoc, author追加お願いします by jflute (2025/10/31)
+// #1on1: 最近のプログラミング、コーディングの中での悩み、レビューができない (2025/11/26)
+// 何を見る？レビューの観点。最近気付いた観点、テストの充足性。
+// 
+// まず基本、厳密にはレビューイーが、「レビューの観点」をレビューワーに伝える。
+// あと、チームとしてこのチームでの「レビューの目的、観点、達成したいこと」を明確に。
+//
+// [間違い探し]
+// o 実装バグを見つける
+// o 業務仕様ミスを見つける ☆☆☆
+// o (業務仕様の妥当性の確認) ☆☆
+//
+// [改善]
+// o テストの充足性
+// o 現場での実装ポリシー (現場固有の王道3つ)
+// o 業務処理の実現方法 (以下の王道3つを総合的に)
+//
+// (王道3つ)
+// o 可読性、コメント (一般的な)
+// o エラーハンドリング
+// o パフォーマンス
+//
+
+// #1on1: オーソドックスな開発プロセス
+// o 要求仕様 (お客さんから、業務側から: こういうことしたい)
+// o 要件定義 (開発側が: やりたいことはこういうことでいいんですね？)
+// o 外部設計/基本設計 (画面系の設計など、外部から見える部分がどう振る舞えばいいか？)
+// o 内部設計/詳細設計 (プログラムとしてどのように実現するか？)
+// o 実装設計 (具体的にどんなクラス作って、どう実装していくか？)
+// o 実装 (書く)
+// o テスト設計... (どんな動作確認をするか？) // 実装より先にやることも
+// o テスト実装... (書く)
+
+// done ichikawa javadoc, author追加お願いします by jflute (2025/10/31)
 /**
- * @author jflute, ichikawa
+ * @author jflute
+ * @author ichikara
  */
 public class TicketBooth {
 
@@ -34,6 +67,7 @@ public class TicketBooth {
     // done ichikawa 元の quantity 変数の変数名をどうしたらいいか？を考えてみてください by jflute (2025/10/24)
     // ここを分けない方が実装が楽、の意味がようやくわかった、、、
 //    private int oneDayPassQuantity = MAX_QUANTITY;
+    // TODO ichikawa インスタンス自体がmutableで状態を変化させられるので、変数の再代入がないからfinalでOK by jflute (2025/11/26)
     private Quantity oneDayPassQuantity = new Quantity(MAX_QUANTITY);
     private Quantity twoDayPassQuantity = new Quantity(MAX_QUANTITY);
     private Integer salesProceeds; // null allowed: until first purchase
@@ -77,7 +111,7 @@ public class TicketBooth {
 // 以前の実装
 //    public Ticket buyOneDayPassport(Integer handedMoney) {
 //        // _/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
-//        // TODO ichikawa checkしてreduceしてcountするって流れを再利用してみましょう by jflute (2025/11/14)
+//        // done ichikawa checkしてreduceしてcountするって流れを再利用してみましょう by jflute (2025/11/14)
 //        // 現状は、個別の処理は再利用されているけど、流れが再利用されていないので、流れの変更で複数箇所修正が必要になる。
 //        // → 追加で追加の処理が発生した時、両方で同じ修正をしないといけなくなる → ミスが起きやすい
 //        // _/_/_/_/
@@ -116,13 +150,16 @@ public class TicketBooth {
     // 「これ以上無理」の基準はなんだろうか？まとめすぎても意味がわからなくなりそう
     // → 業務の一つ一つの操作を単位としてまとめるイメージを持った → どこまで一括りにすべき？というのは考えることになるも？
 
+    // TODO ichikawa [小テクニック]privateのメソッドがbuy始まりだと補完時に視認しづらいので... by jflute (2025/11/26)
+    // 区別するためにメソッド名を e.g. doBuyPassport(), internalBuyPassport()
+    // 会話上も、buyメソッドが曖昧になるので、doBuyにすると区別しやすい。
     private void buyPassport(int handedMoney, int price, Quantity quantity) {
         assertHandedMoneyEnough(handedMoney, price);
         reduceTicketQuantity(quantity);
         countSalesProceeds(price);
     }
 
-    // TODO done ichihara checkという言葉、どっちをチェックをするの？どっちで例外が発生するの？ by jflute (2025/11/14)
+    // done ichihara checkという言葉、どっちをチェックをするの？どっちで例外が発生するの？ by jflute (2025/11/14)
     // 正しい方をチェックするのか？間違った方をチェックするのか？どっちにも使える便利でありながら曖昧な言葉なので...
     // 明確な動詞を使うことが多い。 e.g. assert[正しいこと、期待されること]
     //  e.g. assertHandedMoneyEnough()

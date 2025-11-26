@@ -1,5 +1,6 @@
 package org.docksidestage.bizfw.basic.buyticket;
 
+// TODO ichikawa javadocお願い by jflute (2025/11/26)
 public class Quantity {
     // ===================================================================================
     //                                                                           Attribute
@@ -70,6 +71,18 @@ public class Quantity {
 
     public void reduce() {
         if (quantity <= 0) {
+            // #1on1: 確かにその通りで、売ることを意識したメソッドなのか？純粋に在庫を減らすってメソッドなのか？
+            // 汎用reduce()のつもりなのであれば、確かにここは「売り切れ」ではなく「もう在庫ないのに減らせない例外」をthrowが良い。
+            // ここでは事実だけを伝えて処理を止める。それが売り切れという業務なのかどうかは、呼び出し側が決めること。
+            // e.g. TicketBooth:
+            //  try {
+            //      quantity.reduce(); // Quantityをmutableな設計にするならこれでいい（参照先であるQuantityが内部でもつフィールドの値を変えることで状態変化を表現するから）
+            //  } catch (在庫ないのに減らそうとした例外 e) {
+            //      throw new SoldOut例外("xxxxxxx", e);
+            //  }
+            // 今回は、SoldOut例外がTicketBoothの中で定義してあったから依存がわかりやすかった。
+            // でも、独立したTicketSoldOutExceptionだったら？売り切れという業務概念に依存していることに気付けるか？
+            // TODO ichikawa ということで、何かしら納得のいく実装をしてみましょう by jflute (2025/11/26)
             throw new TicketBooth.TicketSoldOutException("Sold out"); // ここでTicketBoothの例外を呼び出しているのはどうなのか、、、依存性の方向
         }
         quantity--; // フィールドをデクリメントする → mutableな設計にするので、ちょい危険？
