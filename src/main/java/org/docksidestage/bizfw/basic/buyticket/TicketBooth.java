@@ -17,7 +17,7 @@ package org.docksidestage.bizfw.basic.buyticket;
 
 // TODO ichikawa javadoc, author追加お願いします by jflute (2025/10/31)
 /**
- * @author jflute
+ * @author jflute, ichikawa
  */
 public class TicketBooth {
 
@@ -73,7 +73,8 @@ public class TicketBooth {
         checkHandedMoneyShortage(handedMoney, ONE_DAY_PRICE);
 
         //oneDayPassQuantity.reduce(); // ここだけちょっと毛色が違うの気になる
-        reduceTicketQuantity(oneDayPassQuantity); // バケツリレーしたりインスタンスメソッドを使っていたら、これでうまくいく理由がわからなくなってしまった
+        reduceTicketQuantity(oneDayPassQuantity);
+//        oneDayPassQuantity = reduceTicketQuantity(oneDayPassQuantity); // Quantityをimmutableな設計に変更するなら、戻り値を受け取って再代入する必要がある
 
         countSalesProceeds(ONE_DAY_PRICE);
         // そもそもsalesProceedsの初期値を0にしておけば、nullチェックしなくて良いのでは？
@@ -114,8 +115,12 @@ public class TicketBooth {
     }
 
     private void reduceTicketQuantity(Quantity quantity) {
-        quantity.reduce();
+        quantity.reduce(); // Quantityをmutableな設計にするならこれでいい（参照先であるQuantityが内部でもつフィールドの値を変えることで状態変化を表現するから）
     }
+//    private Quantity reduceTicketQuantity(Quantity quantity) {
+//        quantity = quantity.reduce(); // Quantityをimmutableな設計にするならこれ（新しいインスタンスを返すことで状態変化を表現するから）
+//        return quantity;
+//    }
 
     private void countSalesProceeds(int price) {
         if (salesProceeds != null) { // second or more purchase
