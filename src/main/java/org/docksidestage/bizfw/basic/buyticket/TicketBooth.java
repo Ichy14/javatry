@@ -15,7 +15,7 @@
  */
 package org.docksidestage.bizfw.basic.buyticket;
 
-// TODO ichikawa javadoc, author追加お願いします by jflute (2025/10/31)
+// TODO done ichikawa javadoc, author追加お願いします by jflute (2025/10/31)
 /**
  * @author jflute, ichikawa
  */
@@ -70,7 +70,7 @@ public class TicketBooth {
         // 現状は、個別の処理は再利用されているけど、流れが再利用されていないので、流れの変更で複数箇所修正が必要になる。
         // _/_/_/_/
         // チケットブースの視点で、チケット購入操作の時何をするか、が表現できると良いんだろうな
-        checkHandedMoneyShortage(handedMoney, ONE_DAY_PRICE);
+        assertHandedMoneyEnough(handedMoney, ONE_DAY_PRICE);
 
         //oneDayPassQuantity.reduce(); // ここだけちょっと毛色が違うの気になる
         reduceTicketQuantity(oneDayPassQuantity);
@@ -89,7 +89,7 @@ public class TicketBooth {
     }
 
     public TicketBuyResult buyTwoDayPassport(Integer handedMoney) {
-        checkHandedMoneyShortage(handedMoney, TWO_DAY_PRICE);
+        assertHandedMoneyEnough(handedMoney, TWO_DAY_PRICE);
 
 //        twoDayPassQuantity.reduce(); // ここだけちょっと毛色が違うの気になる
         reduceTicketQuantity(twoDayPassQuantity); // バケツリレーしたりインスタンスメソッドを使っていたら、これでうまくいく理由がわからなくなってしまった
@@ -103,12 +103,12 @@ public class TicketBooth {
     // 「これ以上無理」の基準はなんだろうか？まとめすぎても意味がわからなくなりそう
     // → 業務の一つ一つの操作を単位としてまとめるイメージを持った → どこまで一括りにすべき？というのは考えることになるも？
 
-    // TODO ichihara checkという言葉、どっちをチェックをするの？どっちで例外が発生するの？ by jflute (2025/11/14)
+    // TODO done ichihara checkという言葉、どっちをチェックをするの？どっちで例外が発生するの？ by jflute (2025/11/14)
     // 正しい方をチェックするのか？間違った方をチェックするのか？どっちにも使える便利でありながら曖昧な言葉なので...
     // 明確な動詞を使うことが多い。 e.g. assert[正しいこと、期待されること]
     //  e.g. assertHandedMoneyEnough()
     // もし、間違ってる方にフォーカスを当てるなら... e.g. throwIfHandedMoneyShortage() とか。
-    private void checkHandedMoneyShortage(int handedMoney, int price) {
+    private void assertHandedMoneyEnough(int handedMoney, int price) {
         if (handedMoney < price) {
             throw new TicketShortMoneyException("Short money: " + handedMoney);
         }
