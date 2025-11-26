@@ -65,43 +65,62 @@ public class TicketBooth {
      * @throws TicketShortMoneyException When the specified money is short for purchase.
      */
     public Ticket buyOneDayPassport(Integer handedMoney) {
-        // _/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
-        // TODO ichikawa checkしてreduceしてcountするって流れを再利用してみましょう by jflute (2025/11/14)
-        // 現状は、個別の処理は再利用されているけど、流れが再利用されていないので、流れの変更で複数箇所修正が必要になる。
-        // _/_/_/_/
-        // チケットブースの視点で、チケット購入操作の時何をするか、が表現できると良いんだろうな
-        assertHandedMoneyEnough(handedMoney, ONE_DAY_PRICE);
-
-        //oneDayPassQuantity.reduce(); // ここだけちょっと毛色が違うの気になる
-        reduceTicketQuantity(oneDayPassQuantity);
-//        oneDayPassQuantity = reduceTicketQuantity(oneDayPassQuantity); // Quantityをimmutableな設計に変更するなら、戻り値を受け取って再代入する必要がある
-
-        countSalesProceeds(ONE_DAY_PRICE);
-        // そもそもsalesProceedsの初期値を0にしておけば、nullチェックしなくて良いのでは？
-        // ただ、要件的に「まだ売上がない」ことをnullで表現したい気もする
-        // #1on1: 本当その通り。ここは要件は自分で決めてOK。
-
+        buyPassport(handedMoney, ONE_DAY_PRICE, oneDayPassQuantity); // 再利用版
         return new Ticket(ONE_DAY_PRICE);
-
-        // これらのクラスはメソッドは業務ロジックを実行するユースケースに該当するのか？
-        // そういうことを考え始めると、売り上げ、チケット、金額あたりを値オブジェクトにする、みたいなことも考えてみたい。ここでエンティティにするべきものはあるか？（idで識別するべきものはなさそうに見える）
-        // 「チケット」はあった（それを知る前に↑を考えてた）。doInPark()メソッドで状態を変更しているが、たしかにチケットは値オブジェクトじゃなくてエンティティの方が適切か、、、（idで管理するうんぬんは一旦置いといて、今回の場合チケットは等価性より同一性で同じものかどうか判断されるべきだと思う）
     }
 
     public TicketBuyResult buyTwoDayPassport(Integer handedMoney) {
-        assertHandedMoneyEnough(handedMoney, TWO_DAY_PRICE);
-
-//        twoDayPassQuantity.reduce(); // ここだけちょっと毛色が違うの気になる
-        reduceTicketQuantity(twoDayPassQuantity); // バケツリレーしたりインスタンスメソッドを使っていたら、これでうまくいく理由がわからなくなってしまった
-
-        countSalesProceeds(TWO_DAY_PRICE);
-
+        buyPassport(handedMoney, TWO_DAY_PRICE, twoDayPassQuantity);
         return new TicketBuyResult(handedMoney, TWO_DAY_PRICE);
     }
+
+// 以前の実装
+//    public Ticket buyOneDayPassport(Integer handedMoney) {
+//        // _/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+//        // TODO ichikawa checkしてreduceしてcountするって流れを再利用してみましょう by jflute (2025/11/14)
+//        // 現状は、個別の処理は再利用されているけど、流れが再利用されていないので、流れの変更で複数箇所修正が必要になる。
+//        // → 追加で追加の処理が発生した時、両方で同じ修正をしないといけなくなる → ミスが起きやすい
+//        // _/_/_/_/
+//        // チケットブースの視点で、チケット購入操作の時何をするか、が表現できると良いんだろうな
+//        assertHandedMoneyEnough(handedMoney, ONE_DAY_PRICE);
+//
+//        //oneDayPassQuantity.reduce(); // ここだけちょっと毛色が違うの気になる
+//        reduceTicketQuantity(oneDayPassQuantity);
+////        oneDayPassQuantity = reduceTicketQuantity(oneDayPassQuantity); // Quantityをimmutableな設計に変更するなら、戻り値を受け取って再代入する必要がある
+//
+//        countSalesProceeds(ONE_DAY_PRICE);
+//        // そもそもsalesProceedsの初期値を0にしておけば、nullチェックしなくて良いのでは？
+//        // ただ、要件的に「まだ売上がない」ことをnullで表現したい気もする
+//        // #1on1: 本当その通り。ここは要件は自分で決めてOK。
+//
+//        buyPassport(handedMoney, ONE_DAY_PRICE, oneDayPassQuantity); // 再利用版
+//        return new Ticket(ONE_DAY_PRICE);
+//
+//        // これらのクラスはメソッドは業務ロジックを実行するユースケースに該当するのか？
+//        // そういうことを考え始めると、売り上げ、チケット、金額あたりを値オブジェクトにする、みたいなことも考えてみたい。ここでエンティティにするべきものはあるか？（idで識別するべきものはなさそうに見える）
+//        // 「チケット」はあった（それを知る前に↑を考えてた）。doInPark()メソッドで状態を変更しているが、たしかにチケットは値オブジェクトじゃなくてエンティティの方が適切か、、、（idで管理するうんぬんは一旦置いといて、今回の場合チケットは等価性より同一性で同じものかどうか判断されるべきだと思う）
+//    }
+//
+//    public TicketBuyResult buyTwoDayPassport(Integer handedMoney) {
+//        assertHandedMoneyEnough(handedMoney, TWO_DAY_PRICE);
+//
+////        twoDayPassQuantity.reduce(); // ここだけちょっと毛色が違うの気になる
+//        reduceTicketQuantity(twoDayPassQuantity); // バケツリレーしたりインスタンスメソッドを使っていたら、これでうまくいく理由がわからなくなってしまった
+//
+//        countSalesProceeds(TWO_DAY_PRICE);
+//
+//        return new TicketBuyResult(handedMoney, TWO_DAY_PRICE);
+//    }
     
     // done ichikawa 再利用、もう少しチャレンジしてみましょう (これ以上は無理かなってところまで) by jflute (2025/10/24)
     // 「これ以上無理」の基準はなんだろうか？まとめすぎても意味がわからなくなりそう
     // → 業務の一つ一つの操作を単位としてまとめるイメージを持った → どこまで一括りにすべき？というのは考えることになるも？
+
+    private void buyPassport(int handedMoney, int price, Quantity quantity) {
+        assertHandedMoneyEnough(handedMoney, price);
+        reduceTicketQuantity(quantity);
+        countSalesProceeds(price);
+    }
 
     // TODO done ichihara checkという言葉、どっちをチェックをするの？どっちで例外が発生するの？ by jflute (2025/11/14)
     // 正しい方をチェックするのか？間違った方をチェックするのか？どっちにも使える便利でありながら曖昧な言葉なので...
