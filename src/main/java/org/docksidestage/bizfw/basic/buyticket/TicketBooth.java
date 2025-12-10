@@ -99,12 +99,12 @@ public class TicketBooth {
      * @throws TicketShortMoneyException When the specified money is short for purchase.
      */
     public Ticket buyOneDayPassport(Integer handedMoney) {
-        buyPassport(handedMoney, ONE_DAY_PRICE, oneDayPassQuantity); // 再利用版
+        doBuyPassport(handedMoney, ONE_DAY_PRICE, oneDayPassQuantity); // 再利用版
         return new Ticket(ONE_DAY_PRICE);
     }
 
     public TicketBuyResult buyTwoDayPassport(Integer handedMoney) {
-        buyPassport(handedMoney, TWO_DAY_PRICE, twoDayPassQuantity);
+        doBuyPassport(handedMoney, TWO_DAY_PRICE, twoDayPassQuantity);
         return new TicketBuyResult(handedMoney, TWO_DAY_PRICE);
     }
 
@@ -150,10 +150,10 @@ public class TicketBooth {
     // 「これ以上無理」の基準はなんだろうか？まとめすぎても意味がわからなくなりそう
     // → 業務の一つ一つの操作を単位としてまとめるイメージを持った → どこまで一括りにすべき？というのは考えることになるも？
 
-    // TODO ichikawa [小テクニック]privateのメソッドがbuy始まりだと補完時に視認しづらいので... by jflute (2025/11/26)
+    // TODO done ichikawa [小テクニック]privateのメソッドがbuy始まりだと補完時に視認しづらいので... by jflute (2025/11/26)
     // 区別するためにメソッド名を e.g. doBuyPassport(), internalBuyPassport()
     // 会話上も、buyメソッドが曖昧になるので、doBuyにすると区別しやすい。
-    private void buyPassport(int handedMoney, int price, Quantity quantity) {
+    private void doBuyPassport(int handedMoney, int price, Quantity quantity) {
         assertHandedMoneyEnough(handedMoney, price);
         reduceTicketQuantity(quantity);
         countSalesProceeds(price);
