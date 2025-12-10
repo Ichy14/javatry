@@ -17,6 +17,7 @@ package org.docksidestage.bizfw.basic.buyticket;
 
 /**
  * @author jflute
+ * @author n.ichikawa
  */
 public class Ticket {
 
@@ -41,6 +42,13 @@ public class Ticket {
             throw new IllegalStateException("Already in park by this ticket: displayedPrice=" + displayPrice);
         }
         alreadyIn = true;
+    }
+
+    public void doOutPark() {
+        if (!alreadyIn) {
+            throw new IllegalStateException("Not yet in park by this ticket: displayedPrice=" + displayPrice);
+        }
+        alreadyIn = false;
     }
 
     // ===================================================================================
