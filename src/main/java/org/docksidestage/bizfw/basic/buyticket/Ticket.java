@@ -26,6 +26,7 @@ public class Ticket {
     //                                                                           =========
     private final int displayPrice; // written on ticket, park guest can watch this
     private boolean alreadyIn; // true means this ticket is unavailable
+    private int remainingUsage;
     private final TicketDuration availableDays;
 
     // ===================================================================================
@@ -33,6 +34,7 @@ public class Ticket {
     //                                                                         ===========
     public Ticket(int displayPrice, int availableDays) {
         this.displayPrice = displayPrice;
+        this.remainingUsage = availableDays;
         this.availableDays = TicketDuration.of(availableDays);
     }
 
@@ -43,15 +45,22 @@ public class Ticket {
         if (alreadyIn) {
             throw new IllegalStateException("Already in park by this ticket: displayedPrice=" + displayPrice);
         }
-        alreadyIn = true;
+
+        if (remainingUsage < 0) {
+            throw new IllegalStateException("No remaining usage by this ticket.");
+        }
+        remainingUsage--;
+        if (remainingUsage == 0) {
+            alreadyIn = true;
+        }
     }
 
-    public void doOutPark() {
-        if (!alreadyIn) {
-            throw new IllegalStateException("Not yet in park by this ticket: displayedPrice=" + displayPrice);
-        }
-        alreadyIn = false;
-    }
+//    public void doOutPark() {
+//        if (!alreadyIn) {
+//            throw new IllegalStateException("Not yet in park by this ticket: displayedPrice=" + displayPrice);
+//        }
+//        alreadyIn = false;
+//    }
 
     // ===================================================================================
     //                                                                            Accessor
@@ -62,6 +71,10 @@ public class Ticket {
 
     public boolean isAlreadyIn() {
         return alreadyIn;
+    }
+
+    public int getRemainingUsage() {
+        return remainingUsage;
     }
 
     public TicketDuration getAvailableDays() {
