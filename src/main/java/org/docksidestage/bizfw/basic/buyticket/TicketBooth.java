@@ -67,9 +67,9 @@ public class TicketBooth {
     // done ichikawa 元の quantity 変数の変数名をどうしたらいいか？を考えてみてください by jflute (2025/10/24)
     // ここを分けない方が実装が楽、の意味がようやくわかった、、、
 //    private int oneDayPassQuantity = MAX_QUANTITY;
-    // TODO ichikawa インスタンス自体がmutableで状態を変化させられるので、変数の再代入がないからfinalでOK by jflute (2025/11/26)
-    private Quantity oneDayPassQuantity = new Quantity(MAX_QUANTITY);
-    private Quantity twoDayPassQuantity = new Quantity(MAX_QUANTITY);
+    // TODO done ichikawa インスタンス自体がmutableで状態を変化させられるので、変数の再代入がないからfinalでOK by jflute (2025/11/26)
+    private final Quantity oneDayPassQuantity = new Quantity(MAX_QUANTITY);
+    private final Quantity twoDayPassQuantity = new Quantity(MAX_QUANTITY);
     private Integer salesProceeds; // null allowed: until first purchase
     // 1-dayパスと2-dayパスの売上を分けるべきか？実際には別れていた方が嬉しそうな気はする
 
