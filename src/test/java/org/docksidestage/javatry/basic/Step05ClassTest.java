@@ -15,7 +15,6 @@
  */
 package org.docksidestage.javatry.basic;
 
-import org.docksidestage.bizfw.basic.buyticket.Quantity;
 import org.docksidestage.bizfw.basic.buyticket.Ticket;
 import org.docksidestage.bizfw.basic.buyticket.TicketBooth;
 import org.docksidestage.bizfw.basic.buyticket.TicketBooth.TicketShortMoneyException;
@@ -152,7 +151,7 @@ public class Step05ClassTest extends PlainTestCase {
         log(booth.getOneDayPassQuantity(), booth.getSalesProceeds()); // should be same as before-fix
     }
     
-    // TODO jflute 次回1on1ここから (2025/11/14)
+    // TODO done jflute 次回1on1ここから (2025/11/14)
     // ===================================================================================
     //                                                                           Challenge
     //                                                                           =========
@@ -193,7 +192,15 @@ public class Step05ClassTest extends PlainTestCase {
      * (TwoDayPassportなのに一回しか利用できません。複数日数に対応できるようにTicketを修正しましょう)
      */
     public void test_class_moreFix_usePluralDays() {
-        // your confirmation code here
+        TicketBooth booth = new TicketBooth();
+        TicketBuyResult buyResult = booth.buyTwoDayPassport(15000);
+        Ticket twoDayPassport = buyResult.getTicket();
+        twoDayPassport.doInPark();
+        log(twoDayPassport.isAlreadyIn()); // should be true
+        twoDayPassport.doOutPark();
+        log(twoDayPassport.isAlreadyIn()); // should be false
+        twoDayPassport.doInPark();
+        log(twoDayPassport.isAlreadyIn()); // should be true
     }
 
     /**
@@ -202,22 +209,25 @@ public class Step05ClassTest extends PlainTestCase {
      */
     public void test_class_moreFix_whetherTicketType() {
         // uncomment when you implement this exercise
-        //TicketBooth booth = new TicketBooth();
-        //Ticket oneDayPassport = booth.buyOneDayPassport(10000);
-        //showTicketIfNeeds(oneDayPassport);
-        //TicketBuyResult buyResult = booth.buyTwoDayPassport(10000);
-        //Ticket twoDayPassport = buyResult.getTicket();
-        //showTicketIfNeeds(twoDayPassport);
+        TicketBooth booth = new TicketBooth();
+        Ticket oneDayPassport = booth.buyOneDayPassport(10000);
+        showTicketIfNeeds(oneDayPassport);
+        TicketBuyResult buyResult = booth.buyTwoDayPassport(14000);
+        Ticket twoDayPassport = buyResult.getTicket();
+        showTicketIfNeeds(twoDayPassport);
     }
+    // 実装修正途中めも
+    // - TicketBooth.buy~Passport()でチケットを実体化する時にチケットに何Dayパスなのか印字する（書き込む）イメージで実装したい
+    // - 単なる数値ではなく意味のある定数を実装する目的でenumを使ってみたものの、今のままだと単なる数値のリストでいいんだよなあ、、、
 
     // uncomment when you implement this exercise
-    //private void showTicketIfNeeds(Ticket ticket) {
-    //    if (xxxxxxxxxxxxxxxxxx) { // write determination for two-day passport
-    //        log("two-day passport");
-    //    } else {
-    //        log("other");
-    //    }
-    //}
+    private void showTicketIfNeeds(Ticket ticket) {
+        if (ticket.getAvailableDays() == Ticket.TicketDuration.TWO_DAYS) { // write determination for two-day passport
+            log("two-day passport");
+        } else {
+            log("other");
+        }
+    }
 
     // ===================================================================================
     //                                                                           Good Luck
