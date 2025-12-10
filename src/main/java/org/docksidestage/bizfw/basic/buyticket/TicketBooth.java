@@ -100,12 +100,12 @@ public class TicketBooth {
      */
     public Ticket buyOneDayPassport(Integer handedMoney) {
         doBuyPassport(handedMoney, ONE_DAY_PRICE, oneDayPassQuantity); // 再利用版
-        return new Ticket(ONE_DAY_PRICE);
+        return new Ticket(ONE_DAY_PRICE, 1);
     }
 
     public TicketBuyResult buyTwoDayPassport(Integer handedMoney) {
         doBuyPassport(handedMoney, TWO_DAY_PRICE, twoDayPassQuantity);
-        return new TicketBuyResult(handedMoney, TWO_DAY_PRICE);
+        return new TicketBuyResult(handedMoney, TWO_DAY_PRICE, 2);
     }
 
 // 以前の実装

@@ -34,7 +34,7 @@ public class TicketBuyResult {
     //                                                                         ===========
     // TODO ichikawa トレーに徹するなら (Ticket ticket, Change change) となる by jflute (2025/11/14)
     // 個人的には、中途半端なDTOは避けたいので、ここでやるならもうちょいドメイン化したいところ。
-    public TicketBuyResult(int handedMoney, int displayPrice) {
+    public TicketBuyResult(int handedMoney, int displayPrice, int availableDays) {
         // お釣りをreturnしようとした時にhandedMoneyがdisplayPrice未満になることを防ぐためにここで例外ハンドリングするべきのような気がするが、呼び出しもとのbuyTwoDayPassportでやってるから大丈夫？
         // #1on1: このResultクラスが、Domain Entity的なニュアンスで概念化されるのか？
         // それとも、青いトレーのように一時的に受け渡しで使うためだけの入れ物クラスというニュアンスなのか？
@@ -42,7 +42,7 @@ public class TicketBuyResult {
         // yes, DTOの種類の一つ。DTOに具体的なニュアンス(色)を付けるかどうか？ってところ。
         // (ちょいDDDとの絡みの話)
         // done ichikawa チケットの発行と、お釣りの計算をresultがやるかどうか？ by jflute (2025/10/31)
-        this.ticket = new Ticket(displayPrice);
+        this.ticket = new Ticket(displayPrice, availableDays);
         this.change = new Change(handedMoney, displayPrice);
     }
 

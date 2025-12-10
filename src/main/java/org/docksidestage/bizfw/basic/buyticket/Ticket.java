@@ -26,12 +26,14 @@ public class Ticket {
     //                                                                           =========
     private final int displayPrice; // written on ticket, park guest can watch this
     private boolean alreadyIn; // true means this ticket is unavailable
+    private final TicketDuration availableDays;
 
     // ===================================================================================
     //                                                                         Constructor
     //                                                                         ===========
-    public Ticket(int displayPrice) {
+    public Ticket(int displayPrice, int availableDays) {
         this.displayPrice = displayPrice;
+        this.availableDays = TicketDuration.of(availableDays);
     }
 
     // ===================================================================================
@@ -60,5 +62,33 @@ public class Ticket {
 
     public boolean isAlreadyIn() {
         return alreadyIn;
+    }
+
+    public TicketDuration getAvailableDays() {
+        return availableDays;
+    }
+
+    public enum TicketDuration {
+        ONE_DAY(1),
+        TWO_DAYS(2);
+
+        private final int availableDays;
+
+        TicketDuration(int day) {
+            this.availableDays = day;
+        }
+
+        public int getAvailableDays() {
+            return availableDays;
+        }
+
+        public static TicketDuration of(int day) {
+            for (TicketDuration d : values()) {
+                if (d.availableDays == day) {
+                    return d;
+                }
+            }
+            throw new IllegalArgumentException("Unknown day: " + day);
+        }
     }
 }
