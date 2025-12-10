@@ -70,7 +70,8 @@ public class Ticket {
 
     public enum TicketDuration {
         ONE_DAY(1),
-        TWO_DAYS(2);
+        TWO_DAYS(2),
+        FOUR_DAYS(4);
 
         private final int availableDays;
 

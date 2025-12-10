@@ -60,6 +60,7 @@ public class TicketBooth {
     private static final int MAX_QUANTITY = 10;
     private static final int ONE_DAY_PRICE = 7400; // when 2019/06/15
     private static final int TWO_DAY_PRICE = 13200;
+    private static final int FOUR_DAY_PRICE = 22400;
 
     // ===================================================================================
     //                                                                           Attribute
@@ -70,6 +71,7 @@ public class TicketBooth {
     // TODO done ichikawa インスタンス自体がmutableで状態を変化させられるので、変数の再代入がないからfinalでOK by jflute (2025/11/26)
     private final Quantity oneDayPassQuantity = new Quantity(MAX_QUANTITY);
     private final Quantity twoDayPassQuantity = new Quantity(MAX_QUANTITY);
+    private final Quantity fourDayPassQuantity = new Quantity(MAX_QUANTITY);
     private Integer salesProceeds; // null allowed: until first purchase
     // 1-dayパスと2-dayパスの売上を分けるべきか？実際には別れていた方が嬉しそうな気はする
 
@@ -106,6 +108,11 @@ public class TicketBooth {
     public TicketBuyResult buyTwoDayPassport(Integer handedMoney) {
         doBuyPassport(handedMoney, TWO_DAY_PRICE, twoDayPassQuantity);
         return new TicketBuyResult(handedMoney, TWO_DAY_PRICE, 2);
+    }
+
+    public TicketBuyResult buyFourDayPassport(Integer handedMoney) {
+        doBuyPassport(handedMoney, FOUR_DAY_PRICE, fourDayPassQuantity);
+        return new TicketBuyResult(handedMoney, FOUR_DAY_PRICE, 4);
     }
 
 // 以前の実装
