@@ -68,7 +68,7 @@ public class TicketBooth {
     // done ichikawa 元の quantity 変数の変数名をどうしたらいいか？を考えてみてください by jflute (2025/10/24)
     // ここを分けない方が実装が楽、の意味がようやくわかった、、、
 //    private int oneDayPassQuantity = MAX_QUANTITY;
-    // TODO done ichikawa インスタンス自体がmutableで状態を変化させられるので、変数の再代入がないからfinalでOK by jflute (2025/11/26)
+    // done ichikawa インスタンス自体がmutableで状態を変化させられるので、変数の再代入がないからfinalでOK by jflute (2025/11/26)
     private final Quantity oneDayPassQuantity = new Quantity(MAX_QUANTITY);
     private final Quantity twoDayPassQuantity = new Quantity(MAX_QUANTITY);
     private final Quantity fourDayPassQuantity = new Quantity(MAX_QUANTITY);
@@ -106,6 +106,8 @@ public class TicketBooth {
     }
 
     public TicketBuyResult buyTwoDayPassport(Integer handedMoney) {
+        // TODO ichikawa TicketDuration の enum が存在するのであれば、そもそもこの時点から... by jflute (2025/12/15)
+        // 1とか2というリテラル数値ではなく、TicketDuration を指定してくなりますね。
         doBuyPassport(handedMoney, TWO_DAY_PRICE, twoDayPassQuantity);
         return new TicketBuyResult(handedMoney, TWO_DAY_PRICE, 2);
     }
@@ -157,7 +159,7 @@ public class TicketBooth {
     // 「これ以上無理」の基準はなんだろうか？まとめすぎても意味がわからなくなりそう
     // → 業務の一つ一つの操作を単位としてまとめるイメージを持った → どこまで一括りにすべき？というのは考えることになるも？
 
-    // TODO done ichikawa [小テクニック]privateのメソッドがbuy始まりだと補完時に視認しづらいので... by jflute (2025/11/26)
+    // done ichikawa [小テクニック]privateのメソッドがbuy始まりだと補完時に視認しづらいので... by jflute (2025/11/26)
     // 区別するためにメソッド名を e.g. doBuyPassport(), internalBuyPassport()
     // 会話上も、buyメソッドが曖昧になるので、doBuyにすると区別しやすい。
     private void doBuyPassport(int handedMoney, int price, Quantity quantity) {
