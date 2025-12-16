@@ -26,13 +26,14 @@ public class TicketBuyResult {
     // done ichikawa unused警告になっている (Constructorで消費しておしまい) by jflute (2025/10/31)
     // done ichikawa 変数名がTwoDayPassportになっているけど、TwoDay限定？ by jflute (2025/10/31)
     // IntelliJのrenameを使ってrenameしましょう。
+    // TODO ichikawa final付けちゃいましょう by jflute (2025/12/16)
     private Ticket ticket;
     private Change change;
 
     // ===================================================================================
     //                                                                         Constructor
     //                                                                         ===========
-    // TODO done ichikawa トレーに徹するなら (Ticket ticket, Change change) となる by jflute (2025/11/14)
+    // done ichikawa トレーに徹するなら (Ticket ticket, Change change) となる by jflute (2025/11/14)
     // 個人的には、中途半端なDTOは避けたいので、ここでやるならもうちょいドメイン化したいところ。
     public TicketBuyResult(
             int handedMoney,

@@ -185,7 +185,7 @@ public class Step05ClassTest extends PlainTestCase {
         // 1dayパスを買う時にはチケットが戻ってきて、2dayパスを買う時には購入の結果が返ってくるの違和感ある
     }
     // done jflute 次回1on1ここから (2025/10/31)
-    // TODO jflute 次回1on1ここから (2025/11/26)
+    // done jflute 次回1on1ここから (2025/11/26)
 
     /**
      * Now you can use only one in spite of two-day passport, so fix Ticket to be able to handle plural days. <br>
@@ -223,6 +223,7 @@ public class Step05ClassTest extends PlainTestCase {
 
     // uncomment when you implement this exercise
     private void showTicketIfNeeds(Ticket ticket) {
+        // TODO ichikawa 今だとnightOnlyも混ざってしまうので、それが混ざらないようにしてみましょう by jflute (2025/12/16)
         if (ticket.getAvailableDays() == Ticket.TicketDuration.TWO_DAYS) { // write determination for two-day passport
             log("two-day passport");
         } else {
@@ -255,6 +256,7 @@ public class Step05ClassTest extends PlainTestCase {
         Ticket nightOnlyTwoDayPassport = buyResult.getTicket();
         log(nightOnlyTwoDayPassport.isAvailableAllDay()); // should be false
         // DateTime系を使って、夜かどうかの判定ロジックに応じてbooleanを返すのをTicketクラスに実装したい気持ち
+        // TODO ichikawa ↑の部分は「夜しか使えないようにしましょう」で必要になるかと思います by jflute (2025/12/16)
     }
 
     // ===================================================================================

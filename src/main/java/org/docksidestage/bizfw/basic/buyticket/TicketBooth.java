@@ -110,6 +110,7 @@ public class TicketBooth {
     public TicketBuyResult buyTwoDayPassport(Integer handedMoney) {
         // TODO ichikawa TicketDuration の enum が存在するのであれば、そもそもこの時点から... by jflute (2025/12/15)
         // 1とか2というリテラル数値ではなく、TicketDuration を指定してくなりますね。
+        // TODO ichikawa new TicketBuyResultの部分もdoBuyに含めちゃってもいいのでは？ by jflute (2025/12/16)
         doBuyPassport(handedMoney, TWO_DAY_PRICE, twoDayPassQuantity);
         return new TicketBuyResult(handedMoney, TWO_DAY_PRICE, 2);
     }
@@ -187,6 +188,7 @@ public class TicketBooth {
     }
 
     private void reduceTicketQuantity(Quantity quantity) {
+        // TODO ichikawa 売り切れ例外に翻訳してあげましょう (JavaDocにもSoldOut例外をthrowするって書いてあるし) by jflute (2025/12/16)
         quantity.reduce(); // Quantityをmutableな設計にするならこれでいい（参照先であるQuantityが内部でもつフィールドの値を変えることで状態変化を表現するから）
     }
 //    private Quantity reduceTicketQuantity(Quantity quantity) {
