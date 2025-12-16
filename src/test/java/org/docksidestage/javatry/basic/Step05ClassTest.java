@@ -254,6 +254,7 @@ public class Step05ClassTest extends PlainTestCase {
         TicketBuyResult buyResult = booth.buyNightOnlyTwoDayPassport(7400);
         Ticket nightOnlyTwoDayPassport = buyResult.getTicket();
         log(nightOnlyTwoDayPassport.isAvailableAllDay()); // should be false
+        // DateTime系を使って、夜かどうかの判定ロジックに応じてbooleanを返すのをTicketクラスに実装したい気持ち
     }
 
     // ===================================================================================
