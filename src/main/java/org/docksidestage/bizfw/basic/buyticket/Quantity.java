@@ -1,6 +1,9 @@
 package org.docksidestage.bizfw.basic.buyticket;
 
-// TODO ichikawa javadocお願い by jflute (2025/11/26)
+// TODO done ichikawa javadocお願い by jflute (2025/11/26)
+/**
+ * @author n.ichikawa
+ */
 public class Quantity {
     // ===================================================================================
     //                                                                           Attribute
@@ -82,8 +85,8 @@ public class Quantity {
             //  }
             // 今回は、SoldOut例外がTicketBoothの中で定義してあったから依存がわかりやすかった。
             // でも、独立したTicketSoldOutExceptionだったら？売り切れという業務概念に依存していることに気付けるか？
-            // TODO ichikawa ということで、何かしら納得のいく実装をしてみましょう by jflute (2025/11/26)
-            throw new TicketBooth.TicketSoldOutException("Sold out"); // ここでTicketBoothの例外を呼び出しているのはどうなのか、、、依存性の方向
+            // TODO done ichikawa ということで、何かしら納得のいく実装をしてみましょう by jflute (2025/11/26)
+            throw new OutOfStockException("Sold out"); // ここでTicketBoothの例外を呼び出しているのはどうなのか、、、依存性の方向
         }
         quantity--; // フィールドをデクリメントする → mutableな設計にするので、ちょい危険？
                     // → しかし、Quantityの参照先を変えないまま状態変化を表現できるので、TicketBooth側のコードがシンプルで再利用性と可読性が高くなる気がする
@@ -94,6 +97,16 @@ public class Quantity {
 //        }
 //        return new Quantity(quantity - 1); // 新しいインスタンスを返すようにする → immutableな設計にするので、ちょい安全
 //    }
+
+    public static class OutOfStockException extends RuntimeException {
+
+        private static final long serialVersionUID = 1L;
+
+        public OutOfStockException(String msg) {
+            super(msg);
+        }
+    }
+    // この例外クラスとTicketBoothクラスの例外も合わせて、どこか一つのファイルとかにまとめたい気持ち
 
     // ===================================================================================
     //                                                                            Accessor
