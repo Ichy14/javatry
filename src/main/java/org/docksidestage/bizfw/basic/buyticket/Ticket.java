@@ -28,6 +28,7 @@ public class Ticket {
     private boolean alreadyIn; // true means this ticket is unavailable
     private int remainingUsage;
     private final TicketDuration availableDays;
+    private boolean isAvailableAllDay;
 
     // ===================================================================================
     //                                                                         Constructor
@@ -36,6 +37,14 @@ public class Ticket {
         this.displayPrice = displayPrice;
         this.remainingUsage = availableDays;
         this.availableDays = TicketDuration.of(availableDays);
+        this.isAvailableAllDay = true;
+    }
+
+    public Ticket(int displayPrice, int availableDays, boolean isAvailableAllDay) {
+        this.displayPrice = displayPrice;
+        this.remainingUsage = availableDays;
+        this.availableDays = TicketDuration.of(availableDays);
+        this.isAvailableAllDay = isAvailableAllDay;
     }
 
     // ===================================================================================
@@ -46,7 +55,7 @@ public class Ticket {
             throw new IllegalStateException("Already in park by this ticket: displayedPrice=" + displayPrice);
         }
 
-        if (remainingUsage < 0) {
+        if (remainingUsage < 0) { // この書き方はなんだか気持ちが悪いのでどうにかしたい
             throw new IllegalStateException("No remaining usage by this ticket.");
         }
         remainingUsage--;
@@ -65,6 +74,10 @@ public class Ticket {
     // ===================================================================================
     //                                                                            Accessor
     //                                                                            ========
+    public boolean isAvailableAllDay() {
+        return isAvailableAllDay;
+    }
+
     public int getDisplayPrice() {
         return displayPrice;
     }

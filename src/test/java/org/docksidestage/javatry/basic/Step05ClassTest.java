@@ -197,11 +197,12 @@ public class Step05ClassTest extends PlainTestCase {
         Ticket twoDayPassport = buyResult.getTicket();
         twoDayPassport.doInPark();
         log(twoDayPassport.isAlreadyIn()); // should be true
-        twoDayPassport.doOutPark();
-        log(twoDayPassport.isAlreadyIn()); // should be false
         twoDayPassport.doInPark();
         log(twoDayPassport.isAlreadyIn()); // should be true
     }
+    // /TicketのalreadyInフィールドの意味を勘違いしていた
+    // →純粋にパークに入った状態を想定していたが、既に利用済みであること状態として保持したいフィールドなんだろうな
+    // 下の問題を解いてる時に気づいたので対応順序が結果的に逆になってしまった
 
     /**
      * Accurately determine whether type of bought ticket is two-day passport or not by if-statemet. (fix Ticket classes if needed) <br>
@@ -237,7 +238,11 @@ public class Step05ClassTest extends PlainTestCase {
      * (FourDayPassport (金額は22400) のチケットも買えるようにしましょう)
      */
     public void test_class_moreFix_wonder_four() {
-        // your confirmation code here
+        TicketBooth booth = new TicketBooth();
+        TicketBuyResult buyResult = booth.buyFourDayPassport(23000);
+        Ticket fourDayPassport = buyResult.getTicket();
+        int change = buyResult.getChange().getAmount();
+        log(fourDayPassport.getDisplayPrice() + change); // should be same as money
     }
 
     /**
@@ -245,7 +250,10 @@ public class Step05ClassTest extends PlainTestCase {
      * (NightOnlyTwoDayPassport (金額は7400) のチケットも買えるようにしましょう。夜しか使えないようにしましょう)
      */
     public void test_class_moreFix_wonder_night() {
-        // your confirmation code here
+        TicketBooth booth = new TicketBooth();
+        TicketBuyResult buyResult = booth.buyNightOnlyTwoDayPassport(7400);
+        Ticket nightOnlyTwoDayPassport = buyResult.getTicket();
+        log(nightOnlyTwoDayPassport.isAvailableAllDay()); // should be false
     }
 
     // ===================================================================================
