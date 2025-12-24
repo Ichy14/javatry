@@ -26,9 +26,9 @@ public class TicketBuyResult {
     // done ichikawa unused警告になっている (Constructorで消費しておしまい) by jflute (2025/10/31)
     // done ichikawa 変数名がTwoDayPassportになっているけど、TwoDay限定？ by jflute (2025/10/31)
     // IntelliJのrenameを使ってrenameしましょう。
-    // TODO ichikawa final付けちゃいましょう by jflute (2025/12/16)
-    private Ticket ticket;
-    private Change change;
+    // TODO done ichikawa final付けちゃいましょう by jflute (2025/12/16)
+    private final Ticket ticket;
+    private final Change change;
 
     // ===================================================================================
     //                                                                         Constructor
