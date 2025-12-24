@@ -118,6 +118,8 @@ public class TicketBooth {
 
     public TicketBuyResult buyNightOnlyTwoDayPassport(Integer handedMoney) {
         return doBuyPassport(handedMoney, AFTER_FIVE_TWO_DAY_PRICE, afterFiveTwoDayPassQuantity, TicketDuration.TWO_DAYS, false);
+        // doBuyPassportの引数が増えすぎたのでどうにかしたい
+        // いくつかの意味単位でオブジェクトにまとめるとか？
     }
 
     public TicketBuyResult buyFourDayPassport(Integer handedMoney) {
