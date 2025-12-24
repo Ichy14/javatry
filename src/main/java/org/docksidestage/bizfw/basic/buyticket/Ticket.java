@@ -33,17 +33,17 @@ public class Ticket {
     // ===================================================================================
     //                                                                         Constructor
     //                                                                         ===========
-    public Ticket(int displayPrice, int availableDays) {
+    public Ticket(int displayPrice, TicketDuration availableDays) {
         this.displayPrice = displayPrice;
-        this.remainingUsage = availableDays;
-        this.availableDays = TicketDuration.of(availableDays);
+        this.remainingUsage = availableDays.getAvailableDays();
+        this.availableDays = availableDays;
         this.isAvailableAllDay = true;
     }
 
-    public Ticket(int displayPrice, int availableDays, boolean isAvailableAllDay) {
+    public Ticket(int displayPrice, TicketDuration availableDays, boolean isAvailableAllDay) {
         this.displayPrice = displayPrice;
-        this.remainingUsage = availableDays;
-        this.availableDays = TicketDuration.of(availableDays);
+        this.remainingUsage = availableDays.getAvailableDays();
+        this.availableDays = availableDays;
         this.isAvailableAllDay = isAvailableAllDay;
     }
 

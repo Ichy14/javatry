@@ -48,6 +48,9 @@ package org.docksidestage.bizfw.basic.buyticket;
 // o テスト実装... (書く)
 
 // done ichikawa javadoc, author追加お願いします by jflute (2025/10/31)
+
+import static org.docksidestage.bizfw.basic.buyticket.Ticket.TicketDuration;
+
 /**
  * @author jflute
  * @author ichikara
@@ -104,25 +107,25 @@ public class TicketBooth {
      */
     public Ticket buyOneDayPassport(Integer handedMoney) {
         doBuyPassport(handedMoney, ONE_DAY_PRICE, oneDayPassQuantity); // 再利用版
-        return new Ticket(ONE_DAY_PRICE, 1);
+        return new Ticket(ONE_DAY_PRICE, TicketDuration.ONE_DAY);
     }
 
     public TicketBuyResult buyTwoDayPassport(Integer handedMoney) {
-        // TODO ichikawa TicketDuration の enum が存在するのであれば、そもそもこの時点から... by jflute (2025/12/15)
+        // TODO done ichikawa TicketDuration の enum が存在するのであれば、そもそもこの時点から... by jflute (2025/12/15)
         // 1とか2というリテラル数値ではなく、TicketDuration を指定してくなりますね。
         // TODO ichikawa new TicketBuyResultの部分もdoBuyに含めちゃってもいいのでは？ by jflute (2025/12/16)
         doBuyPassport(handedMoney, TWO_DAY_PRICE, twoDayPassQuantity);
-        return new TicketBuyResult(handedMoney, TWO_DAY_PRICE, 2);
+        return new TicketBuyResult(handedMoney, TWO_DAY_PRICE, TicketDuration.TWO_DAYS);
     }
 
     public TicketBuyResult buyNightOnlyTwoDayPassport(Integer handedMoney) {
         doBuyPassport(handedMoney, AFTER_FIVE_TWO_DAY_PRICE, afterFiveTwoDayPassQuantity);
-        return new TicketBuyResult(handedMoney, AFTER_FIVE_TWO_DAY_PRICE, 2, false);
+        return new TicketBuyResult(handedMoney, AFTER_FIVE_TWO_DAY_PRICE, TicketDuration.TWO_DAYS, false);
     }
 
     public TicketBuyResult buyFourDayPassport(Integer handedMoney) {
         doBuyPassport(handedMoney, FOUR_DAY_PRICE, fourDayPassQuantity);
-        return new TicketBuyResult(handedMoney, FOUR_DAY_PRICE, 4);
+        return new TicketBuyResult(handedMoney, FOUR_DAY_PRICE, TicketDuration.FOUR_DAYS);
     }
 
 // 以前の実装
