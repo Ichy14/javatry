@@ -110,9 +110,14 @@ public class TicketBooth {
     }
 
     public TicketBuyResult buyTwoDayPassport(Integer handedMoney) {
-        // TODO done ichikawa TicketDuration の enum が存在するのであれば、そもそもこの時点から... by jflute (2025/12/15)
+        // done ichikawa TicketDuration の enum が存在するのであれば、そもそもこの時点から... by jflute (2025/12/15)
         // 1とか2というリテラル数値ではなく、TicketDuration を指定してくなりますね。
-        // TODO done ichikawa new TicketBuyResultの部分もdoBuyに含めちゃってもいいのでは？ by jflute (2025/12/16)
+        // done ichikawa new TicketBuyResultの部分もdoBuyに含めちゃってもいいのでは？ by jflute (2025/12/16)
+        // TODO ichikawa 現状doBuyの引数で、TWO_DAYを意識した引数が３つある。 by jflute (2025/12/24)
+        // Quantityに関しては状態を示すオブジェクトで、単なる参照情報ってわけじゃないから、そこは独立して良いとして...
+        // なので、せめてTWO_DAYを意識した引数を２こにしたい。
+        // (解決方法として関連するとぅどぅが、step5の showTicketIfNeeds() のところにあるので、一緒に考えてみるといいかも)
+        // hint1: オブジェクト指向っぽいね
         return doBuyPassport(handedMoney, TWO_DAY_PRICE, twoDayPassQuantity, TicketDuration.TWO_DAYS);
     }
 
@@ -171,6 +176,10 @@ public class TicketBooth {
     // done ichikawa [小テクニック]privateのメソッドがbuy始まりだと補完時に視認しづらいので... by jflute (2025/11/26)
     // 区別するためにメソッド名を e.g. doBuyPassport(), internalBuyPassport()
     // 会話上も、buyメソッドが曖昧になるので、doBuyにすると区別しやすい。
+
+    // #1on1: 引数多くてなんかなぁ by いちかわさん (2025/12/24)
+    // 単なる引数クラスじゃなく、オブジェクト的に意味をうまく使って解決ができれば...
+    // (TwoDayのbuyメソッドの方のとぅどぅで続きを...)
     private TicketBuyResult doBuyPassport(int handedMoney, int price, Quantity quantity, TicketDuration availableDays) {
         assertHandedMoneyEnough(handedMoney, price);
         reduceTicketQuantity(quantity);
@@ -197,10 +206,14 @@ public class TicketBooth {
     }
 
     private void reduceTicketQuantity(Quantity quantity) {
-        // TODO done ichikawa 売り切れ例外に翻訳してあげましょう (JavaDocにもSoldOut例外をthrowするって書いてあるし) by jflute (2025/12/16)
+        // done ichikawa 売り切れ例外に翻訳してあげましょう (JavaDocにもSoldOut例外をthrowするって書いてあるし) by jflute (2025/12/16)
+        // #1on1: 例外の翻訳の話 (2025/12/24)
+        // 例外の翻訳のデバッグ面でのコンセプト、クラス依存関係面でのコンセプト。
+        // ただ、あくまで必須ではベターという感じ。
         try {
             quantity.reduce(); // Quantityをmutableな設計にするならこれでいい（参照先であるQuantityが内部でもつフィールドの値を変えることで状態変化を表現するから）
         } catch (Quantity.OutOfStockException e) {
+            // TODO ichikawa 例外が途切れているので、引き継ぎましょう by jflute (2025/12/24)
             throw new TicketSoldOutException("Sold out ticket");
         }
     }

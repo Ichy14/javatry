@@ -18,6 +18,7 @@ package org.docksidestage.javatry.basic;
 import org.docksidestage.bizfw.basic.buyticket.Ticket;
 import org.docksidestage.bizfw.basic.buyticket.TicketBooth;
 import org.docksidestage.bizfw.basic.buyticket.TicketBooth.TicketShortMoneyException;
+import org.docksidestage.bizfw.basic.buyticket.TicketBooth.TicketSoldOutException;
 import org.docksidestage.bizfw.basic.buyticket.TicketBuyResult;
 import org.docksidestage.unit.PlainTestCase;
 
@@ -229,6 +230,25 @@ public class Step05ClassTest extends PlainTestCase {
         } else {
             log("other");
         }
+    }
+    
+    // #1on1: 例外翻訳のスタックトレースを実際に確認するためのテストを書いてみた (2025/12/24)
+    public void test_exception_translation_challenge() {
+        // ## Arrange ##
+        TicketBooth booth = new TicketBooth();
+        int maxQuantity = 10; // privateで直参照できないので、変わったら要修正
+        int handedMoney = 10000; // まあ1万出せば変えるでしょう...いや、そのうち値上げされるかも!?
+        for (int i = 0; i < maxQuantity; i++) {
+            booth.buyOneDayPassport(handedMoney);
+        }
+
+        // ## Act ##
+        assertException(TicketSoldOutException.class, () -> {
+            booth.buyOneDayPassport(handedMoney);
+        }).handle(cause -> {
+            // ## Assert ##
+            log(cause);
+        });
     }
 
     // ===================================================================================

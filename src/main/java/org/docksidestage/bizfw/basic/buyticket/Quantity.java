@@ -86,7 +86,7 @@ public class Quantity {
             // 今回は、SoldOut例外がTicketBoothの中で定義してあったから依存がわかりやすかった。
             // でも、独立したTicketSoldOutExceptionだったら？売り切れという業務概念に依存していることに気付けるか？
             // done ichikawa ということで、何かしら納得のいく実装をしてみましょう by jflute (2025/11/26)
-            // TODO done ichikawa ご自身で気付いた(^^。例外メッセージにまだ売り切れ概念が依存してる by jflute (2025/12/16)
+            // done ichikawa ご自身で気付いた(^^。例外メッセージにまだ売り切れ概念が依存してる by jflute (2025/12/16)
             throw new OutOfStockException("Cannot reduce quantity: no stock"); // ここでTicketBoothの例外を呼び出しているのはどうなのか、、、依存性の方向
         }
         quantity--; // フィールドをデクリメントする → mutableな設計にするので、ちょい危険？
