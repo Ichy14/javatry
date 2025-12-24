@@ -55,10 +55,7 @@ public class Ticket {
             throw new IllegalStateException("Already in park by this ticket: displayedPrice=" + displayPrice);
         }
 
-        // TODO ichikawa (よほどバグってなければ)マイナスにはならないし、0のときもalreadyInのifでここには来ない by jflute (2025/12/16)
-        if (remainingUsage < 0) { // この書き方はなんだか気持ちが悪いのでどうにかしたい
-            throw new IllegalStateException("No remaining usage by this ticket.");
-        }
+        // TODO done ichikawa (よほどバグってなければ)マイナスにはならないし、0のときもalreadyInのifでここには来ない by jflute (2025/12/16)
         remainingUsage--;
         if (remainingUsage == 0) {
             alreadyIn = true;
