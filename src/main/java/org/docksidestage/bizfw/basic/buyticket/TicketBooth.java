@@ -197,8 +197,12 @@ public class TicketBooth {
     }
 
     private void reduceTicketQuantity(Quantity quantity) {
-        // TODO ichikawa 売り切れ例外に翻訳してあげましょう (JavaDocにもSoldOut例外をthrowするって書いてあるし) by jflute (2025/12/16)
-        quantity.reduce(); // Quantityをmutableな設計にするならこれでいい（参照先であるQuantityが内部でもつフィールドの値を変えることで状態変化を表現するから）
+        // TODO done ichikawa 売り切れ例外に翻訳してあげましょう (JavaDocにもSoldOut例外をthrowするって書いてあるし) by jflute (2025/12/16)
+        try {
+            quantity.reduce(); // Quantityをmutableな設計にするならこれでいい（参照先であるQuantityが内部でもつフィールドの値を変えることで状態変化を表現するから）
+        } catch (Quantity.OutOfStockException e) {
+            throw new TicketSoldOutException("Sold out ticket");
+        }
     }
 //    private Quantity reduceTicketQuantity(Quantity quantity) {
 //        quantity = quantity.reduce(); // Quantityをimmutableな設計にするならこれ（新しいインスタンスを返すことで状態変化を表現するから）
