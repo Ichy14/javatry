@@ -106,26 +106,22 @@ public class TicketBooth {
      * @throws TicketShortMoneyException When the specified money is short for purchase.
      */
     public Ticket buyOneDayPassport(Integer handedMoney) {
-        doBuyPassport(handedMoney, ONE_DAY_PRICE, oneDayPassQuantity); // 再利用版
-        return new Ticket(ONE_DAY_PRICE, TicketDuration.ONE_DAY);
+        return doBuyPassport(handedMoney, ONE_DAY_PRICE, oneDayPassQuantity, TicketDuration.ONE_DAY).getTicket(); // 再利用版
     }
 
     public TicketBuyResult buyTwoDayPassport(Integer handedMoney) {
         // TODO done ichikawa TicketDuration の enum が存在するのであれば、そもそもこの時点から... by jflute (2025/12/15)
         // 1とか2というリテラル数値ではなく、TicketDuration を指定してくなりますね。
-        // TODO ichikawa new TicketBuyResultの部分もdoBuyに含めちゃってもいいのでは？ by jflute (2025/12/16)
-        doBuyPassport(handedMoney, TWO_DAY_PRICE, twoDayPassQuantity);
-        return new TicketBuyResult(handedMoney, TWO_DAY_PRICE, TicketDuration.TWO_DAYS);
+        // TODO done ichikawa new TicketBuyResultの部分もdoBuyに含めちゃってもいいのでは？ by jflute (2025/12/16)
+        return doBuyPassport(handedMoney, TWO_DAY_PRICE, twoDayPassQuantity, TicketDuration.TWO_DAYS);
     }
 
     public TicketBuyResult buyNightOnlyTwoDayPassport(Integer handedMoney) {
-        doBuyPassport(handedMoney, AFTER_FIVE_TWO_DAY_PRICE, afterFiveTwoDayPassQuantity);
-        return new TicketBuyResult(handedMoney, AFTER_FIVE_TWO_DAY_PRICE, TicketDuration.TWO_DAYS, false);
+        return doBuyPassport(handedMoney, AFTER_FIVE_TWO_DAY_PRICE, afterFiveTwoDayPassQuantity, TicketDuration.TWO_DAYS, false);
     }
 
     public TicketBuyResult buyFourDayPassport(Integer handedMoney) {
-        doBuyPassport(handedMoney, FOUR_DAY_PRICE, fourDayPassQuantity);
-        return new TicketBuyResult(handedMoney, FOUR_DAY_PRICE, TicketDuration.FOUR_DAYS);
+        return doBuyPassport(handedMoney, FOUR_DAY_PRICE, fourDayPassQuantity, TicketDuration.FOUR_DAYS);
     }
 
 // 以前の実装
@@ -173,10 +169,18 @@ public class TicketBooth {
     // done ichikawa [小テクニック]privateのメソッドがbuy始まりだと補完時に視認しづらいので... by jflute (2025/11/26)
     // 区別するためにメソッド名を e.g. doBuyPassport(), internalBuyPassport()
     // 会話上も、buyメソッドが曖昧になるので、doBuyにすると区別しやすい。
-    private void doBuyPassport(int handedMoney, int price, Quantity quantity) {
+    private TicketBuyResult doBuyPassport(int handedMoney, int price, Quantity quantity, TicketDuration availableDays) {
         assertHandedMoneyEnough(handedMoney, price);
         reduceTicketQuantity(quantity);
         countSalesProceeds(price);
+        return new TicketBuyResult(handedMoney, price, availableDays);
+    }
+
+    private TicketBuyResult doBuyPassport(int handedMoney, int price, Quantity quantity, TicketDuration availableDays, boolean isAvailableAllDay) {
+        assertHandedMoneyEnough(handedMoney, price);
+        reduceTicketQuantity(quantity);
+        countSalesProceeds(price);
+        return new TicketBuyResult(handedMoney, price, availableDays, isAvailableAllDay);
     }
 
     // done ichihara checkという言葉、どっちをチェックをするの？どっちで例外が発生するの？ by jflute (2025/11/14)
