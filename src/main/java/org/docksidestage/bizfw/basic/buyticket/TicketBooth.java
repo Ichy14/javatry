@@ -49,6 +49,20 @@ package org.docksidestage.bizfw.basic.buyticket;
 
 // done ichikawa javadoc, author追加お願いします by jflute (2025/10/31)
 
+// #1on1: ログ設計の話、現場のログ設定を見ながら参考に (2026/01/14)
+//
+// 参考までに↓
+// // LastaFluteのアプリログ | LastaFlute
+// https://dbflute.seasar.org/ja/lastaflute/howto/structure/applogging.html#envlogsettings
+//
+
+// #1on1: ロギングフレームワーク (2026/01/14)
+//
+// Log4j (1.x) → Logback (Slf4j)
+//  ↓
+// Log4j 2 (2.x)
+//
+
 import static org.docksidestage.bizfw.basic.buyticket.Ticket.TicketDuration;
 
 /**
@@ -213,7 +227,7 @@ public class TicketBooth {
         try {
             quantity.reduce(); // Quantityをmutableな設計にするならこれでいい（参照先であるQuantityが内部でもつフィールドの値を変えることで状態変化を表現するから）
         } catch (Quantity.OutOfStockException e) {
-            // TODO done ichikawa 例外が途切れているので、引き継ぎましょう by jflute (2025/12/24)
+            // done ichikawa 例外が途切れているので、引き継ぎましょう by jflute (2025/12/24)
             throw new TicketSoldOutException("Sold out ticket", e);
         }
     }
@@ -234,15 +248,17 @@ public class TicketBooth {
 
         private static final long serialVersionUID = 1L;
 
-        public TicketSoldOutException(String msg) {
+        public TicketSoldOutException(String msg) { // 起点
             super(msg);
         }
-        public TicketSoldOutException(String msg, Throwable cause) {
+        public TicketSoldOutException(String msg, Throwable cause) { // 翻訳
             super(msg, cause);
         }
     }
 
     // 例外ハンドリングせずに例外をif条件で例外を発生させるときなどは、causeを受け取るべきなんだろうか？？？
+    // #1on1: catchの中じゃないthrowは、例外の起点になる場面なので、causeという概念がない。 (2026/01/14)
+    // なのでコンストラクターが二つ用意されている。
     public static class TicketShortMoneyException extends RuntimeException {
 
         private static final long serialVersionUID = 1L;
