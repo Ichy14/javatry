@@ -279,6 +279,18 @@ public class Step05ClassTest extends PlainTestCase {
         // TODO ichikawa ↑の部分は「夜しか使えないようにしましょう」で必要になるかと思います by jflute (2025/12/16)
     }
 
+    public void test_exception_chain_confirm() {
+        // ThicketSoldOutExceptionを発生させて、そのスタックトレースを確認するテスト
+        TicketBooth booth = new TicketBooth();
+        try {
+            for (int i = 0; i < 11; i++) {
+                booth.buyOneDayPassport(10000);
+            }
+        } catch (TicketSoldOutException e) {
+            log("Unexpected sold out during setup", e);
+        }
+    }
+
     // ===================================================================================
     //                                                                         Bonus Stage
     //                                                                         ===========

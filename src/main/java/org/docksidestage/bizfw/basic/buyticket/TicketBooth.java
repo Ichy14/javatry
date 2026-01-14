@@ -213,8 +213,8 @@ public class TicketBooth {
         try {
             quantity.reduce(); // Quantityをmutableな設計にするならこれでいい（参照先であるQuantityが内部でもつフィールドの値を変えることで状態変化を表現するから）
         } catch (Quantity.OutOfStockException e) {
-            // TODO ichikawa 例外が途切れているので、引き継ぎましょう by jflute (2025/12/24)
-            throw new TicketSoldOutException("Sold out ticket");
+            // TODO done ichikawa 例外が途切れているので、引き継ぎましょう by jflute (2025/12/24)
+            throw new TicketSoldOutException("Sold out ticket", e);
         }
     }
 //    private Quantity reduceTicketQuantity(Quantity quantity) {
@@ -237,14 +237,21 @@ public class TicketBooth {
         public TicketSoldOutException(String msg) {
             super(msg);
         }
+        public TicketSoldOutException(String msg, Throwable cause) {
+            super(msg, cause);
+        }
     }
 
+    // 例外ハンドリングせずに例外をif条件で例外を発生させるときなどは、causeを受け取るべきなんだろうか？？？
     public static class TicketShortMoneyException extends RuntimeException {
 
         private static final long serialVersionUID = 1L;
 
         public TicketShortMoneyException(String msg) {
             super(msg);
+        }
+        public TicketShortMoneyException(String msg, Throwable cause) {
+            super(msg, cause);
         }
     }
 
