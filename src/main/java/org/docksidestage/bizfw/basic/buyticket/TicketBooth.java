@@ -125,7 +125,7 @@ public class TicketBooth {
         // done ichikawa TicketDuration の enum が存在するのであれば、そもそもこの時点から... by jflute (2025/12/15)
         // 1とか2というリテラル数値ではなく、TicketDuration を指定してくなりますね。
         // done ichikawa new TicketBuyResultの部分もdoBuyに含めちゃってもいいのでは？ by jflute (2025/12/16)
-        // TODO ichikawa 現状doBuyの引数で、TWO_DAYを意識した引数が３つある。 by jflute (2025/12/24)
+        // done ichikawa 現状doBuyの引数で、TWO_DAYを意識した引数が３つある。 by jflute (2025/12/24)
         // Quantityに関しては状態を示すオブジェクトで、単なる参照情報ってわけじゃないから、そこは独立して良いとして...
         // なので、せめてTWO_DAYを意識した引数を２こにしたい。
         // (解決方法として関連するとぅどぅが、step5の showTicketIfNeeds() のところにあるので、一緒に考えてみるといいかも)
@@ -138,11 +138,14 @@ public class TicketBooth {
 //        Ticket ticket = new Ticket(TWO_DAY_PRICE, TicketDuration.TWO_DAYS);
 //        return doBuyPassport(handedMoney, twoDayPassQuantity, ticket);
         // TWO_DAY_PRICEを参照するということはdurationはTWO_DAYSのはずだから、それをロジックとしてもつ？
+        
+        // #1on1: publicメソッドのbuyは、買えるチケット種別のメニュー表みたいな役割で... (2026/01/28)
+        // 内部的にはdoBuyPassport()で処理は一元管理されていて、TicketTypeは今買えるかどうかは気にせず全部の種別。
         return doBuyPassport(handedMoney, twoDayPassQuantity, TicketType.TWO_DAY);
-
     }
 
     public TicketBuyResult buyNightOnlyTwoDayPassport(Integer handedMoney) {
+        // TODO ichikawa nightの情報もTicketType？ by jflute (2026/01/28)
         return doBuyPassport(handedMoney, TWO_DAY_NIGHT_ONLY_PRICE, twoDayNightOnlyPassQuantity, TicketType.TWO_DAY, false);
         // doBuyPassportの引数が増えすぎたのでどうにかしたい
         // いくつかの意味単位でオブジェクトにまとめるとか？
@@ -303,6 +306,21 @@ public class TicketBooth {
         return salesProceeds;
     }
 
+    // #1on1: enumも、レイヤーに寄って内容が変わる話 (2026/01/28)
+    // DB側のTicketType: 全部入り (古い種別: 今売ってない種別も入る)
+    // 画面側のTicketType: 今売っていい種別のみ → PurchasableTicketType と言える
+    //
+    // o DB側の区分値 (DB区分値)
+    // o 画面側の区分値 (アプリ区分値)
+    // 
+    // // アプリ区分値の自動生成(appcls) | LastaFlute
+    // https://dbflute.seasar.org/ja/lastaflute/howto/dbflute/appcls.html
+    //
+    // // 区分値のグルーピング (GroupingMap) | DBFlute
+    // https://dbflute.seasar.org/ja/manual/function/genbafit/implfit/classification/groupingmap.html
+    //
+    // 現場のグルーピングも見てみた。
+    
     public enum TicketType {
         ONE_DAY(1, ONE_DAY_PRICE),
         TWO_DAY(2, TWO_DAY_PRICE),

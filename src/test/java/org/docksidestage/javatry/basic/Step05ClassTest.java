@@ -224,8 +224,11 @@ public class Step05ClassTest extends PlainTestCase {
 
     // uncomment when you implement this exercise
     private void showTicketIfNeeds(Ticket ticket) {
-        // TODO ichikawa 今だとnightOnlyも混ざってしまうので、それが混ざらないようにしてみましょう by jflute (2025/12/16)
-        if (ticket.getAvailableDays() == TicketBooth.TicketType.TWO_DAY && ticket.isAvailableAllDay() == true) { // write determination for two-day passport
+        // done ichikawa 今だとnightOnlyも混ざってしまうので、それが混ざらないようにしてみましょう by jflute (2025/12/16)
+        // done ichikawa もう、TWO_DAYという種別をピンポイントで指定しているので、AvailableAllDay判定はすでに不要 by jflute (2026/01/28)
+        // チケット種別という概念をオブジェクトにしてしまうのが一番。
+        // #1on1: このenum同士の == の比較の仕組みの話。オブジェクトの存在そのものがDBのIDみたいな役割をする。 (2026/01/28)
+        if (ticket.getAvailableDays() == TicketBooth.TicketType.TWO_DAY) { // write determination for two-day passport
             log("two-day passport");
         } else {
             log("other");
