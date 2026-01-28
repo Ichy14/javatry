@@ -15,8 +15,6 @@
  */
 package org.docksidestage.bizfw.basic.buyticket;
 
-import org.docksidestage.bizfw.basic.buyticket.Ticket.TicketDuration;
-
 /**
  * @author n.ichikawa@bizreach.co.jp
  */
@@ -40,7 +38,7 @@ public class TicketBuyResult {
     public TicketBuyResult(
             int handedMoney,
             int displayPrice,
-            TicketDuration availableDays
+            TicketBooth.TicketDuration availableDays
     ) {
         this.ticket = new Ticket(displayPrice, availableDays);
         this.change = new Change(handedMoney, displayPrice);
@@ -49,7 +47,7 @@ public class TicketBuyResult {
     public TicketBuyResult(
             int handedMoney,
             int displayPrice,
-            TicketDuration availableDays,
+            TicketBooth.TicketDuration availableDays,
             boolean isAvailableAllDay
     ) {
         // お釣りをreturnしようとした時にhandedMoneyがdisplayPrice未満になることを防ぐためにここで例外ハンドリングするべきのような気がするが、呼び出しもとのbuyTwoDayPassportでやってるから大丈夫？

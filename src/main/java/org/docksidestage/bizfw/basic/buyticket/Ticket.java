@@ -27,20 +27,20 @@ public class Ticket {
     private final int displayPrice; // written on ticket, park guest can watch this
     private boolean alreadyIn; // true means this ticket is unavailable
     private int remainingUsage;
-    private final TicketDuration availableDays;
+    private final TicketBooth.TicketDuration availableDays;
     private boolean isAvailableAllDay;
 
     // ===================================================================================
     //                                                                         Constructor
     //                                                                         ===========
-    public Ticket(int displayPrice, TicketDuration availableDays) {
+    public Ticket(int displayPrice, TicketBooth.TicketDuration availableDays) {
         this.displayPrice = displayPrice;
         this.remainingUsage = availableDays.getAvailableDays();
         this.availableDays = availableDays;
         this.isAvailableAllDay = true;
     }
 
-    public Ticket(int displayPrice, TicketDuration availableDays, boolean isAvailableAllDay) {
+    public Ticket(int displayPrice, TicketBooth.TicketDuration availableDays, boolean isAvailableAllDay) {
         this.displayPrice = displayPrice;
         this.remainingUsage = availableDays.getAvailableDays();
         this.availableDays = availableDays;
@@ -88,32 +88,7 @@ public class Ticket {
         return remainingUsage;
     }
 
-    public TicketDuration getAvailableDays() {
+    public TicketBooth.TicketDuration getAvailableDays() {
         return availableDays;
-    }
-
-    public enum TicketDuration {
-        ONE_DAY(1),
-        TWO_DAYS(2),
-        FOUR_DAYS(4);
-
-        private final int availableDays;
-
-        TicketDuration(int day) {
-            this.availableDays = day;
-        }
-
-        public int getAvailableDays() {
-            return availableDays;
-        }
-
-        public static TicketDuration of(int day) {
-            for (TicketDuration d : values()) {
-                if (d.availableDays == day) {
-                    return d;
-                }
-            }
-            throw new IllegalArgumentException("Unknown day: " + day);
-        }
     }
 }

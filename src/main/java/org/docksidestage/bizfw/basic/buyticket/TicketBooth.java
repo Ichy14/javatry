@@ -63,8 +63,6 @@ package org.docksidestage.bizfw.basic.buyticket;
 // Log4j 2 (2.x)
 //
 
-import static org.docksidestage.bizfw.basic.buyticket.Ticket.TicketDuration;
-
 /**
  * @author jflute
  * @author ichikara
@@ -139,6 +137,8 @@ public class TicketBooth {
         // doBuyの前にチケット作っちゃうと、TicketBuyResultの中でまたTicket作ることになるからズレる。だめだ
 //        Ticket ticket = new Ticket(TWO_DAY_PRICE, TicketDuration.TWO_DAYS);
 //        return doBuyPassport(handedMoney, twoDayPassQuantity, ticket);
+        // twoDayPassの金額を受け取っているということはdurationはTWO_DAYSのはずだから、それをロジックとしてもつ？
+
     }
 
     public TicketBuyResult buyNightOnlyTwoDayPassport(Integer handedMoney) {
@@ -300,5 +300,30 @@ public class TicketBooth {
 
     public Integer getSalesProceeds() {
         return salesProceeds;
+    }
+
+    public enum TicketDuration {
+        ONE_DAY(1),
+        TWO_DAYS(2),
+        FOUR_DAYS(4);
+
+        private final int availableDays;
+
+        TicketDuration(int day) {
+            this.availableDays = day;
+        }
+
+        public int getAvailableDays() {
+            return availableDays;
+        }
+
+        public static TicketDuration of(int day) {
+            for (TicketDuration d : values()) {
+                if (d.availableDays == day) {
+                    return d;
+                }
+            }
+            throw new IllegalArgumentException("Unknown day: " + day);
+        }
     }
 }
