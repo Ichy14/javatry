@@ -75,7 +75,7 @@ public class TicketBooth {
     private static final int MAX_QUANTITY = 10;
     private static final int ONE_DAY_PRICE = 7400; // when 2019/06/15
     private static final int TWO_DAY_PRICE = 13200;
-    private static final int AFTER_FIVE_TWO_DAY_PRICE = 7400;
+    private static final int TWO_DAY_NIGHT_ONLY_PRICE = 7400;
     private static final int FOUR_DAY_PRICE = 22400;
 
     // ===================================================================================
@@ -87,7 +87,7 @@ public class TicketBooth {
     // done ichikawa インスタンス自体がmutableで状態を変化させられるので、変数の再代入がないからfinalでOK by jflute (2025/11/26)
     private final Quantity oneDayPassQuantity = new Quantity(MAX_QUANTITY);
     private final Quantity twoDayPassQuantity = new Quantity(MAX_QUANTITY);
-    private final Quantity afterFiveTwoDayPassQuantity = new Quantity(MAX_QUANTITY);
+    private final Quantity twoDayNightOnlyPassQuantity = new Quantity(MAX_QUANTITY);
     private final Quantity fourDayPassQuantity = new Quantity(MAX_QUANTITY);
     private Integer salesProceeds; // null allowed: until first purchase
     // 1-dayパスと2-dayパスの売上を分けるべきか？実際には別れていた方が嬉しそうな気はする
@@ -118,7 +118,7 @@ public class TicketBooth {
      * @throws TicketShortMoneyException When the specified money is short for purchase.
      */
     public Ticket buyOneDayPassport(Integer handedMoney) {
-        return doBuyPassport(handedMoney, ONE_DAY_PRICE, oneDayPassQuantity, TicketDuration.ONE_DAY).getTicket(); // 再利用版
+        return doBuyPassport(handedMoney, ONE_DAY_PRICE, oneDayPassQuantity, TicketType.ONE_DAY).getTicket(); // 再利用版
     }
 
     public TicketBuyResult buyTwoDayPassport(Integer handedMoney) {
@@ -132,7 +132,7 @@ public class TicketBooth {
         // hint1: オブジェクト指向っぽいね
 
         // 表示価格とチケット種別は変動しない・関連した情報、渡されるお金は独立、残数は状態が変化するから別にしたい、、、
-        return doBuyPassport(handedMoney, TWO_DAY_PRICE, twoDayPassQuantity, TicketDuration.TWO_DAYS);
+        return doBuyPassport(handedMoney, TWO_DAY_PRICE, twoDayPassQuantity, TicketType.TWO_DAY);
 
         // doBuyの前にチケット作っちゃうと、TicketBuyResultの中でまたTicket作ることになるからズレる。だめだ
 //        Ticket ticket = new Ticket(TWO_DAY_PRICE, TicketDuration.TWO_DAYS);
@@ -142,13 +142,13 @@ public class TicketBooth {
     }
 
     public TicketBuyResult buyNightOnlyTwoDayPassport(Integer handedMoney) {
-        return doBuyPassport(handedMoney, AFTER_FIVE_TWO_DAY_PRICE, afterFiveTwoDayPassQuantity, TicketDuration.TWO_DAYS, false);
+        return doBuyPassport(handedMoney, TWO_DAY_NIGHT_ONLY_PRICE, twoDayNightOnlyPassQuantity, TicketType.TWO_DAY, false);
         // doBuyPassportの引数が増えすぎたのでどうにかしたい
         // いくつかの意味単位でオブジェクトにまとめるとか？
     }
 
     public TicketBuyResult buyFourDayPassport(Integer handedMoney) {
-        return doBuyPassport(handedMoney, FOUR_DAY_PRICE, fourDayPassQuantity, TicketDuration.FOUR_DAYS);
+        return doBuyPassport(handedMoney, FOUR_DAY_PRICE, fourDayPassQuantity, TicketType.FOUR_DAY);
     }
 
 // 以前の実装
@@ -209,13 +209,13 @@ public class TicketBooth {
     }
 
     // リファクタ前のやつ（2026/01/28）
-    private TicketBuyResult doBuyPassport(int handedMoney, int price, Quantity quantity, TicketDuration availableDays) {
+    private TicketBuyResult doBuyPassport(int handedMoney, int price, Quantity quantity, TicketType availableDays) {
         assertHandedMoneyEnough(handedMoney, price);
         reduceTicketQuantity(quantity);
         countSalesProceeds(price);
         return new TicketBuyResult(handedMoney, price, availableDays);
     }
-    private TicketBuyResult doBuyPassport(int handedMoney, int price, Quantity quantity, TicketDuration availableDays, boolean isAvailableAllDay) {
+    private TicketBuyResult doBuyPassport(int handedMoney, int price, Quantity quantity, TicketType availableDays, boolean isAvailableAllDay) {
         assertHandedMoneyEnough(handedMoney, price);
         reduceTicketQuantity(quantity);
         countSalesProceeds(price);
@@ -302,23 +302,30 @@ public class TicketBooth {
         return salesProceeds;
     }
 
-    public enum TicketDuration {
-        ONE_DAY(1),
-        TWO_DAYS(2),
-        FOUR_DAYS(4);
+    public enum TicketType {
+        ONE_DAY(1, ONE_DAY_PRICE),
+        TWO_DAY(2, TWO_DAY_PRICE),
+        TWO_DAY_NIGHT_ONLY(2, TWO_DAY_NIGHT_ONLY_PRICE),
+        FOUR_DAY(4, FOUR_DAY_PRICE);
 
         private final int availableDays;
+        private final int price;
 
-        TicketDuration(int day) {
+        TicketType(int day, int price) {
             this.availableDays = day;
+            this.price = price;
         }
 
         public int getAvailableDays() {
             return availableDays;
         }
 
-        public static TicketDuration of(int day) {
-            for (TicketDuration d : values()) {
+        public int getPrice() {
+            return price;
+        }
+
+        public static TicketType of(int day) {
+            for (TicketType d : values()) {
                 if (d.availableDays == day) {
                     return d;
                 }

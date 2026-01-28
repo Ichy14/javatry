@@ -38,7 +38,7 @@ public class TicketBuyResult {
     public TicketBuyResult(
             int handedMoney,
             int displayPrice,
-            TicketBooth.TicketDuration availableDays
+            TicketBooth.TicketType availableDays
     ) {
         this.ticket = new Ticket(displayPrice, availableDays);
         this.change = new Change(handedMoney, displayPrice);
@@ -47,7 +47,7 @@ public class TicketBuyResult {
     public TicketBuyResult(
             int handedMoney,
             int displayPrice,
-            TicketBooth.TicketDuration availableDays,
+            TicketBooth.TicketType availableDays,
             boolean isAvailableAllDay
     ) {
         // お釣りをreturnしようとした時にhandedMoneyがdisplayPrice未満になることを防ぐためにここで例外ハンドリングするべきのような気がするが、呼び出しもとのbuyTwoDayPassportでやってるから大丈夫？

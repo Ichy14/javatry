@@ -225,7 +225,7 @@ public class Step05ClassTest extends PlainTestCase {
     // uncomment when you implement this exercise
     private void showTicketIfNeeds(Ticket ticket) {
         // TODO ichikawa 今だとnightOnlyも混ざってしまうので、それが混ざらないようにしてみましょう by jflute (2025/12/16)
-        if (ticket.getAvailableDays() == TicketBooth.TicketDuration.TWO_DAYS && ticket.isAvailableAllDay() == true) { // write determination for two-day passport
+        if (ticket.getAvailableDays() == TicketBooth.TicketType.TWO_DAY && ticket.isAvailableAllDay() == true) { // write determination for two-day passport
             log("two-day passport");
         } else {
             log("other");
