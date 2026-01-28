@@ -132,12 +132,13 @@ public class TicketBooth {
         // hint1: オブジェクト指向っぽいね
 
         // 表示価格とチケット種別は変動しない・関連した情報、渡されるお金は独立、残数は状態が変化するから別にしたい、、、
-        return doBuyPassport(handedMoney, TWO_DAY_PRICE, twoDayPassQuantity, TicketType.TWO_DAY);
+//        return doBuyPassport(handedMoney, TWO_DAY_PRICE, twoDayPassQuantity, TicketType.TWO_DAY);
 
         // doBuyの前にチケット作っちゃうと、TicketBuyResultの中でまたTicket作ることになるからズレる。だめだ
 //        Ticket ticket = new Ticket(TWO_DAY_PRICE, TicketDuration.TWO_DAYS);
 //        return doBuyPassport(handedMoney, twoDayPassQuantity, ticket);
         // TWO_DAY_PRICEを参照するということはdurationはTWO_DAYSのはずだから、それをロジックとしてもつ？
+        return doBuyPassport(handedMoney, twoDayPassQuantity, TicketType.TWO_DAY);
 
     }
 
@@ -201,11 +202,11 @@ public class TicketBooth {
     // 単なる引数クラスじゃなく、オブジェクト的に意味をうまく使って解決ができれば...
     // (TwoDayのbuyメソッドの方のとぅどぅで続きを...)
 
-    private TicketBuyResult doBuyPassport(int handedMoney,Quantity quantity, Ticket ticket) {
-        assertHandedMoneyEnough(handedMoney, ticket.getDisplayPrice());
+    private TicketBuyResult doBuyPassport(int handedMoney,Quantity quantity, TicketType ticketType) {
+        assertHandedMoneyEnough(handedMoney, ticketType.getPrice());
         reduceTicketQuantity(quantity);
-        countSalesProceeds(ticket.getDisplayPrice());
-        return new TicketBuyResult(handedMoney, ticket.getDisplayPrice(), ticket.getAvailableDays());
+        countSalesProceeds(ticketType.getPrice());
+        return new TicketBuyResult(handedMoney, ticketType.getPrice(), ticketType);
     }
 
     // リファクタ前のやつ（2026/01/28）
