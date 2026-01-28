@@ -137,7 +137,7 @@ public class TicketBooth {
         // doBuyの前にチケット作っちゃうと、TicketBuyResultの中でまたTicket作ることになるからズレる。だめだ
 //        Ticket ticket = new Ticket(TWO_DAY_PRICE, TicketDuration.TWO_DAYS);
 //        return doBuyPassport(handedMoney, twoDayPassQuantity, ticket);
-        // twoDayPassの金額を受け取っているということはdurationはTWO_DAYSのはずだから、それをロジックとしてもつ？
+        // TWO_DAY_PRICEを参照するということはdurationはTWO_DAYSのはずだから、それをロジックとしてもつ？
 
     }
 
