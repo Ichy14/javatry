@@ -134,9 +134,11 @@ public class TicketBooth {
         // hint1: オブジェクト指向っぽいね
 
         // 表示価格とチケット種別は変動しない・関連した情報、渡されるお金は独立、残数は状態が変化するから別にしたい、、、
-//        return doBuyPassport(handedMoney, TWO_DAY_PRICE, twoDayPassQuantity, TicketDuration.TWO_DAYS);
-        Ticket ticket = new Ticket(TWO_DAY_PRICE, TicketDuration.TWO_DAYS);
-        return doBuyPassport(handedMoney, twoDayPassQuantity, ticket);
+        return doBuyPassport(handedMoney, TWO_DAY_PRICE, twoDayPassQuantity, TicketDuration.TWO_DAYS);
+
+        // doBuyの前にチケット作っちゃうと、TicketBuyResultの中でまたTicket作ることになるからズレる。だめだ
+//        Ticket ticket = new Ticket(TWO_DAY_PRICE, TicketDuration.TWO_DAYS);
+//        return doBuyPassport(handedMoney, twoDayPassQuantity, ticket);
     }
 
     public TicketBuyResult buyNightOnlyTwoDayPassport(Integer handedMoney) {
@@ -206,13 +208,13 @@ public class TicketBooth {
         return new TicketBuyResult(handedMoney, ticket.getDisplayPrice(), ticket.getAvailableDays());
     }
 
+    // リファクタ前のやつ（2026/01/28）
     private TicketBuyResult doBuyPassport(int handedMoney, int price, Quantity quantity, TicketDuration availableDays) {
         assertHandedMoneyEnough(handedMoney, price);
         reduceTicketQuantity(quantity);
         countSalesProceeds(price);
         return new TicketBuyResult(handedMoney, price, availableDays);
     }
-
     private TicketBuyResult doBuyPassport(int handedMoney, int price, Quantity quantity, TicketDuration availableDays, boolean isAvailableAllDay) {
         assertHandedMoneyEnough(handedMoney, price);
         reduceTicketQuantity(quantity);
