@@ -132,7 +132,11 @@ public class TicketBooth {
         // なので、せめてTWO_DAYを意識した引数を２こにしたい。
         // (解決方法として関連するとぅどぅが、step5の showTicketIfNeeds() のところにあるので、一緒に考えてみるといいかも)
         // hint1: オブジェクト指向っぽいね
-        return doBuyPassport(handedMoney, TWO_DAY_PRICE, twoDayPassQuantity, TicketDuration.TWO_DAYS);
+
+        // 表示価格とチケット種別は変動しない・関連した情報、渡されるお金は独立、残数は状態が変化するから別にしたい、、、
+//        return doBuyPassport(handedMoney, TWO_DAY_PRICE, twoDayPassQuantity, TicketDuration.TWO_DAYS);
+        Ticket ticket = new Ticket(TWO_DAY_PRICE, TicketDuration.TWO_DAYS);
+        return doBuyPassport(handedMoney, twoDayPassQuantity, ticket);
     }
 
     public TicketBuyResult buyNightOnlyTwoDayPassport(Integer handedMoney) {
@@ -194,6 +198,14 @@ public class TicketBooth {
     // #1on1: 引数多くてなんかなぁ by いちかわさん (2025/12/24)
     // 単なる引数クラスじゃなく、オブジェクト的に意味をうまく使って解決ができれば...
     // (TwoDayのbuyメソッドの方のとぅどぅで続きを...)
+
+    private TicketBuyResult doBuyPassport(int handedMoney,Quantity quantity, Ticket ticket) {
+        assertHandedMoneyEnough(handedMoney, ticket.getDisplayPrice());
+        reduceTicketQuantity(quantity);
+        countSalesProceeds(ticket.getDisplayPrice());
+        return new TicketBuyResult(handedMoney, ticket.getDisplayPrice(), ticket.getAvailableDays());
+    }
+
     private TicketBuyResult doBuyPassport(int handedMoney, int price, Quantity quantity, TicketDuration availableDays) {
         assertHandedMoneyEnough(handedMoney, price);
         reduceTicketQuantity(quantity);
