@@ -15,6 +15,9 @@
  */
 package org.docksidestage.bizfw.basic.buyticket;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+
 /**
  * @author jflute
  * @author n.ichikawa
@@ -56,6 +59,12 @@ public class Ticket {
         }
         // night_onlyパスの時、時刻が夕方じゃなければremainingusageを減らさない＋alreadyInもtrueにしない、みたいなロジックが必要
         // DateTimeを使うか？
+        if (!isAvailableAllDay) {
+            ZonedDateTime jstNow = ZonedDateTime.now(ZoneId.of("Asia/Tokyo"));
+            if (jstNow.getHour() < 17) { // 夕方5時から夜パスが使えるとする
+                throw new IllegalStateException("This ticket is not available until evening.");
+            }
+        }
 
         // done ichikawa (よほどバグってなければ)マイナスにはならないし、0のときもalreadyInのifでここには来ない by jflute (2025/12/16)
         remainingUsage--;
