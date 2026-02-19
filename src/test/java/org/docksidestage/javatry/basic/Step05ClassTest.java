@@ -301,6 +301,7 @@ public class Step05ClassTest extends PlainTestCase {
      * Refactor the code to the best readable code you can think of. <br>
      * (自分の中で思う最高に可読性の高いコードにリファクタリングしてみましょう)
      */
+    // チケット自身がチケット種別（TicketType）を知らないのはちょっと違和感あるなあと思っているので、そこを中心にリファクタリングしてみたい気持ち
     public void test_class_moreFix_yourRefactoring() {
         // your confirmation code here
     }
