@@ -118,7 +118,8 @@ public class TicketBooth {
      * @throws TicketShortMoneyException When the specified money is short for purchase.
      */
     public Ticket buyOneDayPassport(Integer handedMoney) {
-        return doBuyPassport(handedMoney, ONE_DAY_PRICE, oneDayPassQuantity, TicketType.ONE_DAY).getTicket(); // 再利用版
+//        return doBuyPassport(handedMoney, ONE_DAY_PRICE, oneDayPassQuantity, TicketType.ONE_DAY).getTicket(); // 再利用版
+        return doBuyPassport(handedMoney, oneDayPassQuantity, TicketType.ONE_DAY).getTicket(); // リファクタ版
     }
 
     public TicketBuyResult buyTwoDayPassport(Integer handedMoney) {
@@ -145,14 +146,16 @@ public class TicketBooth {
     }
 
     public TicketBuyResult buyNightOnlyTwoDayPassport(Integer handedMoney) {
-        // TODO ichikawa nightの情報もTicketType？ by jflute (2026/01/28)
-        return doBuyPassport(handedMoney, TWO_DAY_NIGHT_ONLY_PRICE, twoDayNightOnlyPassQuantity, TicketType.TWO_DAY, false);
+        // done TODO ichikawa nightの情報もTicketType？ by jflute (2026/01/28)
+//        return doBuyPassport(handedMoney, TWO_DAY_NIGHT_ONLY_PRICE, twoDayNightOnlyPassQuantity, TicketType.TWO_DAY, false);
         // doBuyPassportの引数が増えすぎたのでどうにかしたい
         // いくつかの意味単位でオブジェクトにまとめるとか？
+        return doBuyPassport(handedMoney, twoDayNightOnlyPassQuantity, TicketType.TWO_DAY_NIGHT_ONLY, false);  // リファクタ版
     }
 
     public TicketBuyResult buyFourDayPassport(Integer handedMoney) {
-        return doBuyPassport(handedMoney, FOUR_DAY_PRICE, fourDayPassQuantity, TicketType.FOUR_DAY);
+//        return doBuyPassport(handedMoney, FOUR_DAY_PRICE, fourDayPassQuantity, TicketType.FOUR_DAY);
+        return doBuyPassport(handedMoney, fourDayPassQuantity, TicketType.FOUR_DAY); // リファクタ版
     }
 
 // 以前の実装
@@ -210,6 +213,12 @@ public class TicketBooth {
         reduceTicketQuantity(quantity);
         countSalesProceeds(ticketType.getPrice());
         return new TicketBuyResult(handedMoney, ticketType.getPrice(), ticketType);
+    }
+    private TicketBuyResult doBuyPassport(int handedMoney,Quantity quantity, TicketType ticketType, boolean isAvailableAllDay) {
+        assertHandedMoneyEnough(handedMoney, ticketType.getPrice());
+        reduceTicketQuantity(quantity);
+        countSalesProceeds(ticketType.getPrice());
+        return new TicketBuyResult(handedMoney, ticketType.getPrice(), ticketType, isAvailableAllDay);
     }
 
     // リファクタ前のやつ（2026/01/28）

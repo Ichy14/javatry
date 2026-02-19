@@ -54,6 +54,8 @@ public class Ticket {
         if (alreadyIn) {
             throw new IllegalStateException("Already in park by this ticket: displayedPrice=" + displayPrice);
         }
+        // night_onlyパスの時、時刻が夕方じゃなければremainingusageを減らさない＋alreadyInもtrueにしない、みたいなロジックが必要
+        // DateTimeを使うか？
 
         // done ichikawa (よほどバグってなければ)マイナスにはならないし、0のときもalreadyInのifでここには来ない by jflute (2025/12/16)
         remainingUsage--;
