@@ -146,10 +146,19 @@ public class TicketBooth {
     }
 
     public TicketBuyResult buyNightOnlyTwoDayPassport(Integer handedMoney) {
-        // done TODO ichikawa nightの情報もTicketType？ by jflute (2026/01/28)
+        // done ichikawa nightの情報もTicketType？ by jflute (2026/01/28)
 //        return doBuyPassport(handedMoney, TWO_DAY_NIGHT_ONLY_PRICE, twoDayNightOnlyPassQuantity, TicketType.TWO_DAY, false);
         // doBuyPassportの引数が増えすぎたのでどうにかしたい
         // いくつかの意味単位でオブジェクトにまとめるとか？
+        // #1on1: nightのときだけ増えてる, false の引数から、時間帯種別までに辿り着く思考の道 (2026/02/19)
+        // 一歩ずつリファクタリングして(理想ではないとわかってても)、さらに次の一歩を探していくスタイル。
+        // TODO ichikawa [読み物課題] リファクタリングは思考のツール by jflute (2026/02/19)
+        // https://jflute.hatenadiary.jp/entry/20121202/1354442627
+        // 今回は、ラフスケッチなリファクタリングをしていって、一歩ずつマシにしていって、次のマシを見つけて最終的な理想に到達。
+        // #1on1: プロトタイピング思考のお話も (2026/02/19)
+        // TODO ichikawa [読み物課題] jfluteのプログラマーオススメ五冊 by jflute (2026/02/19)
+        // https://jflute.hatenadiary.jp/entry/20150727/fivebooks
+        // TODO ichikawa ", false" を無くしてみましょう by jflute (2026/02/19)
         return doBuyPassport(handedMoney, twoDayNightOnlyPassQuantity, TicketType.TWO_DAY_NIGHT_ONLY, false);  // リファクタ版
     }
 
