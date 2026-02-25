@@ -157,7 +157,9 @@ public class TicketBooth {
         // 今回は、ラフスケッチなリファクタリングをしていって、一歩ずつマシにしていって、次のマシを見つけて最終的な理想に到達。
         // (ichikawa) 作業中は少しずつ変えていったが、それをcommitするのを忘れて一気に大きな変更のcommitをしてしまったorz
         // #1on1: プロトタイピング思考のお話も (2026/02/19)
-        // TODO ichikawa [読み物課題] jfluteのプログラマーオススメ五冊 by jflute (2026/02/19)
+        // done TODO ichikawa [読み物課題] jfluteのプログラマーオススメ五冊 by jflute (2026/02/19)
+        // (ichikawa) commitに「何をした、その背景・理由は」を書いておく、それが簡潔に書けるレベルの変更に留める、というのも「気づかい」だよな、、、と思うなどしました
+        // 質問：意図がわかるコード、てなんでしょう？？？
         // https://jflute.hatenadiary.jp/entry/20150727/fivebooks
         // done TODO ichikawa ", false" を無くしてみましょう by jflute (2026/02/19)
         // return doBuyPassport(handedMoney, twoDayNightOnlyPassQuantity, TicketType.TWO_DAY_NIGHT_ONLY, false);  // リファクタ版
