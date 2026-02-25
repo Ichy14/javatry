@@ -340,17 +340,19 @@ public class TicketBooth {
     // 現場のグルーピングも見てみた。
     
     public enum TicketType {
-        ONE_DAY(1, ONE_DAY_PRICE),
-        TWO_DAY(2, TWO_DAY_PRICE),
-        TWO_DAY_NIGHT_ONLY(2, TWO_DAY_NIGHT_ONLY_PRICE),
-        FOUR_DAY(4, FOUR_DAY_PRICE);
+        ONE_DAY(1, ONE_DAY_PRICE, AvailableTimeType.ALL_DAY),
+        TWO_DAY(2, TWO_DAY_PRICE, AvailableTimeType.ALL_DAY),
+        TWO_DAY_NIGHT_ONLY(2, TWO_DAY_NIGHT_ONLY_PRICE, AvailableTimeType.NIGHT_ONLY),
+        FOUR_DAY(4, FOUR_DAY_PRICE, AvailableTimeType.ALL_DAY);
 
         private final int availableDays;
         private final int price;
+        private final AvailableTimeType availableTime;
 
-        TicketType(int day, int price) {
+        TicketType(int day, int price, AvailableTimeType availableTime) {
             this.availableDays = day;
             this.price = price;
+            this.availableTime = availableTime;
         }
 
         public int getAvailableDays() {
@@ -361,6 +363,10 @@ public class TicketBooth {
             return price;
         }
 
+        public AvailableTimeType getAvailableTime() {
+            return availableTime;
+        }
+
         public static TicketType of(int day) {
             for (TicketType d : values()) {
                 if (d.availableDays == day) {
@@ -368,6 +374,10 @@ public class TicketBooth {
                 }
             }
             throw new IllegalArgumentException("Unknown day: " + day);
+        }
+
+        private enum AvailableTimeType {
+            ALL_DAY, NIGHT_ONLY
         }
     }
 }
