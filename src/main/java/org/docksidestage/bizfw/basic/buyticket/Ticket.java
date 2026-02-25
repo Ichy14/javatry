@@ -31,24 +31,26 @@ public class Ticket {
     private boolean alreadyIn; // true means this ticket is unavailable
     private int remainingUsage;
     private final TicketBooth.TicketType availableDays;
-    private boolean isAvailableAllDay;
+    private final TicketBooth.AvailableTimeType availableTime;
 
     // ===================================================================================
     //                                                                         Constructor
     //                                                                         ===========
-    public Ticket(int displayPrice, TicketBooth.TicketType availableDays) {
+    public Ticket(int displayPrice, TicketBooth.TicketType ticketType) {
         this.displayPrice = displayPrice;
-        this.remainingUsage = availableDays.getAvailableDays();
-        this.availableDays = availableDays;
-        this.isAvailableAllDay = true;
+        this.alreadyIn = false;
+        this.remainingUsage = ticketType.getAvailableDays();
+        this.availableDays = ticketType;
+        this.availableTime = ticketType.getAvailableTime();
     }
 
-    public Ticket(int displayPrice, TicketBooth.TicketType availableDays, boolean isAvailableAllDay) {
-        this.displayPrice = displayPrice;
-        this.remainingUsage = availableDays.getAvailableDays();
-        this.availableDays = availableDays;
-        this.isAvailableAllDay = isAvailableAllDay;
-    }
+    // リファクタ前（2026/02/25）
+//    public Ticket(int displayPrice, TicketBooth.TicketType availableDays, boolean isAvailableAllDay) {
+//        this.displayPrice = displayPrice;
+//        this.remainingUsage = availableDays.getAvailableDays();
+//        this.availableDays = availableDays;
+//        this.isAvailableAllDay = isAvailableAllDay;
+//    }
 
     // ===================================================================================
     //                                                                             In Park
@@ -59,7 +61,7 @@ public class Ticket {
         }
         // night_onlyパスの時、時刻が夕方じゃなければremainingusageを減らさない＋alreadyInもtrueにしない、みたいなロジックが必要
         // DateTimeを使うか？
-        if (!isAvailableAllDay) {
+        if (availableTime == TicketBooth.AvailableTimeType.NIGHT_ONLY) {
             ZonedDateTime jstNow = ZonedDateTime.now(ZoneId.of("Asia/Tokyo"));
             if (jstNow.getHour() < 17) { // 夕方5時から夜パスが使えるとする
                 throw new IllegalStateException("This ticket is not available until evening.");
@@ -83,8 +85,8 @@ public class Ticket {
     // ===================================================================================
     //                                                                            Accessor
     //                                                                            ========
-    public boolean isAvailableAllDay() {
-        return isAvailableAllDay;
+    public TicketBooth.AvailableTimeType getAvailableTime() {
+        return availableTime;
     }
 
     public int getDisplayPrice() {

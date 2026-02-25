@@ -158,8 +158,9 @@ public class TicketBooth {
         // #1on1: プロトタイピング思考のお話も (2026/02/19)
         // TODO ichikawa [読み物課題] jfluteのプログラマーオススメ五冊 by jflute (2026/02/19)
         // https://jflute.hatenadiary.jp/entry/20150727/fivebooks
-        // TODO ichikawa ", false" を無くしてみましょう by jflute (2026/02/19)
-        return doBuyPassport(handedMoney, twoDayNightOnlyPassQuantity, TicketType.TWO_DAY_NIGHT_ONLY, false);  // リファクタ版
+        // done TODO ichikawa ", false" を無くしてみましょう by jflute (2026/02/19)
+        // return doBuyPassport(handedMoney, twoDayNightOnlyPassQuantity, TicketType.TWO_DAY_NIGHT_ONLY, false);  // リファクタ版
+        return doBuyPassport(handedMoney, twoDayNightOnlyPassQuantity, TicketType.TWO_DAY_NIGHT_ONLY);  // リファクタ版
     }
 
     public TicketBuyResult buyFourDayPassport(Integer handedMoney) {
@@ -223,26 +224,34 @@ public class TicketBooth {
         countSalesProceeds(ticketType.getPrice());
         return new TicketBuyResult(handedMoney, ticketType.getPrice(), ticketType);
     }
-    private TicketBuyResult doBuyPassport(int handedMoney,Quantity quantity, TicketType ticketType, boolean isAvailableAllDay) {
-        assertHandedMoneyEnough(handedMoney, ticketType.getPrice());
-        reduceTicketQuantity(quantity);
-        countSalesProceeds(ticketType.getPrice());
-        return new TicketBuyResult(handedMoney, ticketType.getPrice(), ticketType, isAvailableAllDay);
-    }
+
+    // リファクタ前のやつ（2026/02/25）
+//    private TicketBuyResult doBuyPassport(int handedMoney,Quantity quantity, TicketType ticketType) {
+//        assertHandedMoneyEnough(handedMoney, ticketType.getPrice());
+//        reduceTicketQuantity(quantity);
+//        countSalesProceeds(ticketType.getPrice());
+//        return new TicketBuyResult(handedMoney, ticketType.getPrice(), ticketType);
+//    }
+//    private TicketBuyResult doBuyPassport(int handedMoney,Quantity quantity, TicketType ticketType, boolean isAvailableAllDay) {
+//        assertHandedMoneyEnough(handedMoney, ticketType.getPrice());
+//        reduceTicketQuantity(quantity);
+//        countSalesProceeds(ticketType.getPrice());
+//        return new TicketBuyResult(handedMoney, ticketType.getPrice(), ticketType, isAvailableAllDay);
+//    }
 
     // リファクタ前のやつ（2026/01/28）
-    private TicketBuyResult doBuyPassport(int handedMoney, int price, Quantity quantity, TicketType availableDays) {
-        assertHandedMoneyEnough(handedMoney, price);
-        reduceTicketQuantity(quantity);
-        countSalesProceeds(price);
-        return new TicketBuyResult(handedMoney, price, availableDays);
-    }
-    private TicketBuyResult doBuyPassport(int handedMoney, int price, Quantity quantity, TicketType availableDays, boolean isAvailableAllDay) {
-        assertHandedMoneyEnough(handedMoney, price);
-        reduceTicketQuantity(quantity);
-        countSalesProceeds(price);
-        return new TicketBuyResult(handedMoney, price, availableDays, isAvailableAllDay);
-    }
+//    private TicketBuyResult doBuyPassport(int handedMoney, int price, Quantity quantity, TicketType availableDays) {
+//        assertHandedMoneyEnough(handedMoney, price);
+//        reduceTicketQuantity(quantity);
+//        countSalesProceeds(price);
+//        return new TicketBuyResult(handedMoney, price, availableDays);
+//    }
+//    private TicketBuyResult doBuyPassport(int handedMoney, int price, Quantity quantity, TicketType availableDays, boolean isAvailableAllDay) {
+//        assertHandedMoneyEnough(handedMoney, price);
+//        reduceTicketQuantity(quantity);
+//        countSalesProceeds(price);
+//        return new TicketBuyResult(handedMoney, price, availableDays, isAvailableAllDay);
+//    }
 
     // done ichihara checkという言葉、どっちをチェックをするの？どっちで例外が発生するの？ by jflute (2025/11/14)
     // 正しい方をチェックするのか？間違った方をチェックするのか？どっちにも使える便利でありながら曖昧な言葉なので...
@@ -375,9 +384,8 @@ public class TicketBooth {
             }
             throw new IllegalArgumentException("Unknown day: " + day);
         }
-
-        private enum AvailableTimeType {
-            ALL_DAY, NIGHT_ONLY
-        }
+    }
+    public enum AvailableTimeType {
+        ALL_DAY, NIGHT_ONLY
     }
 }

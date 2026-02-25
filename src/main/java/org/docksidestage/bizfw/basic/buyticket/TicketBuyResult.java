@@ -38,28 +38,29 @@ public class TicketBuyResult {
     public TicketBuyResult(
             int handedMoney,
             int displayPrice,
-            TicketBooth.TicketType availableDays
+            TicketBooth.TicketType ticketType
     ) {
-        this.ticket = new Ticket(displayPrice, availableDays);
+        this.ticket = new Ticket(displayPrice, ticketType);
         this.change = new Change(handedMoney, displayPrice);
     }
 
-    public TicketBuyResult(
-            int handedMoney,
-            int displayPrice,
-            TicketBooth.TicketType availableDays,
-            boolean isAvailableAllDay
-    ) {
-        // お釣りをreturnしようとした時にhandedMoneyがdisplayPrice未満になることを防ぐためにここで例外ハンドリングするべきのような気がするが、呼び出しもとのbuyTwoDayPassportでやってるから大丈夫？
-        // #1on1: このResultクラスが、Domain Entity的なニュアンスで概念化されるのか？
-        // それとも、青いトレーのように一時的に受け渡しで使うためだけの入れ物クラスというニュアンスなのか？
-        // DTO？ by いちかわさん
-        // yes, DTOの種類の一つ。DTOに具体的なニュアンス(色)を付けるかどうか？ってところ。
-        // (ちょいDDDとの絡みの話)
-        // done ichikawa チケットの発行と、お釣りの計算をresultがやるかどうか？ by jflute (2025/10/31)
-        this.ticket = new Ticket(displayPrice, availableDays, isAvailableAllDay);
-        this.change = new Change(handedMoney, displayPrice);
-    }
+    // リファクタ前（2026/02/25）
+//    public TicketBuyResult(
+//            int handedMoney,
+//            int displayPrice,
+//            TicketBooth.TicketType availableDays,
+//            boolean isAvailableAllDay
+//    ) {
+//        // お釣りをreturnしようとした時にhandedMoneyがdisplayPrice未満になることを防ぐためにここで例外ハンドリングするべきのような気がするが、呼び出しもとのbuyTwoDayPassportでやってるから大丈夫？
+//        // #1on1: このResultクラスが、Domain Entity的なニュアンスで概念化されるのか？
+//        // それとも、青いトレーのように一時的に受け渡しで使うためだけの入れ物クラスというニュアンスなのか？
+//        // DTO？ by いちかわさん
+//        // yes, DTOの種類の一つ。DTOに具体的なニュアンス(色)を付けるかどうか？ってところ。
+//        // (ちょいDDDとの絡みの話)
+//        // done ichikawa チケットの発行と、お釣りの計算をresultがやるかどうか？ by jflute (2025/10/31)
+//        this.ticket = new Ticket(displayPrice, availableDays, isAvailableAllDay);
+//        this.change = new Change(handedMoney, displayPrice);
+//    }
 
     // ===================================================================================
     //                                                                            Accessor
