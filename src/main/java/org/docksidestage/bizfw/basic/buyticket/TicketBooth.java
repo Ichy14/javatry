@@ -152,9 +152,10 @@ public class TicketBooth {
         // いくつかの意味単位でオブジェクトにまとめるとか？
         // #1on1: nightのときだけ増えてる, false の引数から、時間帯種別までに辿り着く思考の道 (2026/02/19)
         // 一歩ずつリファクタリングして(理想ではないとわかってても)、さらに次の一歩を探していくスタイル。
-        // TODO ichikawa [読み物課題] リファクタリングは思考のツール by jflute (2026/02/19)
+        // done TODO ichikawa [読み物課題] リファクタリングは思考のツール by jflute (2026/02/19)
         // https://jflute.hatenadiary.jp/entry/20121202/1354442627
         // 今回は、ラフスケッチなリファクタリングをしていって、一歩ずつマシにしていって、次のマシを見つけて最終的な理想に到達。
+        // (ichikawa) 作業中は少しずつ変えていったが、それをcommitするのを忘れて一気に大きな変更のcommitをしてしまったorz
         // #1on1: プロトタイピング思考のお話も (2026/02/19)
         // TODO ichikawa [読み物課題] jfluteのプログラマーオススメ五冊 by jflute (2026/02/19)
         // https://jflute.hatenadiary.jp/entry/20150727/fivebooks
