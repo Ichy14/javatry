@@ -19,6 +19,11 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
 /**
+ * {@code Ticket}は「チケット」オブジェクトを定義するクラスです。<br>
+ * チケットの状態とチケット自体の情報を持ちます。<br>
+ * - チケットの状態：チケットがすでに入園されているかどうか、残りの使用回数を表します。<br>
+ * - チケットの情報：表示価格、利用可能な日数、利用可能な時間帯を表します。<br>
+ *
  * @author jflute
  * @author n.ichikawa
  */
@@ -55,6 +60,12 @@ public class Ticket {
     // ===================================================================================
     //                                                                             In Park
     //                                                                             =======
+    /**
+     * チケットを入園済み状態に更新するメソッドです。<br>
+     * 以下の場合に例外をスローします。<br>
+     * - チケットがすでに入園済み状態の時に呼び出された場合
+     * - 夜間専用チケットが夕方以降でない時に呼び出された場合
+     */
     public void doInPark() {
         if (alreadyIn) {
             throw new IllegalStateException("Already in park by this ticket: displayedPrice=" + displayPrice);
