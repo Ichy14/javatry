@@ -32,6 +32,12 @@ public class Ticket {
     // ===================================================================================
     //                                                                           Attribute
     //                                                                           =========
+    // TODO ichikawa すでに TicketType は days だけじゃない概念なので、ticketType でいいかなと by jflute (2026/03/03)
+    // TODO ichikawa availableTimeは TicketType から取れて、immutable なので、事前に確保してなくてもいいかも!? by jflute (2026/03/03)
+    // (でもこれは若干ケースバイケースで、availableTime が重要人物で、何度も頻繁に利用するとかだったら話は別)
+    // TODO ichikawa インスタンス変数の定義順序、何かしらの指針でぱっと見で理解できるように工夫したいところ by jflute (2026/03/03)
+    // e.g. immutable, mutableで分ける、業務的なカテゴリで分ける
+    // DBFlute の LikeSearchOption の例で説明。
     private final int displayPrice; // written on ticket, park guest can watch this
     private boolean alreadyIn; // true means this ticket is unavailable
     private int remainingUsage;
@@ -60,6 +66,7 @@ public class Ticket {
     // ===================================================================================
     //                                                                             In Park
     //                                                                             =======
+    // #1on1: JavaDoc, Good. 一方で、@throws とかあるよ話 (2026/03/03)
     /**
      * チケットを入園済み状態に更新するメソッドです。<br>
      * 以下の場合に例外をスローします。<br>
@@ -72,9 +79,14 @@ public class Ticket {
         }
         // night_onlyパスの時、時刻が夕方じゃなければremainingusageを減らさない＋alreadyInもtrueにしない、みたいなロジックが必要
         // DateTimeを使うか？
-        if (availableTime == TicketBooth.AvailableTimeType.NIGHT_ONLY) {
+        if (availableDays.getAvailableTime() == TicketBooth.AvailableTimeType.NIGHT_ONLY) {
             ZonedDateTime jstNow = ZonedDateTime.now(ZoneId.of("Asia/Tokyo"));
+            // TODO ichikawa 修行++: アフター6, スターライトパスポートとかを想像。夜の開始ニュアンスが若干違うケースがあるかも。 by jflute (2026/03/03)
+            // そういったNIGHT_ONLYのチケット種別が新しく追加されても、enumの修正だけで済むようにしたい。
+            // (NIGHT_ONLYというニュアンスに統一しても、違うものを導入しても、どちらでも。何にせよここから17を消したい)
             if (jstNow.getHour() < 17) { // 夕方5時から夜パスが使えるとする
+                // TODO ichikawa 業務例外だとしても、バグきっかけで発生することもあるので、ticketTypeくらいは入れておきたい by jflute (2026/03/03)
+                // (業務例外でもデバッグ情報はある程度入れておいた方が良い)
                 throw new IllegalStateException("This ticket is not available until evening.");
             }
         }

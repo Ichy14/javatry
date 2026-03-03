@@ -152,16 +152,18 @@ public class TicketBooth {
         // いくつかの意味単位でオブジェクトにまとめるとか？
         // #1on1: nightのときだけ増えてる, false の引数から、時間帯種別までに辿り着く思考の道 (2026/02/19)
         // 一歩ずつリファクタリングして(理想ではないとわかってても)、さらに次の一歩を探していくスタイル。
-        // done TODO ichikawa [読み物課題] リファクタリングは思考のツール by jflute (2026/02/19)
+        // done ichikawa [読み物課題] リファクタリングは思考のツール by jflute (2026/02/19)
         // https://jflute.hatenadiary.jp/entry/20121202/1354442627
         // 今回は、ラフスケッチなリファクタリングをしていって、一歩ずつマシにしていって、次のマシを見つけて最終的な理想に到達。
         // (ichikawa) 作業中は少しずつ変えていったが、それをcommitするのを忘れて一気に大きな変更のcommitをしてしまったorz
         // #1on1: プロトタイピング思考のお話も (2026/02/19)
-        // done TODO ichikawa [読み物課題] jfluteのプログラマーオススメ五冊 by jflute (2026/02/19)
+        // done ichikawa [読み物課題] jfluteのプログラマーオススメ五冊 by jflute (2026/02/19)
         // (ichikawa) commitに「何をした、その背景・理由は」を書いておく、それが簡潔に書けるレベルの変更に留める、というのも「気づかい」だよな、、、と思うなどしました
         // 質問：意図がわかるコード、てなんでしょう？？？
+        // #1on1: オーソドックスなコードなら意図は自然と伝わるが...そうでないコードは黙ってても意図は伝わらない。 (2026/03/03)
+        // できるだけコードだけで意図が伝わるような構造にする一方で、どうしてもってところもあるのでコメントなどを活用する。
         // https://jflute.hatenadiary.jp/entry/20150727/fivebooks
-        // done TODO ichikawa ", false" を無くしてみましょう by jflute (2026/02/19)
+        // done ichikawa ", false" を無くしてみましょう by jflute (2026/02/19)
         // return doBuyPassport(handedMoney, twoDayNightOnlyPassQuantity, TicketType.TWO_DAY_NIGHT_ONLY, false);  // リファクタ版
         return doBuyPassport(handedMoney, twoDayNightOnlyPassQuantity, TicketType.TWO_DAY_NIGHT_ONLY);  // リファクタ版
     }
@@ -351,6 +353,7 @@ public class TicketBooth {
     //
     // 現場のグルーピングも見てみた。
     
+    // TODO ichikawa Boothに依存したオブジェクトではないと思うので、独立させちゃった方がわかりやすいかも by jflute (2026/03/03)
     public enum TicketType {
         ONE_DAY(1, ONE_DAY_PRICE, AvailableTimeType.ALL_DAY),
         TWO_DAY(2, TWO_DAY_PRICE, AvailableTimeType.ALL_DAY),
