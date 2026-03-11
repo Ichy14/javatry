@@ -352,9 +352,4 @@ public class TicketBooth {
     // https://dbflute.seasar.org/ja/manual/function/genbafit/implfit/classification/groupingmap.html
     //
     // 現場のグルーピングも見てみた。
-    
-
-    public enum AvailableTimeType {
-        ALL_DAY, NIGHT_ONLY
-    }
 }
