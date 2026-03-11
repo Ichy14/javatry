@@ -32,7 +32,7 @@ public class Ticket {
     // ===================================================================================
     //                                                                           Attribute
     //                                                                           =========
-    // TODO ichikawa すでに TicketType は days だけじゃない概念なので、ticketType でいいかなと by jflute (2026/03/03)
+    // done TODO ichikawa すでに TicketType は days だけじゃない概念なので、ticketType でいいかなと by jflute (2026/03/03)
     // TODO ichikawa availableTimeは TicketType から取れて、immutable なので、事前に確保してなくてもいいかも!? by jflute (2026/03/03)
     // (でもこれは若干ケースバイケースで、availableTime が重要人物で、何度も頻繁に利用するとかだったら話は別)
     // TODO ichikawa インスタンス変数の定義順序、何かしらの指針でぱっと見で理解できるように工夫したいところ by jflute (2026/03/03)
@@ -41,7 +41,7 @@ public class Ticket {
     private final int displayPrice; // written on ticket, park guest can watch this
     private boolean alreadyIn; // true means this ticket is unavailable
     private int remainingUsage;
-    private final TicketType availableDays;
+    private final TicketType ticketType;
     private final AvailableTimeType availableTime;
 
     // ===================================================================================
@@ -51,7 +51,7 @@ public class Ticket {
         this.displayPrice = displayPrice;
         this.alreadyIn = false;
         this.remainingUsage = ticketType.getAvailableDays();
-        this.availableDays = ticketType;
+        this.ticketType = ticketType;
         this.availableTime = ticketType.getAvailableTime();
     }
 
@@ -79,7 +79,7 @@ public class Ticket {
         }
         // night_onlyパスの時、時刻が夕方じゃなければremainingusageを減らさない＋alreadyInもtrueにしない、みたいなロジックが必要
         // DateTimeを使うか？
-        if (availableDays.getAvailableTime() == AvailableTimeType.NIGHT_ONLY) {
+        if (ticketType.getAvailableTime() == AvailableTimeType.NIGHT_ONLY) {
             ZonedDateTime jstNow = ZonedDateTime.now(ZoneId.of("Asia/Tokyo"));
             // TODO ichikawa 修行++: アフター6, スターライトパスポートとかを想像。夜の開始ニュアンスが若干違うケースがあるかも。 by jflute (2026/03/03)
             // そういったNIGHT_ONLYのチケット種別が新しく追加されても、enumの修正だけで済むようにしたい。
@@ -124,7 +124,7 @@ public class Ticket {
         return remainingUsage;
     }
 
-    public TicketType getAvailableDays() {
-        return availableDays;
+    public TicketType getTicketType() {
+        return ticketType;
     }
 }
