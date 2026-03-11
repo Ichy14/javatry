@@ -4,16 +4,16 @@ import static org.docksidestage.bizfw.basic.buyticket.TicketBooth.*;
 
 // done TODO ichikawa Boothに依存したオブジェクトではないと思うので、独立させちゃった方がわかりやすいかも by jflute (2026/03/03)
 public enum TicketType {
-    ONE_DAY(1, ONE_DAY_PRICE, TicketBooth.AvailableTimeType.ALL_DAY),
-    TWO_DAY(2, TWO_DAY_PRICE, TicketBooth.AvailableTimeType.ALL_DAY),
-    TWO_DAY_NIGHT_ONLY(2, TWO_DAY_NIGHT_ONLY_PRICE, TicketBooth.AvailableTimeType.NIGHT_ONLY),
-    FOUR_DAY(4, FOUR_DAY_PRICE, TicketBooth.AvailableTimeType.ALL_DAY);
+    ONE_DAY(1, ONE_DAY_PRICE, AvailableTimeType.ALL_DAY),
+    TWO_DAY(2, TWO_DAY_PRICE, AvailableTimeType.ALL_DAY),
+    TWO_DAY_NIGHT_ONLY(2, TWO_DAY_NIGHT_ONLY_PRICE, AvailableTimeType.NIGHT_ONLY),
+    FOUR_DAY(4, FOUR_DAY_PRICE, AvailableTimeType.ALL_DAY);
 
     private final int availableDays;
     private final int price;
-    private final TicketBooth.AvailableTimeType availableTime;
+    private final AvailableTimeType availableTime;
 
-    TicketType(int day, int price, TicketBooth.AvailableTimeType availableTime) {
+    TicketType(int day, int price, AvailableTimeType availableTime) {
         this.availableDays = day;
         this.price = price;
         this.availableTime = availableTime;
@@ -27,7 +27,7 @@ public enum TicketType {
         return price;
     }
 
-    public TicketBooth.AvailableTimeType getAvailableTime() {
+    public AvailableTimeType getAvailableTime() {
         return availableTime;
     }
 

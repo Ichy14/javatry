@@ -42,7 +42,7 @@ public class Ticket {
     private boolean alreadyIn; // true means this ticket is unavailable
     private int remainingUsage;
     private final TicketType availableDays;
-    private final TicketBooth.AvailableTimeType availableTime;
+    private final AvailableTimeType availableTime;
 
     // ===================================================================================
     //                                                                         Constructor
@@ -79,7 +79,7 @@ public class Ticket {
         }
         // night_onlyパスの時、時刻が夕方じゃなければremainingusageを減らさない＋alreadyInもtrueにしない、みたいなロジックが必要
         // DateTimeを使うか？
-        if (availableDays.getAvailableTime() == TicketBooth.AvailableTimeType.NIGHT_ONLY) {
+        if (availableDays.getAvailableTime() == AvailableTimeType.NIGHT_ONLY) {
             ZonedDateTime jstNow = ZonedDateTime.now(ZoneId.of("Asia/Tokyo"));
             // TODO ichikawa 修行++: アフター6, スターライトパスポートとかを想像。夜の開始ニュアンスが若干違うケースがあるかも。 by jflute (2026/03/03)
             // そういったNIGHT_ONLYのチケット種別が新しく追加されても、enumの修正だけで済むようにしたい。
@@ -108,7 +108,7 @@ public class Ticket {
     // ===================================================================================
     //                                                                            Accessor
     //                                                                            ========
-    public TicketBooth.AvailableTimeType getAvailableTime() {
+    public AvailableTimeType getAvailableTime() {
         return availableTime;
     }
 
