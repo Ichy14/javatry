@@ -38,7 +38,7 @@ public class TicketBuyResult {
     public TicketBuyResult(
             int handedMoney,
             int displayPrice,
-            TicketBooth.TicketType ticketType
+            TicketType ticketType
     ) {
         this.ticket = new Ticket(displayPrice, ticketType);
         this.change = new Change(handedMoney, displayPrice);

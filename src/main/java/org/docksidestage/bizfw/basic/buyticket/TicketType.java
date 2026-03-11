@@ -2,7 +2,7 @@ package org.docksidestage.bizfw.basic.buyticket;
 
 import static org.docksidestage.bizfw.basic.buyticket.TicketBooth.*;
 
-// TODO ichikawa Boothに依存したオブジェクトではないと思うので、独立させちゃった方がわかりやすいかも by jflute (2026/03/03)
+// done TODO ichikawa Boothに依存したオブジェクトではないと思うので、独立させちゃった方がわかりやすいかも by jflute (2026/03/03)
 public enum TicketType {
     ONE_DAY(1, ONE_DAY_PRICE, TicketBooth.AvailableTimeType.ALL_DAY),
     TWO_DAY(2, TWO_DAY_PRICE, TicketBooth.AvailableTimeType.ALL_DAY),

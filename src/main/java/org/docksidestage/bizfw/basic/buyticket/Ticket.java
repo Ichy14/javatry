@@ -41,13 +41,13 @@ public class Ticket {
     private final int displayPrice; // written on ticket, park guest can watch this
     private boolean alreadyIn; // true means this ticket is unavailable
     private int remainingUsage;
-    private final TicketBooth.TicketType availableDays;
+    private final TicketType availableDays;
     private final TicketBooth.AvailableTimeType availableTime;
 
     // ===================================================================================
     //                                                                         Constructor
     //                                                                         ===========
-    public Ticket(int displayPrice, TicketBooth.TicketType ticketType) {
+    public Ticket(int displayPrice, TicketType ticketType) {
         this.displayPrice = displayPrice;
         this.alreadyIn = false;
         this.remainingUsage = ticketType.getAvailableDays();
@@ -124,7 +124,7 @@ public class Ticket {
         return remainingUsage;
     }
 
-    public TicketBooth.TicketType getAvailableDays() {
+    public TicketType getAvailableDays() {
         return availableDays;
     }
 }
