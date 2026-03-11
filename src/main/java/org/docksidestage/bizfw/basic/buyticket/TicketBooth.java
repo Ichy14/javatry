@@ -73,10 +73,10 @@ public class TicketBooth {
     //                                                                          Definition
     //                                                                          ==========
     private static final int MAX_QUANTITY = 10;
-    private static final int ONE_DAY_PRICE = 7400; // when 2019/06/15
-    private static final int TWO_DAY_PRICE = 13200;
-    private static final int TWO_DAY_NIGHT_ONLY_PRICE = 7400;
-    private static final int FOUR_DAY_PRICE = 22400;
+    static final int ONE_DAY_PRICE = 7400; // when 2019/06/15
+    static final int TWO_DAY_PRICE = 13200;
+    static final int TWO_DAY_NIGHT_ONLY_PRICE = 7400;
+    static final int FOUR_DAY_PRICE = 22400;
 
     // ===================================================================================
     //                                                                           Attribute
