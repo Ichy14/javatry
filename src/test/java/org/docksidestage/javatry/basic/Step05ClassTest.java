@@ -278,7 +278,7 @@ public class Step05ClassTest extends PlainTestCase {
         TicketBooth booth = new TicketBooth();
         TicketBuyResult buyResult = booth.buyNightOnlyTwoDayPassport(7400);
         Ticket nightOnlyTwoDayPassport = buyResult.getTicket();
-        log(nightOnlyTwoDayPassport.getAvailableTime()); // should be false
+        log(nightOnlyTwoDayPassport.getTicketType().getAvailableTime()); // should be false
         // DateTime系を使って、夜かどうかの判定ロジックに応じてbooleanを返すのをTicketクラスに実装したい気持ち
         // done ichikawa ↑の部分は「夜しか使えないようにしましょう」で必要になるかと思います by jflute (2025/12/16)
         // TODO ichikawa 修行#: テストが実施時間によって通ったり落ちたりするのをどうにかしたい by jflute (2026/03/03)

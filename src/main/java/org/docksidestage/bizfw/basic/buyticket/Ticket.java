@@ -33,8 +33,9 @@ public class Ticket {
     //                                                                           Attribute
     //                                                                           =========
     // done TODO ichikawa すでに TicketType は days だけじゃない概念なので、ticketType でいいかなと by jflute (2026/03/03)
-    // TODO ichikawa availableTimeは TicketType から取れて、immutable なので、事前に確保してなくてもいいかも!? by jflute (2026/03/03)
+    // done TODO ichikawa availableTimeは TicketType から取れて、immutable なので、事前に確保してなくてもいいかも!? by jflute (2026/03/03)
     // (でもこれは若干ケースバイケースで、availableTime が重要人物で、何度も頻繁に利用するとかだったら話は別)
+    // (ichikawa) availableTimeは、TicketTypeから取れる & 頻繁には利用しないので、除外。今後使うことになったとしても、リファクタは難しくはないはず。
     // TODO ichikawa インスタンス変数の定義順序、何かしらの指針でぱっと見で理解できるように工夫したいところ by jflute (2026/03/03)
     // e.g. immutable, mutableで分ける、業務的なカテゴリで分ける
     // DBFlute の LikeSearchOption の例で説明。
@@ -42,7 +43,6 @@ public class Ticket {
     private boolean alreadyIn; // true means this ticket is unavailable
     private int remainingUsage;
     private final TicketType ticketType;
-    private final AvailableTimeType availableTime;
 
     // ===================================================================================
     //                                                                         Constructor
@@ -52,7 +52,6 @@ public class Ticket {
         this.alreadyIn = false;
         this.remainingUsage = ticketType.getAvailableDays();
         this.ticketType = ticketType;
-        this.availableTime = ticketType.getAvailableTime();
     }
 
     // リファクタ前（2026/02/25）
@@ -108,10 +107,6 @@ public class Ticket {
     // ===================================================================================
     //                                                                            Accessor
     //                                                                            ========
-    public AvailableTimeType getAvailableTime() {
-        return availableTime;
-    }
-
     public int getDisplayPrice() {
         return displayPrice;
     }
