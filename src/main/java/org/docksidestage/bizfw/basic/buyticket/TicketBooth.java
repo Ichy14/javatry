@@ -73,6 +73,16 @@ public class TicketBooth {
     //                                                                          Definition
     //                                                                          ==========
     private static final int MAX_QUANTITY = 10;
+
+    // #1on1: priceは誰が決めるものなのか？業務概念的な考え方 (2026/03/11)
+    // 売り場が複数あったら、チケット種別で共通的なpriceとも言える by jflute
+    // 一方で、チケット種別だけでpriceが決まるってのも違和感 by ichikawaさん
+    // 確かに、priceは種別だけってよりは他の要因でも変化しそう by jflute
+    // 変化要因は想像すると色々とある。ので、金額を決めるオブジェクトがあってもいいかも by jflute
+    // もしくは、チケット種別のpriceはregularPriceという感覚なら柔軟性あり。
+    // 考えるとキリがないので、javatryとしては思考トレーニングに止めて...
+    // どっちに持たせるかはキメの問題で。
+    // (TicketBoothを、物理のブースと解釈するか、論理のブースと解釈するか)
     static final int ONE_DAY_PRICE = 7400; // when 2019/06/15
     static final int TWO_DAY_PRICE = 13200;
     static final int TWO_DAY_NIGHT_ONLY_PRICE = 7400;
