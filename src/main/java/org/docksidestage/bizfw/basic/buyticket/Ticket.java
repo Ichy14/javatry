@@ -32,8 +32,8 @@ public class Ticket {
     // ===================================================================================
     //                                                                           Attribute
     //                                                                           =========
-    // done TODO ichikawa すでに TicketType は days だけじゃない概念なので、ticketType でいいかなと by jflute (2026/03/03)
-    // done TODO ichikawa availableTimeは TicketType から取れて、immutable なので、事前に確保してなくてもいいかも!? by jflute (2026/03/03)
+    // done ichikawa すでに TicketType は days だけじゃない概念なので、ticketType でいいかなと by jflute (2026/03/03)
+    // done ichikawa availableTimeは TicketType から取れて、immutable なので、事前に確保してなくてもいいかも!? by jflute (2026/03/03)
     // (でもこれは若干ケースバイケースで、availableTime が重要人物で、何度も頻繁に利用するとかだったら話は別)
     // (ichikawa) availableTimeは、TicketTypeから取れる & 頻繁には利用しないので、除外。今後使うことになったとしても、リファクタは難しくはないはず。
     // TODO ichikawa インスタンス変数の定義順序、何かしらの指針でぱっと見で理解できるように工夫したいところ by jflute (2026/03/03)

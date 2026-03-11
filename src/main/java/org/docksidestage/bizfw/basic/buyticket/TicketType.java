@@ -2,7 +2,14 @@ package org.docksidestage.bizfw.basic.buyticket;
 
 import static org.docksidestage.bizfw.basic.buyticket.TicketBooth.*;
 
-// done TODO ichikawa Boothに依存したオブジェクトではないと思うので、独立させちゃった方がわかりやすいかも by jflute (2026/03/03)
+// #1on1: コミット粒度、1コミットで1やった、って感じでOK (少なくともjavatryでは) (2026/03/11)
+// 一方で、現場の粒度についての話。スカッシュとか。
+// gitコメントのチケット番号のお話。
+// gitコメントに背景書くというのはとても良い習慣。but jfluteとしては、コードに書こう感。 (2026/03/11)
+// プルリクであれこれ説明するならコードにコメントに書こう
+// https://jflute.hatenadiary.jp/entry/20181016/pulcomment
+
+// done ichikawa Boothに依存したオブジェクトではないと思うので、独立させちゃった方がわかりやすいかも by jflute (2026/03/03)
 public enum TicketType {
     ONE_DAY(1, ONE_DAY_PRICE, AvailableTimeType.ALL_DAY),
     TWO_DAY(2, TWO_DAY_PRICE, AvailableTimeType.ALL_DAY),
