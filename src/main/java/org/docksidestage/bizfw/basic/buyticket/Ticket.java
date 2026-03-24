@@ -36,13 +36,14 @@ public class Ticket {
     // done ichikawa availableTimeは TicketType から取れて、immutable なので、事前に確保してなくてもいいかも!? by jflute (2026/03/03)
     // (でもこれは若干ケースバイケースで、availableTime が重要人物で、何度も頻繁に利用するとかだったら話は別)
     // (ichikawa) availableTimeは、TicketTypeから取れる & 頻繁には利用しないので、除外。今後使うことになったとしても、リファクタは難しくはないはず。
-    // TODO ichikawa インスタンス変数の定義順序、何かしらの指針でぱっと見で理解できるように工夫したいところ by jflute (2026/03/03)
+    // TODO done ichikawa インスタンス変数の定義順序、何かしらの指針でぱっと見で理解できるように工夫したいところ by jflute (2026/03/03)
     // e.g. immutable, mutableで分ける、業務的なカテゴリで分ける
     // DBFlute の LikeSearchOption の例で説明。
+    private final TicketType ticketType;
     private final int displayPrice; // written on ticket, park guest can watch this
+
     private boolean alreadyIn; // true means this ticket is unavailable
     private int remainingUsage;
-    private final TicketType ticketType;
 
     // ===================================================================================
     //                                                                         Constructor
