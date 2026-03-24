@@ -84,9 +84,9 @@ public class Ticket {
             // そういったNIGHT_ONLYのチケット種別が新しく追加されても、enumの修正だけで済むようにしたい。
             // (NIGHT_ONLYというニュアンスに統一しても、違うものを導入しても、どちらでも。何にせよここから17を消したい)
             if (jstNow.getHour() < 17) { // 夕方5時から夜パスが使えるとする
-                // TODO ichikawa 業務例外だとしても、バグきっかけで発生することもあるので、ticketTypeくらいは入れておきたい by jflute (2026/03/03)
+                // TODO done ichikawa 業務例外だとしても、バグきっかけで発生することもあるので、ticketTypeくらいは入れておきたい by jflute (2026/03/03)
                 // (業務例外でもデバッグ情報はある程度入れておいた方が良い)
-                throw new IllegalStateException("This ticket is not available until evening.");
+                throw new IllegalStateException("This ticket is not available until evening. TicketType=" + ticketType);
             }
         }
 
