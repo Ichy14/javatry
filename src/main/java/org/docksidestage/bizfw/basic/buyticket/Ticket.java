@@ -18,6 +18,7 @@ package org.docksidestage.bizfw.basic.buyticket;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
+// TODO ichikawa ↑ZoneIdのunused by jflute (2026/03/24)
 /**
  * {@code Ticket}は「チケット」オブジェクトを定義するクラスです。<br>
  * チケットの状態とチケット自体の情報を持ちます。<br>
@@ -36,7 +37,7 @@ public class Ticket {
     // done ichikawa availableTimeは TicketType から取れて、immutable なので、事前に確保してなくてもいいかも!? by jflute (2026/03/03)
     // (でもこれは若干ケースバイケースで、availableTime が重要人物で、何度も頻繁に利用するとかだったら話は別)
     // (ichikawa) availableTimeは、TicketTypeから取れる & 頻繁には利用しないので、除外。今後使うことになったとしても、リファクタは難しくはないはず。
-    // TODO done ichikawa インスタンス変数の定義順序、何かしらの指針でぱっと見で理解できるように工夫したいところ by jflute (2026/03/03)
+    // done ichikawa インスタンス変数の定義順序、何かしらの指針でぱっと見で理解できるように工夫したいところ by jflute (2026/03/03)
     // e.g. immutable, mutableで分ける、業務的なカテゴリで分ける
     // DBFlute の LikeSearchOption の例で説明。
     private final TicketType ticketType;
@@ -81,11 +82,11 @@ public class Ticket {
 //        // DateTimeを使うか？
 //        if (ticketType.getAvailableTime() == AvailableTimeType.NIGHT_ONLY) {
 //            ZonedDateTime jstNow = ZonedDateTime.now(ZoneId.of("Asia/Tokyo"));
-//            // TODO done ichikawa 修行++: アフター6, スターライトパスポートとかを想像。夜の開始ニュアンスが若干違うケースがあるかも。 by jflute (2026/03/03)
+//            // done ichikawa 修行++: アフター6, スターライトパスポートとかを想像。夜の開始ニュアンスが若干違うケースがあるかも。 by jflute (2026/03/03)
 //            // そういったNIGHT_ONLYのチケット種別が新しく追加されても、enumの修正だけで済むようにしたい。
 //            // (NIGHT_ONLYというニュアンスに統一しても、違うものを導入しても、どちらでも。何にせよここから17を消したい)
 //            if (jstNow.getHour() < 17) { // 夕方5時から夜パスが使えるとする
-//                // TODO done ichikawa 業務例外だとしても、バグきっかけで発生することもあるので、ticketTypeくらいは入れておきたい by jflute (2026/03/03)
+//                // done ichikawa 業務例外だとしても、バグきっかけで発生することもあるので、ticketTypeくらいは入れておきたい by jflute (2026/03/03)
 //                // (業務例外でもデバッグ情報はある程度入れておいた方が良い)
 //                throw new IllegalStateException("This ticket is not available until evening. TicketType=" + ticketType);
 //            }
@@ -93,8 +94,21 @@ public class Ticket {
 
         // そもそもチケットがNIGHT_ONLYかどうかに関係なく、入園時間より前には入れないようにした
         ZonedDateTime jstNow = ZonedDateTime.now(TimeController.clock());
+        // #1on1: 1文字の変数名のお話。文化にもよるがJavaの世界の傾向のお話も。 (2026/03/24)
+        // 昔の時代の変数名の制約のお話、DBのテーブル名やカラム名のお話。
+        // "単語の省略: entryTime → time" と、"略語単語: time → tm" の違い。
+        // スコープが短い場合は、短めの名前を付けるのでは一般的なのでOK。
+        // ただ、どっちで短くするか？
+        // 略語、人によって変わってしまう問題: member → mb? mem? mbr?
+        // (昔は、略語辞書を作ってる現場あった。今はそれを作るって現場はほぼない)
+        // (一方で、CODE → CD とか FLAG → FLG とか浸透しているものはOK)
+        // 
+        // TODO ichikawa [読み物課題] SQLのエリアス名、頭文字省略は...うーん by jflute (2026/03/24)
+        // https://jflute.hatenadiary.jp/entry/20140908/sqlalias
         int t = ticketType.getAvailableTime().getEntryTime();
         if (jstNow.getHour() < t) {
+            // #1on1: t と ticketType を入れてるの素晴らしい (2026/03/24)
+            // 一方で、jstNow も優先度は低いけど、デバッグ情報としては入れておきたい、差し替えが発生してるかもしれないし。
             throw new IllegalStateException("This ticket is not available until "+ t +":00. TicketType=" + ticketType);
         }
         // done ichikawa (よほどバグってなければ)マイナスにはならないし、0のときもalreadyInのifでここには来ない by jflute (2025/12/16)

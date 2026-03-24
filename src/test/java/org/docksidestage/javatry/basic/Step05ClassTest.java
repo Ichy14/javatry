@@ -283,7 +283,7 @@ public class Step05ClassTest extends PlainTestCase {
         log(nightOnlyTwoDayPassport.getTicketType().getAvailableTime()); // should be false
         // DateTime系を使って、夜かどうかの判定ロジックに応じてbooleanを返すのをTicketクラスに実装したい気持ち
         // done ichikawa ↑の部分は「夜しか使えないようにしましょう」で必要になるかと思います by jflute (2025/12/16)
-        // TODO done ichikawa 修行#: テストが実施時間によって通ったり落ちたりするのをどうにかしたい by jflute (2026/03/03)
+        // done ichikawa 修行#: テストが実施時間によって通ったり落ちたりするのをどうにかしたい by jflute (2026/03/03)
         // hint1: mockitoは無いけど、やりたいことは似た感じ、objectをmock化して挙動を少し変えたい (2026/03/11)
         // hint2: step6をやってからでもOK (step5の文法だけでは大変かも)
         nightOnlyTwoDayPassport.doInPark();
