@@ -77,20 +77,26 @@ public class Ticket {
         if (alreadyIn) {
             throw new IllegalStateException("Already in park by this ticket: displayedPrice=" + displayPrice);
         }
-        // night_onlyパスの時、時刻が夕方じゃなければremainingusageを減らさない＋alreadyInもtrueにしない、みたいなロジックが必要
-        // DateTimeを使うか？
-        if (ticketType.getAvailableTime() == AvailableTimeType.NIGHT_ONLY) {
-            ZonedDateTime jstNow = ZonedDateTime.now(ZoneId.of("Asia/Tokyo"));
-            // TODO ichikawa 修行++: アフター6, スターライトパスポートとかを想像。夜の開始ニュアンスが若干違うケースがあるかも。 by jflute (2026/03/03)
-            // そういったNIGHT_ONLYのチケット種別が新しく追加されても、enumの修正だけで済むようにしたい。
-            // (NIGHT_ONLYというニュアンスに統一しても、違うものを導入しても、どちらでも。何にせよここから17を消したい)
-            if (jstNow.getHour() < 17) { // 夕方5時から夜パスが使えるとする
-                // TODO done ichikawa 業務例外だとしても、バグきっかけで発生することもあるので、ticketTypeくらいは入れておきたい by jflute (2026/03/03)
-                // (業務例外でもデバッグ情報はある程度入れておいた方が良い)
-                throw new IllegalStateException("This ticket is not available until evening. TicketType=" + ticketType);
-            }
-        }
+//        // night_onlyパスの時、時刻が夕方じゃなければremainingusageを減らさない＋alreadyInもtrueにしない、みたいなロジックが必要
+//        // DateTimeを使うか？
+//        if (ticketType.getAvailableTime() == AvailableTimeType.NIGHT_ONLY) {
+//            ZonedDateTime jstNow = ZonedDateTime.now(ZoneId.of("Asia/Tokyo"));
+//            // TODO done ichikawa 修行++: アフター6, スターライトパスポートとかを想像。夜の開始ニュアンスが若干違うケースがあるかも。 by jflute (2026/03/03)
+//            // そういったNIGHT_ONLYのチケット種別が新しく追加されても、enumの修正だけで済むようにしたい。
+//            // (NIGHT_ONLYというニュアンスに統一しても、違うものを導入しても、どちらでも。何にせよここから17を消したい)
+//            if (jstNow.getHour() < 17) { // 夕方5時から夜パスが使えるとする
+//                // TODO done ichikawa 業務例外だとしても、バグきっかけで発生することもあるので、ticketTypeくらいは入れておきたい by jflute (2026/03/03)
+//                // (業務例外でもデバッグ情報はある程度入れておいた方が良い)
+//                throw new IllegalStateException("This ticket is not available until evening. TicketType=" + ticketType);
+//            }
+//        }
 
+        // そもそもチケットがNIGHT_ONLYかどうかに関係なく、入園時間より前には入れないようにした
+        ZonedDateTime jstNow = ZonedDateTime.now(ZoneId.of("Asia/Tokyo"));
+        int t = ticketType.getAvailableTime().getEntryTime();
+        if (jstNow.getHour() < t) {
+            throw new IllegalStateException("This ticket is not available until "+ t +":00. TicketType=" + ticketType);
+        }
         // done ichikawa (よほどバグってなければ)マイナスにはならないし、0のときもalreadyInのifでここには来ない by jflute (2025/12/16)
         remainingUsage--;
         if (remainingUsage == 0) {
