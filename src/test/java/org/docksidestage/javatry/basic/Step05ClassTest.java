@@ -15,12 +15,12 @@
  */
 package org.docksidestage.javatry.basic;
 
-import org.docksidestage.bizfw.basic.buyticket.Ticket;
-import org.docksidestage.bizfw.basic.buyticket.TicketBooth;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+
+import org.docksidestage.bizfw.basic.buyticket.*;
 import org.docksidestage.bizfw.basic.buyticket.TicketBooth.TicketShortMoneyException;
 import org.docksidestage.bizfw.basic.buyticket.TicketBooth.TicketSoldOutException;
-import org.docksidestage.bizfw.basic.buyticket.TicketBuyResult;
-import org.docksidestage.bizfw.basic.buyticket.TicketType;
 import org.docksidestage.unit.PlainTestCase;
 
 /**
@@ -275,13 +275,15 @@ public class Step05ClassTest extends PlainTestCase {
      * (NightOnlyTwoDayPassport (金額は7400) のチケットも買えるようにしましょう。夜しか使えないようにしましょう)
      */
     public void test_class_moreFix_wonder_night() {
+        TimeController.use(LocalDateTime.of(2026, 1, 1, 18, 0), ZoneId.of("Asia/Tokyo"));
+
         TicketBooth booth = new TicketBooth();
         TicketBuyResult buyResult = booth.buyNightOnlyTwoDayPassport(7400);
         Ticket nightOnlyTwoDayPassport = buyResult.getTicket();
         log(nightOnlyTwoDayPassport.getTicketType().getAvailableTime()); // should be false
         // DateTime系を使って、夜かどうかの判定ロジックに応じてbooleanを返すのをTicketクラスに実装したい気持ち
         // done ichikawa ↑の部分は「夜しか使えないようにしましょう」で必要になるかと思います by jflute (2025/12/16)
-        // TODO ichikawa 修行#: テストが実施時間によって通ったり落ちたりするのをどうにかしたい by jflute (2026/03/03)
+        // TODO done ichikawa 修行#: テストが実施時間によって通ったり落ちたりするのをどうにかしたい by jflute (2026/03/03)
         // hint1: mockitoは無いけど、やりたいことは似た感じ、objectをmock化して挙動を少し変えたい (2026/03/11)
         // hint2: step6をやってからでもOK (step5の文法だけでは大変かも)
         nightOnlyTwoDayPassport.doInPark();
@@ -335,3 +337,4 @@ public class Step05ClassTest extends PlainTestCase {
         // your confirmation code here
     }
 }
+

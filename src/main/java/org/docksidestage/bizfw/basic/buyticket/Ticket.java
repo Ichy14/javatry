@@ -92,7 +92,7 @@ public class Ticket {
 //        }
 
         // そもそもチケットがNIGHT_ONLYかどうかに関係なく、入園時間より前には入れないようにした
-        ZonedDateTime jstNow = ZonedDateTime.now(ZoneId.of("Asia/Tokyo"));
+        ZonedDateTime jstNow = ZonedDateTime.now(TimeController.clock());
         int t = ticketType.getAvailableTime().getEntryTime();
         if (jstNow.getHour() < t) {
             throw new IllegalStateException("This ticket is not available until "+ t +":00. TicketType=" + ticketType);
