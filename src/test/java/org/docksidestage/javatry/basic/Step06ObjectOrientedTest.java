@@ -258,9 +258,9 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
         Animal animal = new Cat();
         BarkedSound sound = animal.bark();
         String sea = sound.getBarkWord();
-        log(sea); // your answer? => 
+        log(sea); // your answer? => "nya-"
         int land = animal.getHitPoint();
-        log(land); // your answer? => 
+        log(land); // your answer? => 5  // 残HPが奇数の時に2減る仕様、謎すぎる、、、しかも一度奇数になったらずっと2減る、、、低燃費だ、、、
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
