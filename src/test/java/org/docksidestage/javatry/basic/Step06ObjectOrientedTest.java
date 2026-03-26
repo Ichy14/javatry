@@ -135,9 +135,9 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
         // [buy one-day passport]
         //
         // if step05 has been finished, you can use this code by jflute (2019/06/15)
-        //Ticket ticket = booth.buyOneDayPassport(10000);
-        booth.buyOneDayPassport(10000); // as temporary, remove if you finished step05
-        Ticket ticket = new Ticket(7400, TicketType.ONE_DAY); // also here
+        Ticket ticket = booth.buyOneDayPassport(10000);
+//        booth.buyOneDayPassport(10000); // as temporary, remove if you finished step05
+//        Ticket ticket = new Ticket(7400, TicketType.ONE_DAY); // also here
 
         // *buyOneDayPassport() has this process:
         //if (quantity <= 0) {
@@ -193,7 +193,7 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
     // write your memo here:
     // _/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
     // what is object?
-    //
+    // 意味（情報と操作）のまとまりだと思う。
     // _/_/_/_/_/_/_/_/_/_/
 
     // ===================================================================================
