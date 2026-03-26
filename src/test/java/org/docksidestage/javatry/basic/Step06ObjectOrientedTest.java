@@ -281,7 +281,7 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
         // write your memo here:
         // _/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
         // what is happy?
-        //
+        // 同じ型のオブジェクトとして扱えるので、一括処理（ListやMapに入れて処理するとか）ができるのが嬉しいと思う。
         // _/_/_/_/_/_/_/_/_/_/
     }
 
