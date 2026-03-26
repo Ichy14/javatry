@@ -207,9 +207,12 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
         Dog dog = new Dog();
         BarkedSound sound = dog.bark();
         String sea = sound.getBarkWord();
-        log(sea); // your answer? => 
+        log(sea); // your answer? => "wan"
         int land = dog.getHitPoint();
-        log(land); // your answer? => 
+        log(land); // your answer? => 10
+        // 吠えた後だからHPが減るってのを（Animalクラス読んだのに）忘れてた...orz
+        // とはいえ、なんで3も減ってる？
+        // -> bark()の中で呼び出されてるそれぞれのメソッドでdownHitPoint()してるからだ。理解。
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
