@@ -64,10 +64,10 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
         if (quantity <= 0) {
             throw new IllegalStateException("Sold out");
         }
-        --quantity;
         if (handedMoney < oneDayPrice) {
             throw new IllegalStateException("Short money: handedMoney=" + handedMoney);
         }
+        --quantity;  // チケットの残数だけでなく、手渡された金額の検証が通って初めてチケットを減らす処理を行うのが適切では？
         salesProceeds = handedMoney;
 
         //
