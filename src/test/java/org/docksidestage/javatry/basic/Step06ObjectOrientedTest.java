@@ -68,7 +68,7 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
             throw new IllegalStateException("Short money: handedMoney=" + handedMoney);
         }
         --quantity;  // チケットの残数だけでなく、手渡された金額の検証が通って初めてチケットを減らす処理を行うのが適切では？
-        salesProceeds = handedMoney;
+        salesProceeds = oneDayPrice;  // 手渡された金額を売上金額にするのは不適切では？ (お釣りがある場合もあるので、チケットの価格を売上金額にするのが適切)
 
         //
         // [ticket info]
