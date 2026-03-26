@@ -74,7 +74,7 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
         // [ticket info]
         //
         // simulation: actually these variables should be more wide scope
-        int displayPrice = oneDayPrice;
+        int displayPrice = oneDayPrice;  // 現状だと割引とかもないし、チケットの金額と表示価格を分ける必要も今のところなさそう
         boolean alreadyIn = false;
 
         // other processes here...
@@ -86,7 +86,8 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
         //
         // simulation: actually this process should be called by other trigger
         if (alreadyIn) {
-            throw new IllegalStateException("Already in park by this ticket: displayPrice=" + quantity);
+            // ここのエラーメッセージで表示金額を表示されたところで嬉しいのか微妙だと感じた、、、（「表示金額がこれと言うことは、このチケットか？」と言う思考の1ステップが必要？）
+            throw new IllegalStateException("Already in park by this ticket: displayPrice=" + displayPrice);
         }
         alreadyIn = true;
 
