@@ -74,7 +74,7 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
         // [ticket info]
         //
         // simulation: actually these variables should be more wide scope
-        int displayPrice = quantity;
+        int displayPrice = oneDayPrice;
         boolean alreadyIn = false;
 
         // other processes here...
