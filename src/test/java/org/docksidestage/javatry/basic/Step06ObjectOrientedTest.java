@@ -48,9 +48,6 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
      * (OneDayPassportを買って InPark する処理の中で、(simulationを除いて)間違いがいくつかあるので修正しましょう)
      */
     public void test_objectOriented_aboutObject_againstObject() {
-        //
-        // [ticket booth info]
-        //
         // simulation: actually these variables should be more wide scope
         int oneDayPrice = 7400;
         int quantity = 10;
@@ -67,6 +64,9 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
         if (handedMoney < oneDayPrice) {
             throw new IllegalStateException("Short money: handedMoney=" + handedMoney);
         }
+        // #1on1: 一行だけ見て間違いとわかるバグと、複数行の関連性を見ないと間違いを見つけられないバグ (2026/04/08)
+        // → 流れの可読性というが大事 (流れのバグは発見しづらいので)
+        // → 書く側としては、もし間違ってたとしたら、すぐに見つけてもらえるようなコードを意識する by いちかわさん
         --quantity;  // チケットの残数だけでなく、手渡された金額の検証が通って初めてチケットを減らす処理を行うのが適切では？
         salesProceeds = oneDayPrice;  // 手渡された金額を売上金額にするのは不適切では？ (お釣りがある場合もあるので、チケットの価格を売上金額にするのが適切)
 
@@ -93,6 +93,23 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
 
         //
         // [final process]
+        //
+        // TODO ichikawa 最後の間違いがここに by jflute (2026/04/08)
+        // #1on1: ここでの学び (2026/04/08)
+        //
+        // 1. オブジェクト化することの実務的な意義 (間違いポイントが局所化される)
+        // o まさしくタイプセーフ
+        // o オブジェクトの単位/粒度
+        // o DDD, Value Object
+        // o 現状は、int,int,intになってるから、意味の違うものを簡単に代入できちゃう
+        //
+        // 2. もうint,intを呼ばざるを得ない時: 指差し確認 (5秒10秒)
+        // o じゃあ、一行一行指差し確認するか？ → 現実きつい (日が暮れちゃう)
+        // o じゃあ、間違えやすいところだけ指差し確認する → 間違えやすいところってどこ？
+        // o ある程度は経験がないと判断できないところ (ベテランはその経験から間違えポイントを知ってる)
+        // o ある程度はセオリーで判断できるところもあるし、経験がそのセオリーを積み重ねていって欲しい
+        // o ものづくりスキル
+        // o 一般的な間違いポイントと、自分ならではの間違いポイントもある
         //
         saveBuyingHistory(quantity, displayPrice, salesProceeds, alreadyIn);
     }
@@ -195,6 +212,11 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
     // what is object?
     // 意味（情報と操作）のまとまりだと思う。
     // _/_/_/_/_/_/_/_/_/_/
+    // #1on1: データ同士の意味的な関連性をしっかり見つけること (2026/04/08)
+    //
+    // オブジェクト指向の三大原則: 継承、ポリモーフィズム、カプセル化
+    // よりも前に大事なこと。
+    //
 
     // ===================================================================================
     //                                                              Polymorphism Beginning
@@ -218,7 +240,7 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
     public void test_objectOriented_polymorphism_2nd_asAbstract() {
         Animal animal = new Dog();  // お、今度はAnimalクラスとしてDogを扱ってるな。とはいえ、その旨みはここにはなさそう？
-        BarkedSound sound = animal.bark();
+        BarkedSound sound = animal.bark(); // #1on1: 超ミクロでは、1行目はDog依存だけど、2行目以降はDogに依存してない
         String sea = sound.getBarkWord();
         log(sea); // your answer? => "wan"
         int land = animal.getHitPoint();
@@ -227,6 +249,8 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
     public void test_objectOriented_polymorphism_3rd_fromMethod() {
+        // #1on1: Dogへの直接の依存はなくなった (DogをCatに変える時、このメソッド自体は1文字も修正が不要)
+        // 1文字でもいじったらヒューマンエラーが発生する可能性があると捉えてテストしないといけない。
         Animal animal = createAnyAnimal();
         BarkedSound sound = animal.bark();
         String sea = sound.getBarkWord();
@@ -283,8 +307,13 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
         // what is happy?
         // 同じ型のオブジェクトとして扱えるので、一括処理（ListやMapに入れて処理するとか）ができるのが嬉しいと思う。
         // _/_/_/_/_/_/_/_/_/_/
+        // #1on1: 3rd, 4thがポリモーフィズムの真骨頂。
+        // 処理を繰り返し再利用できる。by いちかわさん
+        // 特に流れの処理を再利用しやすくなるのがポイント by jflute
+        // (引数で解決する再利用だと、再利用範囲が狭まりがち)
     }
 
+    // TODO jflute 次回1on1, interface (2026/04/08)
     // ===================================================================================
     //                                                              Polymorphism Interface
     //                                                              ======================
