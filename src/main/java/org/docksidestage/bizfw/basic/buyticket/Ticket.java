@@ -15,10 +15,9 @@
  */
 package org.docksidestage.bizfw.basic.buyticket;
 
-import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
-// TODO ichikawa ↑ZoneIdのunused by jflute (2026/03/24)
+// TODO done ichikawa ↑ZoneIdのunused by jflute (2026/03/24)
 /**
  * {@code Ticket}は「チケット」オブジェクトを定義するクラスです。<br>
  * チケットの状態とチケット自体の情報を持ちます。<br>
