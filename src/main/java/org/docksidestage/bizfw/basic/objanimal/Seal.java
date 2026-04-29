@@ -15,11 +15,19 @@
  */
 package org.docksidestage.bizfw.basic.objanimal;
 
+import org.docksidestage.bizfw.basic.objanimal.runner.FastRunner;
+import org.docksidestage.bizfw.basic.objanimal.swimmer.FastSwimmer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * The object for cat(猫).
  * @author jflute
  */
-public class Seal extends Animal {
+public class Seal extends Animal implements FastSwimmer {
+
+    private static final Logger logger = LoggerFactory.getLogger(Seal.class);
+
     // ===================================================================================
     //                                                                         Constructor
     //                                                                         ===========
@@ -32,5 +40,14 @@ public class Seal extends Animal {
     @Override
     protected String getBarkWord() {
         return "Arf, arf!";
+    }
+
+    // ===================================================================================
+    //                                                                            Swimmer
+    //                                                                              ======
+    @Override
+    public void swim() {
+        logger.debug("...Swimming now"); // dummy implementation
+        downHitPoint();
     }
 }

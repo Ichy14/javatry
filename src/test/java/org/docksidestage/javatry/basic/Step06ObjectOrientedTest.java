@@ -390,6 +390,8 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
      */
     public void test_objectOriented_polymorphism_makeInterface() {
         // your confirmation code here
+        Seal seal = new Seal();
+        seal.swim();
     }
 
     // ===================================================================================
