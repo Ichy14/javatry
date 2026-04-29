@@ -94,7 +94,7 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
         //
         // [final process]
         //
-        // TODO ichikawa 最後の間違いがここに by jflute (2026/04/08)
+        // TODO done ichikawa 最後の間違いがここに by jflute (2026/04/08)
         // #1on1: ここでの学び (2026/04/08)
         //
         // 1. オブジェクト化することの実務的な意義 (間違いポイントが局所化される)
@@ -111,7 +111,7 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
         // o ものづくりスキル
         // o 一般的な間違いポイントと、自分ならではの間違いポイントもある
         //
-        saveBuyingHistory(quantity, displayPrice, salesProceeds, alreadyIn);
+        saveBuyingHistory(quantity, salesProceeds, displayPrice, alreadyIn);
     }
 
     private void saveBuyingHistory(int quantity, Integer salesProceeds, int displayPrice, boolean alreadyIn) {
