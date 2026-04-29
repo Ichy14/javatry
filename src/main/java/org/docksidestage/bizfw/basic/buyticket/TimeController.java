@@ -14,9 +14,12 @@ public class TimeController implements AutoCloseable {
     // デフォルトはシステム時刻
     private static Clock currentClock = Clock.systemDefaultZone();
 
-    // TODO ichikawa javadocで、paramとreturnを by jflute (2026/03/24)
+    // TODO done ichikawa javadocで、paramとreturnを by jflute (2026/03/24)
     /**
-     * 目的のメソッド: 時刻を指定して「固定」モードに入る
+     * 時刻を指定して「固定」モードに入る
+     * @param dateTime 固定する日時
+     * @param zoneId 固定する日時のタイムゾーン
+     * @return TimeControllerのインスタンス。
      */
     public static TimeController use(LocalDateTime dateTime, ZoneId zoneId) {
         Instant instant = dateTime.atZone(zoneId).toInstant();
