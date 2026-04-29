@@ -102,8 +102,9 @@ public class Ticket {
         // (昔は、略語辞書を作ってる現場あった。今はそれを作るって現場はほぼない)
         // (一方で、CODE → CD とか FLAG → FLG とか浸透しているものはOK)
         // 
-        // TODO ichikawa [読み物課題] SQLのエリアス名、頭文字省略は...うーん by jflute (2026/03/24)
+        // TODO done ichikawa [読み物課題] SQLのエリアス名、頭文字省略は...うーん by jflute (2026/03/24)
         // https://jflute.hatenadiary.jp/entry/20140908/sqlalias
+        // この話を聞いてから、SQL書く時のエイリアスをちょいと意識して考えてから書くようになりました（ichikawa）
         int t = ticketType.getAvailableTime().getEntryTime();
         if (jstNow.getHour() < t) {
             // #1on1: t と ticketType を入れてるの素晴らしい (2026/03/24)
