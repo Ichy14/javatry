@@ -24,6 +24,7 @@ import org.docksidestage.bizfw.basic.objanimal.runner.FastRunner;
 import org.docksidestage.javatry.basic.st6.dbms.St6MySql;
 import org.docksidestage.javatry.basic.st6.dbms.St6PostgreSql;
 import org.docksidestage.javatry.basic.st6.dbms.St6Sql;
+import org.docksidestage.javatry.basic.st6.os.St6MacOS;
 import org.docksidestage.unit.PlainTestCase;
 
 /**
@@ -474,7 +475,8 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
      * (St6OperationSystem (basic.st6.os) からコンクリートクラスを抽出してみましょう (スーパークラスとサブクラスの関係に))
      */
     public void test_objectOriented_writing_specialization_extractToConcrete() {
-        // your confirmation code here
+        St6MacOS macOs = new St6MacOS("12345");
+        macOs.buildUserResourcePath("test.txt");
     }
 
     // ===================================================================================
