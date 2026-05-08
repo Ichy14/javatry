@@ -14,8 +14,4 @@ public abstract class St6Sql {
     int calcOffset(int pageSize, int pageNumber) {
         return pageSize * (pageNumber - 1);
     }
-
-    public void getClassName() {
-        log.info("class name: {}", this.getClass().getSimpleName());
-    }
 }
