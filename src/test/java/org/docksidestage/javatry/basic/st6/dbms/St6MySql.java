@@ -16,15 +16,14 @@
 package org.docksidestage.javatry.basic.st6.dbms;
 
 /**
- * @author jflute
+ * @author jflute, n.ichikawa
  */
 public class St6MySql extends St6Sql {
 
-    // 一応抽象クラスは作ったけれど、
-    // offsetの計算も同じ構成だから共通化したいような気持ち
+    // 一応抽象クラスは作ったけれど、何かしっくりこない
     @Override
     public String buildPagingQuery(int pageSize, int pageNumber) {
-        int offset = pageSize * (pageNumber - 1);
+        int offset = calcOffset(pageSize, pageNumber);
         return "limit " + offset + ", " + pageSize;
     }
 }

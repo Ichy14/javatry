@@ -463,11 +463,13 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
      * (St6MySql, St6PostgreSql (basic.st6.dbms) から抽象クラスを抽出してみましょう (スーパークラスとサブクラスの関係に))
      */
     public void test_objectOriented_writing_generalization_extractToAbstract() {
-        St6MySql mySql = new St6MySql();
-        mySql.getClassName();
+        if (St6MySql.class.isAssignableFrom(St6Sql.class)) {
+            log("St6MySql is assignable from St6Sql");
+        }
 
-        St6Sql postgreSql = new St6PostgreSql();
-        postgreSql.getClassName();
+        if (St6PostgreSql.class.isAssignableFrom(St6Sql.class)) {
+            log("St6PostgreSql is assignable from St6Sql");
+        }
     }
 
     /**
