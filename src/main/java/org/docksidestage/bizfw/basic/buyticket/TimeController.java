@@ -14,7 +14,7 @@ public class TimeController implements AutoCloseable {
     // デフォルトはシステム時刻
     private static Clock currentClock = Clock.systemDefaultZone();
 
-    // TODO done ichikawa javadocで、paramとreturnを by jflute (2026/03/24)
+    // done ichikawa javadocで、paramとreturnを by jflute (2026/03/24)
     /**
      * 時刻を指定して「固定」モードに入る
      * @param dateTime 固定する日時

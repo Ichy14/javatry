@@ -21,6 +21,7 @@ import org.docksidestage.bizfw.basic.objanimal.*;
 import org.docksidestage.bizfw.basic.objanimal.loud.AlarmClock;
 import org.docksidestage.bizfw.basic.objanimal.loud.Loudable;
 import org.docksidestage.bizfw.basic.objanimal.runner.FastRunner;
+import org.docksidestage.bizfw.colorbox.ColorBox;
 import org.docksidestage.javatry.basic.st6.dbms.St6MySql;
 import org.docksidestage.javatry.basic.st6.dbms.St6PostgreSql;
 import org.docksidestage.javatry.basic.st6.dbms.St6Sql;
@@ -93,7 +94,7 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
         //
         // [final process]
         //
-        // TODO done ichikawa 最後の間違いがここに by jflute (2026/04/08)
+        // done ichikawa 最後の間違いがここに by jflute (2026/04/08)
         // #1on1: ここでの学び (2026/04/08)
         //
         // 1. オブジェクト化することの実務的な意義 (間違いポイントが局所化される)
@@ -312,7 +313,7 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
         // (引数で解決する再利用だと、再利用範囲が狭まりがち)
     }
 
-    // TODO jflute 次回1on1, interface (2026/04/08)
+    // done jflute 次回1on1, interface (2026/04/08)
     // ===================================================================================
     //                                                              Polymorphism Interface
     //                                                              ======================
@@ -427,7 +428,35 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
         // レイヤー間のinterfaceはあるけど、局所的なinterfaceはなかなかない。
         // ライブラリとかフレームワークでよく使う。
         
-        // TODO jflute 次回、もっと踏み込んだ肩代わりinterfaceの話 (2026/04/30)
+        // done jflute 次回、もっと踏み込んだ肩代わりinterfaceの話 (2026/04/30)
+        // #1on1: ColorBoxインターフェース (2026/05/08)
+        // public abstract class AbstractColorBox implements ColorBox {
+        // AbstractColorBoxがあればColorBoxインターフェース要らなくない？
+        // 隠したいものがAbstractColorBoxにあるんじゃないか？ by いちかわさん
+        //
+        // o publicにせざるを得ないけど、隠したい処理があるとき
+        /* e.g. 初期化メソッド
+    public void initialize() {
+        // 何か初期化処理必要
+        // コンストラクターでやればいいんじゃない？
+        // コンストラクターってnewした瞬間に動いちゃう
+        // でも時々、インスタンスの生成時は初期化せず保持しておいて、
+        // その後のタイミングで初期化したいときがある (実務的な理由)
+    }
+         */
+        //    → Abstractにpublicメソッド定義しておいて、interfaceでは定義しない
+        //    → もしAbstractだけだったら、内部用初期化メソッドが外部で簡単に呼べちゃう
+        //    → abstract, ポリモーフィズムと具象実装がくっついちゃってて融通利かないというデメリットとも言える
+        //    → なので、abstractは具象実装に集中して、ポリモーフィズムはinterfaceさんお願い
+        //    → 厳密には、initialize() を呼ぶ人はabstractのポリモーフィズムは使ってる
+        //      (外部のオーソドックな呼び出しではinterfaceのポリモーフィズムのみ)
+        //
+        // o あと、interfaceが単純に呼べるメソッド一覧になってわかりやすい (小さなメリット)
+        //
+        // ということで、けっこうぼくらは、
+        // 抽象クラスのポリモーフィズムを使って呼び出すことは少ない。
+        // (その内部のinitialize()を呼ぶ時)
+        // (「具象クラス extends 具象クラス」はフレームワーク経由でよく使うことはあるけど)
     }
     
     // ===================================================================================
@@ -454,7 +483,7 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
         seal.swim();
     }
 
-    // TODO jflute 次回1on1ここから (2026/04/30)
+    // done jflute 次回1on1ここから (2026/04/30)
     // ===================================================================================
     //                                                                           Challenge
     //                                                                           =========
@@ -463,6 +492,8 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
      * (St6MySql, St6PostgreSql (basic.st6.dbms) から抽象クラスを抽出してみましょう (スーパークラスとサブクラスの関係に))
      */
     public void test_objectOriented_writing_generalization_extractToAbstract() {
+        // TODO ichikawa isAssignableFrom() が逆 by jflute (2026/05/08)
+        // #1on1: isの主語はどっち問題。メソッド定義元？引数？ (2026/05/08)
         if (St6MySql.class.isAssignableFrom(St6Sql.class)) {
             log("St6MySql is assignable from St6Sql");
         }
@@ -477,6 +508,7 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
      * (St6OperationSystem (basic.st6.os) からコンクリートクラスを抽出してみましょう (スーパークラスとサブクラスの関係に))
      */
     public void test_objectOriented_writing_specialization_extractToConcrete() {
+        // TODO ichikawa Windows と OldWindows のクラスも作ってみましょう by jflute (2026/05/08)
         St6MacOS macOs = new St6MacOS("12345");
         macOs.buildUserResourcePath("test.txt");
     }
