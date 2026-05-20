@@ -492,13 +492,13 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
      * (St6MySql, St6PostgreSql (basic.st6.dbms) から抽象クラスを抽出してみましょう (スーパークラスとサブクラスの関係に))
      */
     public void test_objectOriented_writing_generalization_extractToAbstract() {
-        // TODO ichikawa isAssignableFrom() が逆 by jflute (2026/05/08)
+        // done TODO ichikawa isAssignableFrom() が逆 by jflute (2026/05/08)
         // #1on1: isの主語はどっち問題。メソッド定義元？引数？ (2026/05/08)
-        if (St6MySql.class.isAssignableFrom(St6Sql.class)) {
+        if (St6Sql.class.isAssignableFrom(St6MySql.class)) {
             log("St6MySql is assignable from St6Sql");
         }
 
-        if (St6PostgreSql.class.isAssignableFrom(St6Sql.class)) {
+        if (St6Sql.class.isAssignableFrom(St6PostgreSql.class)) {
             log("St6PostgreSql is assignable from St6Sql");
         }
     }
