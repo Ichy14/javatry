@@ -25,6 +25,9 @@ import org.docksidestage.javatry.basic.st6.dbms.St6MySql;
 import org.docksidestage.javatry.basic.st6.dbms.St6PostgreSql;
 import org.docksidestage.javatry.basic.st6.dbms.St6DBMS;
 import org.docksidestage.javatry.basic.st6.os.St6MacOS;
+import org.docksidestage.javatry.basic.st6.os.St6OldWindows;
+import org.docksidestage.javatry.basic.st6.os.St6OperationSystem;
+import org.docksidestage.javatry.basic.st6.os.St6Windows;
 import org.docksidestage.unit.PlainTestCase;
 
 /**
@@ -507,9 +510,27 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
      * (St6OperationSystem (basic.st6.os) からコンクリートクラスを抽出してみましょう (スーパークラスとサブクラスの関係に))
      */
     public void test_objectOriented_writing_specialization_extractToConcrete() {
-        // TODO ichikawa Windows と OldWindows のクラスも作ってみましょう by jflute (2026/05/08)
+        // done TODO ichikawa Windows と OldWindows のクラスも作ってみましょう by jflute (2026/05/08)
         St6MacOS macOs = new St6MacOS("12345");
-        macOs.buildUserResourcePath("test.txt");
+        log(macOs.buildUserResourcePath("test.txt"));
+        if(St6OperationSystem.class.isAssignableFrom(St6MacOS.class)) {
+            log("St6MacOS is assignable from St6OperationSystem");
+            log("================================================");
+        }
+
+        St6Windows windows = new St6Windows("67890");
+        log(windows.buildUserResourcePath("test.txt"));
+        if(St6OperationSystem.class.isAssignableFrom(St6Windows.class)) {
+            log("St6Windows is assignable from St6OperationSystem");
+            log("================================================");
+        }
+
+        St6OldWindows oldWindows = new St6OldWindows("54321");
+        log(oldWindows.buildUserResourcePath("test.txt"));
+        if(St6OperationSystem.class.isAssignableFrom(St6OldWindows.class)) {
+            log("St6OldWindows is assignable from St6OperationSystem");
+            log("================================================");
+        }
     }
 
     // ===================================================================================
