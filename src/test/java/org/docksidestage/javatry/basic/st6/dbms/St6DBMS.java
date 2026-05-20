@@ -7,12 +7,12 @@ import org.slf4j.LoggerFactory;
 // 他の具象クラスを思いつくか？ → e.g. Oracle
 // SQLの機能を備えた何かだけど、SQLそのものかどうか？
 // リレーショナルデータベース製品、RDBMS (Rを省略してDBMS)
-// TODO ichikawa 抽象クラス名をrenameしてみましょう by jflute (2026/05/08)
+// done TODO ichikawa 抽象クラス名をrenameしてみましょう by jflute (2026/05/08)
 /**
  * @author n.ichikawa
  */
-public abstract class St6Sql {
-    private static final Logger log = LoggerFactory.getLogger(St6Sql.class);
+public abstract class St6DBMS {
+    private static final Logger log = LoggerFactory.getLogger(St6DBMS.class);
 
     abstract public String buildPagingQuery(int pageSize, int pageNumber);
 

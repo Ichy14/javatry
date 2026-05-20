@@ -21,10 +21,9 @@ import org.docksidestage.bizfw.basic.objanimal.*;
 import org.docksidestage.bizfw.basic.objanimal.loud.AlarmClock;
 import org.docksidestage.bizfw.basic.objanimal.loud.Loudable;
 import org.docksidestage.bizfw.basic.objanimal.runner.FastRunner;
-import org.docksidestage.bizfw.colorbox.ColorBox;
 import org.docksidestage.javatry.basic.st6.dbms.St6MySql;
 import org.docksidestage.javatry.basic.st6.dbms.St6PostgreSql;
-import org.docksidestage.javatry.basic.st6.dbms.St6Sql;
+import org.docksidestage.javatry.basic.st6.dbms.St6DBMS;
 import org.docksidestage.javatry.basic.st6.os.St6MacOS;
 import org.docksidestage.unit.PlainTestCase;
 
@@ -494,11 +493,11 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
     public void test_objectOriented_writing_generalization_extractToAbstract() {
         // done TODO ichikawa isAssignableFrom() が逆 by jflute (2026/05/08)
         // #1on1: isの主語はどっち問題。メソッド定義元？引数？ (2026/05/08)
-        if (St6Sql.class.isAssignableFrom(St6MySql.class)) {
+        if (St6DBMS.class.isAssignableFrom(St6MySql.class)) {
             log("St6MySql is assignable from St6Sql");
         }
 
-        if (St6Sql.class.isAssignableFrom(St6PostgreSql.class)) {
+        if (St6DBMS.class.isAssignableFrom(St6PostgreSql.class)) {
             log("St6PostgreSql is assignable from St6Sql");
         }
     }

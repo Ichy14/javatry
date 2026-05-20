@@ -18,7 +18,7 @@ package org.docksidestage.javatry.basic.st6.dbms;
 /**
  * @author jflute, n.ichikawa
  */
-public class St6PostgreSql extends St6Sql {
+public class St6PostgreSql extends St6DBMS {
 
     @Override
     public String buildPagingQuery(int pageSize, int pageNumber) {

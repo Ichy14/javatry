@@ -18,7 +18,7 @@ package org.docksidestage.javatry.basic.st6.dbms;
 /**
  * @author jflute, n.ichikawa
  */
-public class St6MySql extends St6Sql {
+public class St6MySql extends St6DBMS {
 
     // 一応抽象クラスは作ったけれど、何かしっくりこない
     // #1on1: 何がしっくりこない？もっと綺麗にできるかな？ by いちかわさん
