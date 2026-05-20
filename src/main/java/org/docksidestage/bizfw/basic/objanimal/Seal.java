@@ -15,16 +15,15 @@
  */
 package org.docksidestage.bizfw.basic.objanimal;
 
-import org.docksidestage.bizfw.basic.objanimal.runner.FastRunner;
 import org.docksidestage.bizfw.basic.objanimal.swimmer.FastSwimmer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-// TODO ichikawa javadoc修正 by jflute (2026/04/30)
+// done TODO ichikawa javadoc修正 by jflute (2026/04/30)
 // #1on1: コードコピペの話、Copyrightとauthor, 会社の権利を守る手段の一つ。 (2026/04/30)
 /**
- * The object for cat(猫).
- * @author jflute
+ * The object for seal(あざらし).
+ * @author n.ichikawa
  */
 public class Seal extends Animal implements FastSwimmer {
 
