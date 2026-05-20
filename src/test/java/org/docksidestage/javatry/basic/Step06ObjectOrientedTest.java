@@ -459,6 +459,8 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
         // 抽象クラスのポリモーフィズムを使って呼び出すことは少ない。
         // (その内部のinitialize()を呼ぶ時)
         // (「具象クラス extends 具象クラス」はフレームワーク経由でよく使うことはあるけど)
+        
+        // #1on1: もう一つの理由、Abstractを継承したくないけどポリモーフィズムだけしたいとき (2026/05/20)
     }
     
     // ===================================================================================
@@ -494,7 +496,7 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
      * (St6MySql, St6PostgreSql (basic.st6.dbms) から抽象クラスを抽出してみましょう (スーパークラスとサブクラスの関係に))
      */
     public void test_objectOriented_writing_generalization_extractToAbstract() {
-        // done TODO ichikawa isAssignableFrom() が逆 by jflute (2026/05/08)
+        // done ichikawa isAssignableFrom() が逆 by jflute (2026/05/08)
         // #1on1: isの主語はどっち問題。メソッド定義元？引数？ (2026/05/08)
         if (St6DBMS.class.isAssignableFrom(St6MySql.class)) {
             log("St6MySql is assignable from St6Sql");
@@ -510,7 +512,7 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
      * (St6OperationSystem (basic.st6.os) からコンクリートクラスを抽出してみましょう (スーパークラスとサブクラスの関係に))
      */
     public void test_objectOriented_writing_specialization_extractToConcrete() {
-        // done TODO ichikawa Windows と OldWindows のクラスも作ってみましょう by jflute (2026/05/08)
+        // done ichikawa Windows と OldWindows のクラスも作ってみましょう by jflute (2026/05/08)
         St6MacOS macOs = new St6MacOS("12345");
         log(macOs.buildUserResourcePath("test.txt"));
         if(St6OperationSystem.class.isAssignableFrom(St6MacOS.class)) {
