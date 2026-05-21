@@ -2,10 +2,8 @@ package org.docksidestage.javatry.basic.st6.os;
 
 public class St6Windows extends St6OperationSystem {
 
-    private final String loginId;
-
     public St6Windows(String loginId) {
-        this.loginId = loginId;
+        super(loginId);
     }
 
     @Override

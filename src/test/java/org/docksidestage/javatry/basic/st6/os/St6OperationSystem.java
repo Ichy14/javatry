@@ -30,16 +30,14 @@ public abstract class St6OperationSystem {
     // ===================================================================================
     //                                                                           Attribute
     //                                                                           =========
-//    private final String osType;
-//    private final String loginId;
+    protected final String loginId;
 
     // ===================================================================================
     //                                                                         Constructor
     //                                                                         ===========
-//    public St6OperationSystem(String osType, String loginId) {
-//        this.osType = osType;
-//        this.loginId = loginId;
-//    }
+    public St6OperationSystem(String loginId) {
+        this.loginId = loginId;
+    }
 
     // ===================================================================================
     //                                                                      User Directory
