@@ -9,7 +9,7 @@ public class St6MacOS extends St6OperationSystem {
          super(loginId);
     }
 
-    // TODO ichikawa DBMSクラスと同じになっている。流れがコピペされている。 by jflute (2026/05/20)
+    // done TODO ichikawa DBMSクラスと同じになっている。流れがコピペされている。 by jflute (2026/05/20)
     // なんとかして、これをsuper(OS)の方に持っていきたい。
 
     protected String getFileSeparator() {

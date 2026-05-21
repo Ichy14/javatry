@@ -6,14 +6,6 @@ public class St6OldWindows extends St6OperationSystem {
         super(loginId);
     }
 
-    @Override
-    public String buildUserResourcePath(String relativePath) {
-        String fileSeparator = getFileSeparator();
-        String userDirectory = getUserDirectory();
-        String resourcePath = buildPath(userDirectory, fileSeparator, relativePath);
-        return resourcePath.replace("/", fileSeparator);
-    }
-
     protected String getFileSeparator() {
         return "\\";
     }

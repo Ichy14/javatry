@@ -42,33 +42,18 @@ public abstract class St6OperationSystem {
     // ===================================================================================
     //                                                                      User Directory
     //                                                                      ==============
-    abstract public String buildUserResourcePath(String relativePath);
+    public String buildUserResourcePath(String relativePath) {
+        String fileSeparator = getFileSeparator();
+        String userDirectory = getUserDirectory();
+        String resourcePath = buildPath(userDirectory, fileSeparator, relativePath);
+        return resourcePath.replace("/", fileSeparator);
+    }
 
     String buildPath(String userDirectory, String fileSeparator, String relativePath) {
         return userDirectory + fileSeparator + relativePath;
     }
 
-//    protected String getFileSeparator() {
-//        if (OS_TYPE_MAC.equalsIgnoreCase(osType)) {
-//            return "/";
-//        } else if (OS_TYPE_WINDOWS.equalsIgnoreCase(osType)) {
-//            return "\\";
-//        } else if (OS_TYPE_OLD_WINDOWS.equalsIgnoreCase(osType)) {
-//            return "\\";
-//        } else {
-//            throw new IllegalStateException("Unknown osType: " + osType);
-//        }
-//    }
+    protected abstract String getFileSeparator();
 
-//    protected String getUserDirectory() {
-//        if (OS_TYPE_MAC.equalsIgnoreCase(osType)) {
-//            return "/Users/" + loginId;
-//        } else if (OS_TYPE_WINDOWS.equalsIgnoreCase(osType)) {
-//            return "/Users/" + loginId;
-//        } else if (OS_TYPE_OLD_WINDOWS.equalsIgnoreCase(osType)) {
-//            return "/Documents and Settings/" + loginId;
-//        } else {
-//            throw new IllegalStateException("Unknown osType: " + osType);
-//        }
-//    }
+    protected abstract String getUserDirectory();
 }
