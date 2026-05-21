@@ -14,9 +14,15 @@ import org.slf4j.LoggerFactory;
 public abstract class St6DBMS {
     private static final Logger log = LoggerFactory.getLogger(St6DBMS.class);
 
-    abstract public String buildPagingQuery(int pageSize, int pageNumber);
+    public String buildPagingQuery(int pageSize, int pageNumber) {
+        int offset = calcOffset(pageSize, pageNumber);
+        String pagingQuery = doBuildPagingQuery(offset, pageSize);
+        return pagingQuery;
+    }
     
     int calcOffset(int pageSize, int pageNumber) {
         return pageSize * (pageNumber - 1);
     }
+
+    protected abstract String doBuildPagingQuery(int offset, int pageSize);
 }

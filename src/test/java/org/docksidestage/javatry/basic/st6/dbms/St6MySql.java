@@ -47,15 +47,14 @@ public class St6MySql extends St6DBMS {
     // 流れを再利用できるか？
     // step5で流れを再利用していた。ただあっちは引数で抽象化をして再利用していた。
     // こっちは、もうすでに抽象化された概念がある。それをうまく使えないか？
-    // TODO ichikawa 流れを再利用できる形にしてみましょう by jflute (2026/05/08)
+    // done TODO ichikawa 流れを再利用できる形にしてみましょう by jflute (2026/05/08)
     // #1on1: hint1 既存の抽象/具象のコードを「流れの再利用」という視点で見てみたら？ (2026/05/20)
     // hint2: Animalのbark()と1行1行比較してみたら、いちかわさんは悔しがった (2026/05/20)
     // #1on1: ようやく抽象と具象の処理の移り変わりが感覚的に沁み込んだ by いちかわさん (2026/05/20)
     // まさしく、こういうデザイン的な部分は一度じっくり悩んで感覚で捉えないと使える知識にならない。
     @Override
-    public String buildPagingQuery(int pageSize, int pageNumber) {
-        int offset = calcOffset(pageSize, pageNumber);
-        return "limit " + offset + ", " + pageSize; // getBarkWord()
+    public String doBuildPagingQuery(int offset, int pageSize) {
+        return "limit " + offset + ", " + pageSize;
     }
     // TODO ichikawa [宿題] テンプレートメソッドパターンを調べてみてください by jflute (2026/05/20)
     // done ichikawa [読み物課題]デバッグパターン: うごかない、ほかうごくなら、ただひかく by jflute (2026/05/20)
