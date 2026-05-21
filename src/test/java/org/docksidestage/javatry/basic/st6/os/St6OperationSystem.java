@@ -19,14 +19,6 @@ package org.docksidestage.javatry.basic.st6.os;
  * @author jflute
  */
 public abstract class St6OperationSystem {
-
-    // ===================================================================================
-    //                                                                          Definition
-    //                                                                          ==========
-//    private static final String OS_TYPE_MAC = "Mac";
-//    private static final String OS_TYPE_WINDOWS = "Windows";
-//    private static final String OS_TYPE_OLD_WINDOWS = "OldWindows";
-
     // ===================================================================================
     //                                                                           Attribute
     //                                                                           =========
