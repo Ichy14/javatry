@@ -16,62 +16,41 @@
 package org.docksidestage.bizfw.basic.objanimal;
 
 import org.docksidestage.bizfw.basic.objanimal.loud.Loudable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * The object for animal(動物).
  * @author jflute
  */
 public abstract class Animal implements Loudable {
-
-    // ===================================================================================
-    //                                                                          Definition
-    //                                                                          ==========
-    private static final Logger logger = LoggerFactory.getLogger(Animal.class);
-
     // ===================================================================================
     //                                                                           Attribute
     //                                                                           =========
     protected int hitPoint; // is HP
+    protected String barkWord;
+    protected BarkingProcess barkingProcess;
 
     // ===================================================================================
     //                                                                         Constructor
     //                                                                         ===========
     public Animal() {
         hitPoint = getInitialHitPoint();
+        barkWord = getBarkWord();  // 思ったこと：成長段階によって鳴き声が変わることもしばしばある。それをどう実装するのか考えるのも面白そう。
+        barkingProcess = new BarkingProcess(this);
     }
 
     protected int getInitialHitPoint() {
         return 10; // as default
     }
 
+    protected abstract String getBarkWord();  //この意図ならgetよりsetBarkWordの方がいいのか？
+
     // ===================================================================================
     //                                                                               Bark
     //                                                                              ======
     public BarkedSound bark() {
-        breatheIn();
-        prepareAbdominalMuscle();
-        String barkWord = getBarkWord();
-        BarkedSound barkedSound = doBark(barkWord);
+        // やりたいこと：処理をBarkingProcessに委譲する
+        BarkedSound barkedSound = barkingProcess.doBark(barkWord);
         return barkedSound;
-    }
-
-    protected void breatheIn() { // actually depends on barking
-        logger.debug("...Breathing in for barking"); // dummy implementation
-        downHitPoint();
-    }
-
-    protected void prepareAbdominalMuscle() { // also actually depends on barking
-        logger.debug("...Using my abdominal muscle for barking"); // dummy implementation
-        downHitPoint();
-    }
-
-    protected abstract String getBarkWord();
-
-    protected BarkedSound doBark(String barkWord) {
-        downHitPoint();
-        return new BarkedSound(barkWord);
     }
 
     // ===================================================================================
