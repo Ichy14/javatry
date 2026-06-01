@@ -18,6 +18,7 @@ package org.docksidestage.javatry.basic;
 import org.docksidestage.bizfw.basic.buyticket.Ticket;
 import org.docksidestage.bizfw.basic.buyticket.TicketBooth;
 import org.docksidestage.bizfw.basic.objanimal.*;
+import org.docksidestage.bizfw.basic.objanimal.barking.BarkedSound;
 import org.docksidestage.bizfw.basic.objanimal.loud.AlarmClock;
 import org.docksidestage.bizfw.basic.objanimal.loud.Loudable;
 import org.docksidestage.bizfw.basic.objanimal.runner.FastRunner;
@@ -570,7 +571,13 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
      * </pre>
      */
     public void test_objectOriented_writing_withPackageRefactoring() {
-        // your confirmation code here
+        // デグレの確認
+        Animal animal = new Dog();
+        BarkedSound sound = animal.bark();
+        String sea = sound.getBarkWord();
+        log(sea); // your answer? => "wan"
+        int land = animal.getHitPoint();
+        log(land); // your answer? => 7
     }
 
     /**

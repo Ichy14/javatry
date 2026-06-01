@@ -15,6 +15,8 @@
  */
 package org.docksidestage.bizfw.basic.objanimal;
 
+import org.docksidestage.bizfw.basic.objanimal.barking.BarkedSound;
+import org.docksidestage.bizfw.basic.objanimal.barking.BarkingProcess;
 import org.docksidestage.bizfw.basic.objanimal.loud.Loudable;
 
 /**
@@ -56,7 +58,7 @@ public abstract class Animal implements Loudable {
     // ===================================================================================
     //                                                                           Hit Point
     //                                                                           =========
-    protected void downHitPoint() {
+    public void downHitPoint() {  // このメソッドpublicにしたくないな、、、
         --hitPoint;
         if (hitPoint <= 0) {
             throw new IllegalStateException("I'm very tired, so I want to sleep" + getBarkWord());
