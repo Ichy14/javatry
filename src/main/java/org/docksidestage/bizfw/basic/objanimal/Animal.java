@@ -64,6 +64,7 @@ public abstract class Animal implements Loudable {
     //                                                                           =========
     // TODO ichikawa 修行#: その通り、内部メソッドをpublicにしちゃうのはカプセル化を壊している by jflute (2026/06/03)
     // しかも、内部的なリファクタリング都合でpublicになっちゃった...
+    // hint1: 相互参照を外すことが解決の糸口にもなるかも。(2026/06/03)
     public void downHitPoint() {  // このメソッドpublicにしたくないな、、、
         --hitPoint;
         if (hitPoint <= 0) {
