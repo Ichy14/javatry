@@ -28,6 +28,8 @@ public abstract class Animal implements Loudable {
     //                                                                           Attribute
     //                                                                           =========
     protected int hitPoint; // is HP
+    
+    // TODO ichikawa もう固定的なインスタンスであれば、finalを付けてそれを示しておきたい by jflute (2026/06/03)
     protected String barkWord;
     protected BarkingProcess barkingProcess;
 
@@ -37,6 +39,8 @@ public abstract class Animal implements Loudable {
     public Animal() {
         hitPoint = getInitialHitPoint();
         barkWord = getBarkWord();  // 思ったこと：成長段階によって鳴き声が変わることもしばしばある。それをどう実装するのか考えるのも面白そう。
+        // #1on1: ↑BarkWordもオブジェクト化して、成長段階を階層で表現したり年齢的な時系列の要素を入れたり... (2026/06/03)
+
         barkingProcess = new BarkingProcess(this);
     }
 
@@ -58,6 +62,8 @@ public abstract class Animal implements Loudable {
     // ===================================================================================
     //                                                                           Hit Point
     //                                                                           =========
+    // TODO ichikawa 修行#: その通り、内部メソッドをpublicにしちゃうのはカプセル化を壊している by jflute (2026/06/03)
+    // しかも、内部的なリファクタリング都合でpublicになっちゃった...
     public void downHitPoint() {  // このメソッドpublicにしたくないな、、、
         --hitPoint;
         if (hitPoint <= 0) {

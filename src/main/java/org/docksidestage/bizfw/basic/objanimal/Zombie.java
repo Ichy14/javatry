@@ -53,7 +53,19 @@ public class Zombie extends Animal {
     // ===================================================================================
     //                                                                               Bark
     //                                                                              ======
+    // TODO ichikawa 修行++: Zombieって、bark()したら、bark()の中のbreatheInで、diaryにcountするという挙動 by jflute (2026/06/03)
+    // 元々、AnimalのbreatheIn()をオーバーライドして、countBreatheIn()を付け足していた。
+    // いま、↓このbreatheIn()は、barkingProcessのbreatheInと連動していない。
+    // ZombieのbreatheIn()が呼ばれたら、barkingProcessのbreatheIn()が呼ばれるけど...
+    // barkingProcessのbreatheIn()が呼ばれても、ZombieのbreatheIn()は呼ばれない。
+    // 元々の実装は、後者で連動する挙動を期待していた。今逆になってる。
+    // (オーバーライドで処理の差し替えが発生していたが、いま素のメソッドなので誰からも呼ばれてない)
+    //
+    // barkingProcessのbreatheIn()が呼ばれたら、ZombieのbreatheIn()も呼ばれるようにしたい。
+    // (ZombieのbreatheIn()というか、とにかくbarkingProcessのbreatheIn()が呼ばれた時、
+    // countBreatheIn()の処理を追加されるようにしたい: 具体的な実装方法はいくつか選択肢あり)
     protected void breatheIn() {
+        // TODO ichikawa super.は不要です。superの変数も継承して来ているのでthis.扱い by jflute (2026/06/03)
         super.barkingProcess.breatheIn();
         zombieDiary.countBreatheIn();
     }

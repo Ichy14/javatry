@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
  * @author n.ichikawa
  */
 public abstract class St6DBMS {
+    // TODO ichikawa こちらunusedなので削除を by jflute (2026/06/03)
     private static final Logger log = LoggerFactory.getLogger(St6DBMS.class);
 
     public String buildPagingQuery(int pageSize, int pageNumber) {
