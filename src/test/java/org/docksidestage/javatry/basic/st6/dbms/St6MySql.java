@@ -56,7 +56,7 @@ public class St6MySql extends St6DBMS {
     // super側はprotectedなので、具象側も同じくprotectedで良い。
     // (現状、superから具象に来て、スコープを広げてしまっている)
     @Override
-    public String doBuildPagingQuery(int offset, int pageSize) {
+    protected String doBuildPagingQuery(int offset, int pageSize) {
         return "limit " + offset + ", " + pageSize;
     }
     // done ichikawa [宿題] テンプレートメソッドパターンを調べてみてください by jflute (2026/05/20)
