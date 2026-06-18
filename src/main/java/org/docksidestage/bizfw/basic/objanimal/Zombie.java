@@ -15,6 +15,9 @@
  */
 package org.docksidestage.bizfw.basic.objanimal;
 
+import org.docksidestage.bizfw.basic.objanimal.barking.BarkingProcess;
+import org.docksidestage.bizfw.basic.objanimal.barking.extended.ZombieBarkingProcess;
+
 /**
  * The object for zombie(ゾンビ).
  * @author jflute
@@ -50,10 +53,15 @@ public class Zombie extends Animal {
         }
     }
 
+    @Override
+    protected BarkingProcess createBarkingProcess() {
+        return new ZombieBarkingProcess(this);
+    }
+    
     // ===================================================================================
     //                                                                               Bark
     //                                                                              ======
-    // TODO ichikawa 修行++: Zombieって、bark()したら、bark()の中のbreatheInで、diaryにcountするという挙動 by jflute (2026/06/03)
+    // done ichikawa 修行++: Zombieって、bark()したら、bark()の中のbreatheInで、diaryにcountするという挙動 by jflute (2026/06/03)
     // 元々、AnimalのbreatheIn()をオーバーライドして、countBreatheIn()を付け足していた。
     // いま、↓このbreatheIn()は、barkingProcessのbreatheInと連動していない。
     // ZombieのbreatheIn()が呼ばれたら、barkingProcessのbreatheIn()が呼ばれるけど...
@@ -64,11 +72,21 @@ public class Zombie extends Animal {
     // barkingProcessのbreatheIn()が呼ばれたら、ZombieのbreatheIn()も呼ばれるようにしたい。
     // (ZombieのbreatheIn()というか、とにかくbarkingProcessのbreatheIn()が呼ばれた時、
     // countBreatheIn()の処理を追加されるようにしたい: 具体的な実装方法はいくつか選択肢あり)
-    protected void breatheIn() {
-        // TODO ichikawa super.は不要です。superの変数も継承して来ているのでthis.扱い by jflute (2026/06/03)
-        super.barkingProcess.breatheIn();
-        zombieDiary.countBreatheIn();
-    }
+    //
+    // hint1: いったんベタに実現してみる (これでリリースするつもりはないけど) (2026/06/18)
+    // 思考の踊り場を作りましょう。一気に最上階を登るのではなく、いったんあそこまで。
+    // hint2: オブジェクト指向はもっと自由 (2026/06/18)
+    // hint3: オブジェクト指向はAnimalだけのものじゃない (2026/06/18)
+    // BarkingProcessのサブクラスを作っても別に良い。
+    // (OSクラスでif文をサブクラス作って解決してた)
+    // でも、BarkingProcessのサブクラスはZombieではないので、意味があるのか？？？
+    // hint4: Zombieの具象処理は、必ずしもZombieクラスじゃなくても、ZombieワールドだったらOK (2026/06/18)
+    //protected void breatheIn() {
+    //    // done ichikawa super.は不要です。superの変数も継承して来ているのでthis.扱い by jflute (2026/06/03)
+    //    // #1on1: this. super. は変数名が上下でかぶってるときに区別するときに使うくらい (2026/06/18)
+    //    barkingProcess.breatheIn();
+    //    zombieDiary.countBreatheIn();
+    //}
 
     @Override
     protected String getBarkWord() {

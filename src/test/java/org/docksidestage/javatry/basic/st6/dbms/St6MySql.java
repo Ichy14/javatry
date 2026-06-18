@@ -52,7 +52,7 @@ public class St6MySql extends St6DBMS {
     // hint2: Animalのbark()と1行1行比較してみたら、いちかわさんは悔しがった (2026/05/20)
     // #1on1: ようやく抽象と具象の処理の移り変わりが感覚的に沁み込んだ by いちかわさん (2026/05/20)
     // まさしく、こういうデザイン的な部分は一度じっくり悩んで感覚で捉えないと使える知識にならない。
-    // TODO ichikawa 具象側のオーバーライドのメソッドを public にする必要はない by jflute (2026/06/03)
+    // done ichikawa 具象側のオーバーライドのメソッドを public にする必要はない by jflute (2026/06/03)
     // super側はprotectedなので、具象側も同じくprotectedで良い。
     // (現状、superから具象に来て、スコープを広げてしまっている)
     @Override

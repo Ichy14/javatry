@@ -580,6 +580,8 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
         log(land); // your answer? => 7
     }
 
+    // TODO jflute 卒業残し (2026/06/18)
+    // #1on1: 次の新卒フォローのときに一緒にぜひ学んで (2026/06/18)
     /**
      * Is Zombie correct as sub-class of Animal? Analyze it in thirty seconds. (thinking only) <br>
      * (ゾンビは動物クラスのサブクラスとして適切でしょうか？30秒だけ考えてみましょう (考えるだけでOK))

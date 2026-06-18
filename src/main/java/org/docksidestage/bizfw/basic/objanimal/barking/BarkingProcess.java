@@ -4,7 +4,12 @@ import org.docksidestage.bizfw.basic.objanimal.Animal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * @author ichikawa
+ * @author jflute
+ */
 public class BarkingProcess {
+
     // ===================================================================================
     //                                                                          Definition
     //                                                                          ==========
@@ -53,10 +58,46 @@ public class BarkingProcess {
     public void breatheIn() { // actually depends on barking
         logger.debug("...Breathing in for barking"); // dummy implementation
         animal.downHitPoint();
+
+        // #1on1: まずベタに書くとこう。挙動的にはいったんこれで辻褄が合う。 (2026/06/18)
+        // これがダメな理由はなんだろう？
+        // BarkingProcessがZombieを知ってるのが... by いちかわさん
+        // 知っちゃうと何が悪いんだろう？
+        // Zombieを迂闊にいじれなくなる by いちかわさん
+        // BarkingProcessからAnimalに対するポリモーフィズムが崩れてる、と言える。
+        // あとは、キリがない。ここにif文がずらーっと並ぶ可能性がある。
+        // 具象処理がAnimalの具象クラス(Dog,Cat)の中で閉じない。
+        //if (animal instanceof Zombie) {
+        //    // これは本来、Zombieの具象処理。これがZombieワールドから外に出ちゃってる。
+        //    // Zombie固有の具象処理は、Zombieワールドに配置したい。
+        //    ((Zombie) animal).getZombieDiary().countBreatheIn();
+        //}
+        // OSクラスとかの例を参考にすると、こういう具象処理のifを、
+        // サブクラスを作ってオーバーライド方式に変えてきた。
+        //
+        // +------------------+ <-------------------+
+        // |      Animal      | ------+             |
+        // +------------------+       |     +---------------------+
+        //          ^                 +---> |   BarkingProcess    |
+        //          |                       |                     |
+        //          |               +------ |    breatheIn()      |
+        //          |     +---------+       +---------------------+
+        //          |     | (↑これどうにかしたい)      ^
+        //  -------/|\---/|\-----------------------/|\----- ↓Zombieワールド -------
+        //          |     v                         |      
+        // +------------------+                     |
+        // |      Zombie      |             +---------------------------+
+        // +------------------+             |  ZombieBarkingProcess     |
+        //               |                  | override breatheIn() {    |
+        //               +----------------> |   super.breatheIn()       |
+        //                      new         |   (ぞんびの日記カウント)     |
+        //                     橋渡し        | }                         |
+        //  (createメソッドをオーバーライド)    +---------------------------+
+        //
     }
 
-    // TODO ichikawa prepareAbdominalMuscle() は protected でも大丈夫かと by jflute (2026/06/03)
-    public void prepareAbdominalMuscle() { // also actually depends on barking
+    // done ichikawa prepareAbdominalMuscle() は protected でも大丈夫かと by jflute (2026/06/03)
+    protected void prepareAbdominalMuscle() { // also actually depends on barking
         logger.debug("...Using my abdominal muscle for barking"); // dummy implementation
         animal.downHitPoint();
     }
